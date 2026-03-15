@@ -120,6 +120,7 @@ export default function DashboardPage() {
                                 isSensitive={true}
                                 isVisible={showSensitiveInfo}
                                 onToggle={() => setShowSensitiveInfo(!showSensitiveInfo)}
+                                isCopyable={true}
                             />
                             <DashboardCard
                                 title="Security Mesh"

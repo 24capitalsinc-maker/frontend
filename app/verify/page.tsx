@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Shield, CheckCircle2, RefreshCw, ArrowRight, Lock } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 import Link from 'next/link'
+import { useSettingsStore } from '@/store/useSettingsStore'
 
 function generateChallenge() {
     const ops = [
@@ -20,6 +21,7 @@ type Phase = 'checkbox' | 'challenge' | 'verified'
 
 export default function VerifyPage() {
     const router = useRouter()
+    const { settings } = useSettingsStore()
     const [phase, setPhase] = useState<Phase>('checkbox')
     const [challenge, setChallenge] = useState(generateChallenge)
     const [answer, setAnswer] = useState('')
@@ -29,10 +31,15 @@ export default function VerifyPage() {
 
     // If already verified in this session, skip straight to register
     useEffect(() => {
+        if (settings && settings.isRegistrationEnabled === false) {
+            router.replace('/login')
+            return
+        }
+
         if (typeof window !== 'undefined' && sessionStorage.getItem('captcha_verified') === 'true') {
             router.replace('/register')
         }
-    }, [router])
+    }, [router, settings])
 
     const handleCheckboxClick = useCallback(() => {
         if (phase !== 'checkbox' || checkboxAnimating) return

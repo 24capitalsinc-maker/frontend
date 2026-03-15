@@ -3,12 +3,26 @@ import AuthForm from '@/components/AuthForm'
 import Navbar from '@/components/Navbar'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useAuthStore } from '@/store/useAuthStore'
+import { useSettingsStore } from '@/store/useSettingsStore'
 
 export default function RegisterPage() {
     const router = useRouter()
+    const { user } = useAuthStore()
+    const { settings } = useSettingsStore()
     const [verified, setVerified] = useState(false)
 
     useEffect(() => {
+        if (user) {
+            router.replace('/dashboard')
+            return
+        }
+
+        if (settings && settings.isRegistrationEnabled === false) {
+            router.replace('/login')
+            return
+        }
+
         if (typeof window !== 'undefined') {
             const ok = sessionStorage.getItem('captcha_verified') === 'true'
             if (!ok) {
@@ -17,7 +31,7 @@ export default function RegisterPage() {
                 setVerified(true)
             }
         }
-    }, [router])
+    }, [router, user])
 
     if (!verified) {
         // Render nothing while the redirect happens

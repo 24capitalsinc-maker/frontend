@@ -8,6 +8,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Mail, ArrowLeft, Shield, Loader2, CheckCircle2 } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 
+import { useAuthStore } from '@/store/useAuthStore'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+
 const schema = z.object({
     email: z.string().email('Please enter a valid email address'),
 })
@@ -18,6 +22,14 @@ export default function ForgotPasswordPage() {
     const [phase, setPhase] = useState<Phase>('form')
     const [loading, setLoading] = useState(false)
     const [submittedEmail, setSubmittedEmail] = useState('')
+    const { user } = useAuthStore()
+    const router = useRouter()
+
+    useEffect(() => {
+        if (user) {
+            router.replace('/dashboard')
+        }
+    }, [user, router])
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(schema)

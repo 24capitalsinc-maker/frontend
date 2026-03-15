@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Lock, Shield, Loader2, CheckCircle2, AlertCircle, ArrowRight } from 'lucide-react'
+import { Lock, Shield, Loader2, CheckCircle2, AlertCircle, ArrowRight, Eye, EyeOff } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 
 const schema = z.object({
@@ -25,6 +25,8 @@ export default function ResetPasswordPage() {
     const [phase, setPhase] = useState<Phase>('form')
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
+    const [showPassword, setShowPassword] = useState(false)
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(schema)
@@ -109,13 +111,18 @@ export default function ResetPasswordPage() {
                                                 <label className="text-[10px] font-bold uppercase tracking-[0.25em] text-accent/40 block">
                                                     New Password
                                                 </label>
-                                                <input
-                                                    {...register('password')}
-                                                    type="password"
-                                                    autoFocus
-                                                    className="w-full bg-primary border border-gold/20 focus:border-gold px-5 py-4 outline-none transition-colors text-accent font-light text-sm"
-                                                    placeholder="••••••••"
-                                                />
+                                                <div className="relative">
+                                                    <input
+                                                        {...register('password')}
+                                                        type={showPassword ? 'text' : 'password'}
+                                                        autoFocus
+                                                        className="w-full bg-primary border border-gold/20 focus:border-gold px-5 py-4 outline-none transition-colors text-accent font-light text-sm"
+                                                        placeholder="••••••••"
+                                                    />
+                                                    <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-5 top-1/2 -translate-y-1/2 text-accent/20 hover:text-gold">
+                                                        {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                                                    </button>
+                                                </div>
                                                 {errors.password && (
                                                     <p className="text-red-400 text-xs mt-1">{errors.password.message as string}</p>
                                                 )}
@@ -125,12 +132,17 @@ export default function ResetPasswordPage() {
                                                 <label className="text-[10px] font-bold uppercase tracking-[0.25em] text-accent/40 block">
                                                     Confirm New Password
                                                 </label>
-                                                <input
-                                                    {...register('confirmPassword')}
-                                                    type="password"
-                                                    className="w-full bg-primary border border-gold/20 focus:border-gold px-5 py-4 outline-none transition-colors text-accent font-light text-sm"
-                                                    placeholder="••••••••"
-                                                />
+                                                <div className="relative">
+                                                    <input
+                                                        {...register('confirmPassword')}
+                                                        type={showConfirmPassword ? 'text' : 'password'}
+                                                        className="w-full bg-primary border border-gold/20 focus:border-gold px-5 py-4 outline-none transition-colors text-accent font-light text-sm"
+                                                        placeholder="••••••••"
+                                                    />
+                                                    <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-5 top-1/2 -translate-y-1/2 text-accent/20 hover:text-gold">
+                                                        {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                                                    </button>
+                                                </div>
                                                 {errors.confirmPassword && (
                                                     <p className="text-red-400 text-xs mt-1">{errors.confirmPassword.message as string}</p>
                                                 )}

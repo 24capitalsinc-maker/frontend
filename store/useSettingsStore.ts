@@ -10,6 +10,7 @@ interface SettingsState {
         logoAccent: string;
         logoUrl: string;
         supportEmail: string;
+        isRegistrationEnabled?: boolean;
         socialLinks: {
             twitter?: string;
             linkedin?: string;
@@ -36,6 +37,7 @@ export const useSettingsStore = create<SettingsState>((set) => ({
                     logoAccent: '24',
                     logoUrl: '',
                     supportEmail: 'support@capital24.com',
+                    isRegistrationEnabled: true,
                     socialLinks: {}
                 }
             });

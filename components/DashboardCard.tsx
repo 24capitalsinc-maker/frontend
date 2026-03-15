@@ -1,6 +1,6 @@
-'use client'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Eye, EyeOff } from 'lucide-react'
+import { Eye, EyeOff, Copy, Check } from 'lucide-react'
+import { useState } from 'react'
 
 interface DashboardCardProps {
     title: string
@@ -10,6 +10,7 @@ interface DashboardCardProps {
     isSensitive?: boolean
     isVisible?: boolean
     onToggle?: () => void
+    isCopyable?: boolean
 }
 
 export default function DashboardCard({
@@ -19,8 +20,18 @@ export default function DashboardCard({
     subtitle,
     isSensitive,
     isVisible,
-    onToggle
+    onToggle,
+    isCopyable
 }: DashboardCardProps) {
+    const [copied, setCopied] = useState(false)
+
+    const handleCopy = (e: React.MouseEvent) => {
+        e.stopPropagation()
+        navigator.clipboard.writeText(String(value))
+        setCopied(true)
+        setTimeout(() => setCopied(false), 2000)
+    }
+
     return (
         <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -62,18 +73,29 @@ export default function DashboardCard({
                 </div>
 
                 <div className="relative z-10">
-                    <AnimatePresence mode="wait">
-                        <motion.h3
-                            key={isVisible ? 'visible' : 'hidden'}
-                            initial={{ opacity: 0, y: 5 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -5 }}
-                            transition={{ duration: 0.3 }}
-                            className="text-4xl font-medium text-accent tracking-tighter mb-4 transition-all duration-700 group-hover:tracking-normal"
-                        >
-                            {isSensitive && !isVisible ? "••••••••" : value}
-                        </motion.h3>
-                    </AnimatePresence>
+                    <div className="flex items-center gap-4 mb-4">
+                        <AnimatePresence mode="wait">
+                            <motion.h3
+                                key={isVisible ? 'visible' : 'hidden'}
+                                initial={{ opacity: 0, y: 5 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -5 }}
+                                transition={{ duration: 0.3 }}
+                                className="text-4xl font-medium text-accent tracking-tighter transition-all duration-700 group-hover:tracking-normal"
+                            >
+                                {isSensitive && !isVisible ? "••••••••" : value}
+                            </motion.h3>
+                        </AnimatePresence>
+                        {isCopyable && (!isSensitive || isVisible) && (
+                            <button
+                                onClick={handleCopy}
+                                className="p-2 text-gold/30 hover:text-gold transition-colors"
+                                title="Copy to clipboard"
+                            >
+                                {copied ? <Check size={16} /> : <Copy size={16} />}
+                            </button>
+                        )}
+                    </div>
                     {subtitle && (
                         <div className="flex items-center gap-3">
                             <div className="h-[1px] w-6 bg-gold/20" />

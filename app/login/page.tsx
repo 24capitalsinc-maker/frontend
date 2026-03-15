@@ -3,7 +3,19 @@ import AuthForm from '@/components/AuthForm'
 import Navbar from '@/components/Navbar'
 import Link from 'next/link'
 
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { useAuthStore } from '@/store/useAuthStore'
+
 export default function LoginPage() {
+    const { user } = useAuthStore()
+    const router = useRouter()
+
+    useEffect(() => {
+        if (user) {
+            router.replace('/dashboard')
+        }
+    }, [user, router])
     return (
         <main className="min-h-screen bg-primary flex flex-col relative overflow-x-hidden">
             {/* Editorial background texture */}

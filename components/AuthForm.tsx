@@ -50,12 +50,24 @@ export default function AuthForm({ type }: { type: 'login' | 'register' }) {
         try {
             const endpoint = type === 'login' ? '/auth/login' : '/auth/register'
             const res = await api.post(endpoint, data)
-            setAuth(res.data, res.data.accessToken, res.data.refreshToken)
-            if (type === 'register') sessionStorage.removeItem('captcha_verified')
-            router.push('/dashboard')
+            if (type === 'login') {
+                setAuth(res.data, res.data.accessToken, res.data.refreshToken)
+                router.push('/dashboard')
+            } else {
+                // Registration: store userId so the verify page can use it
+                sessionStorage.setItem('verifyUserId', res.data.userId)
+                sessionStorage.removeItem('captcha_verified')
+                router.push('/verify-email')
+            }
         } catch (err: any) {
+            if (type === 'login' && err.response?.status === 403 && err.response?.data?.isUnverified) {
+                // Handle unverified account during login
+                sessionStorage.setItem('verifyUserId', err.response.data.userId)
+                router.push('/verify-email')
+                return
+            }
             setError(err.response?.data?.message || 'Authentication failed. Please verify your credentials.')
-            if (type === 'register') setStep(1) // Reset to start if error happens
+            if (type === 'register') setStep(1)
         } finally {
             setLoading(false)
         }
@@ -145,7 +157,12 @@ export default function AuthForm({ type }: { type: 'login' | 'register' }) {
                                         </div>
                                         <div className="space-y-2">
                                             <label className={labelClasses}>Secure Password</label>
-                                            <input {...register('password')} type="password" className={inputClasses} placeholder="Minimum 6 characters" />
+                                            <div className="relative">
+                                                <input {...register('password')} type={showPassword ? 'text' : 'password'} className={inputClasses} placeholder="Minimum 6 characters" />
+                                                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-5 top-1/2 -translate-y-1/2 text-accent/20 hover:text-gold">
+                                                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                                                </button>
+                                            </div>
                                             {errors.password && <p className="text-red-400 text-[10px] mt-1">{errors.password.message as string}</p>}
                                         </div>
                                     </motion.div>
