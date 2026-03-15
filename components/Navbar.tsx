@@ -47,8 +47,9 @@ export default function Navbar() {
         <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-1000 ${scrolled ? 'py-4 bg-primary/80 backdrop-blur-2xl border-b border-gold/10' : 'py-10 bg-transparent'
             }`}>
             <div className="absolute inset-0 bg-silk opacity-5 pointer-events-none" />
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex justify-between items-center relative z-10">
-                <div className="flex items-center gap-8">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex justify-between items-center relative z-10 w-full">
+                {/* Left: Branding */}
+                <div className="flex-1 flex justify-start items-center gap-8">
                     <Link href="/" className="flex items-center gap-4 group">
                         {mounted && settings?.logoUrl ? (
                             <img src={settings.logoUrl} alt={settings.companyName} className="h-10 w-auto object-contain transition-transform duration-700 group-hover:scale-105" />
@@ -76,8 +77,8 @@ export default function Navbar() {
                     ) : null}
                 </div>
 
-                {/* Desktop Nav */}
-                <div className="hidden xl:flex items-center gap-12">
+                {/* Center: Desktop Nav Links */}
+                <div className="flex-none hidden xl:flex justify-center items-center">
                     {!isDashboard && !isAdmin && (
                         <div className="flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase font-bold">
                             {navLinks.map((link) => (
@@ -97,9 +98,10 @@ export default function Navbar() {
                             ))}
                         </div>
                     )}
+                </div>
 
-                    <div className="h-4 w-px bg-gold/10"></div>
-
+                {/* Right: Desktop Auth & User Profile */}
+                <div className="flex-1 hidden xl:flex justify-end items-center">
                     {mounted && (user ? (
                         <div className="flex items-center gap-8">
                             <Link href="/dashboard" className="text-[10px] font-bold tracking-[0.3em] uppercase text-accent hover:text-gold transition-all duration-500 flex items-center gap-3 group">
@@ -132,12 +134,14 @@ export default function Navbar() {
                 </div>
 
                 {/* Mobile Toggle */}
-                <button
-                    className="xl:hidden text-accent hover:text-gold transition-all duration-500"
-                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                >
-                    {mobileMenuOpen ? <X size={24} strokeWidth={1} /> : <Menu size={24} strokeWidth={1} />}
-                </button>
+                <div className="flex-1 flex xl:hidden justify-end items-center">
+                    <button
+                        className="text-accent hover:text-gold transition-all duration-500"
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                    >
+                        {mobileMenuOpen ? <X size={24} strokeWidth={1} /> : <Menu size={24} strokeWidth={1} />}
+                    </button>
+                </div>
             </div>
 
             {/* Mobile Menu */}
