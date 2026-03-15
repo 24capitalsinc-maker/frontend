@@ -62,7 +62,7 @@ export default function HomePage() {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1.2, delay: 0.7 }}
-                            className="text-prestige text-6xl md:text-8xl mb-8 text-accent max-w-5xl"
+                            className="text-prestige text-5xl sm:text-6xl md:text-8xl mb-8 text-accent max-w-5xl"
                         >
                             Where Ambition Meets <br />
                             <span className="text-gold-gradient font-medium italic">Absolute Precision.</span>

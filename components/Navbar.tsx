@@ -77,7 +77,7 @@ export default function Navbar() {
                 </div>
 
                 {/* Desktop Nav */}
-                <div className="hidden lg:flex items-center gap-12">
+                <div className="hidden xl:flex items-center gap-12">
                     {!isDashboard && !isAdmin && (
                         <div className="flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase font-bold">
                             {navLinks.map((link) => (
@@ -133,7 +133,7 @@ export default function Navbar() {
 
                 {/* Mobile Toggle */}
                 <button
-                    className="lg:hidden text-accent hover:text-gold transition-all duration-500"
+                    className="xl:hidden text-accent hover:text-gold transition-all duration-500"
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 >
                     {mobileMenuOpen ? <X size={24} strokeWidth={1} /> : <Menu size={24} strokeWidth={1} />}
@@ -147,7 +147,7 @@ export default function Navbar() {
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        className="lg:hidden absolute top-full left-0 w-full bg-primary border-b border-gold/10"
+                        className="xl:hidden absolute top-full left-0 w-full bg-primary border-b border-gold/10"
                     >
                         <div className="px-6 py-10 flex flex-col gap-2 font-light uppercase tracking-[0.15em]">
                             {!isDashboard && !isAdmin && navLinks.map((link) => (

@@ -25,8 +25,8 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <html lang="en" className={`${outfit.variable} ${inter.variable} overflow-x-hidden`} data-scroll-behavior="smooth">
-            <body className="bg-primary text-slate-100 font-sans antialiased overflow-x-hidden">
+        <html lang="en" className={`${outfit.variable} ${inter.variable} overflow-x-hidden max-w-[100vw] text-ellipsis`} data-scroll-behavior="smooth">
+            <body className="bg-primary text-slate-100 font-sans antialiased overflow-x-hidden max-w-[100vw]">
                 <FaviconSync />
                 <Toaster richColors position="top-right" closeButton />
                 {children}
