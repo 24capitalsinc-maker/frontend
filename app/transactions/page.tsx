@@ -31,7 +31,7 @@ export default function TransactionsPage() {
 
             <Navbar />
 
-            <div className="flex flex-1 pt-24">
+            <div className="flex flex-1 pt-20">
                 <Sidebar />
                 <div className="flex-1 min-w-0 p-4 sm:p-6 md:p-12 z-10 overflow-hidden">
                     <header className="mb-14 flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-gold/10 pb-10">

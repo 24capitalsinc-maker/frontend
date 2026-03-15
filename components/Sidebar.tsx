@@ -29,12 +29,12 @@ export default function Sidebar() {
 
     if (!mounted) {
         return (
-            <aside className="w-80 bg-primary-light/10 border-r border-gold/10 min-h-[calc(100vh-100px)] p-10 hidden lg:block sticky top-24 self-start" />
+            <aside className="w-80 bg-primary-light/10 border-r border-gold/10 min-h-[calc(100vh-80px)] p-10 hidden lg:block sticky top-20 self-start" />
         )
     }
 
     return (
-        <aside className="w-80 bg-primary/40 backdrop-blur-3xl border-r border-gold/10 min-h-[calc(100vh-100px)] p-12 hidden lg:block sticky top-24 self-start">
+        <aside className="w-80 bg-primary/40 backdrop-blur-3xl border-r border-gold/10 min-h-[calc(100vh-80px)] p-12 hidden lg:block sticky top-20 self-start">
             <div className="absolute inset-0 bg-silk opacity-5 pointer-events-none" />
             <div className="flex flex-col h-full relative z-10">
                 <div className="flex-1 space-y-12">

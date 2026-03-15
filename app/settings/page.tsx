@@ -69,7 +69,7 @@ export default function SettingsPage() {
 
             <Navbar />
 
-            <div className="flex flex-1 pt-24 h-[calc(100vh-64px)] overflow-hidden">
+            <div className="flex flex-1 pt-20 h-[calc(100vh-64px)] overflow-hidden">
                 <Sidebar />
 
                 <div className="flex-1 flex flex-col md:flex-row overflow-hidden">

@@ -28,12 +28,12 @@ export default function AdminSidebar() {
 
     if (!mounted) {
         return (
-            <aside className="w-80 bg-red-950/5 border-r border-red-500/10 min-h-[calc(100vh-100px)] p-10 hidden lg:block sticky top-24 self-start" />
+            <aside className="w-80 bg-red-950/5 border-r border-red-500/10 min-h-[calc(100vh-80px)] p-10 hidden lg:block sticky top-20 self-start" />
         )
     }
 
     return (
-        <aside className="w-80 bg-red-950/5 border-r border-red-500/10 min-h-[calc(100vh-100px)] p-10 hidden lg:block sticky top-24 self-start">
+        <aside className="w-80 bg-red-950/5 border-r border-red-500/10 min-h-[calc(100vh-80px)] p-10 hidden lg:block sticky top-20 self-start">
             <div className="flex flex-col h-full">
                 <div className="flex-1 space-y-10">
                     <div className="flex flex-col gap-2 mb-10">

@@ -28,7 +28,7 @@ export default function HomePage() {
             <Navbar />
 
             {/* ===== HERO SECTION ===== */}
-            <section className="relative min-h-screen flex items-center justify-center pt-32 sm:pt-40 pb-20 px-4 md:px-12 overflow-hidden bg-silk">
+            <section className="relative min-h-screen flex items-center justify-center pt-24 sm:pt-32 pb-20 px-4 md:px-12 overflow-hidden bg-silk">
                 <div className="absolute inset-0 bg-noise opacity-10 pointer-events-none" />
 
                 <motion.div

@@ -43,7 +43,7 @@ export default function Navbar() {
     }
 
     return (
-        <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-1000 ${scrolled ? 'py-4 bg-primary/80 backdrop-blur-2xl border-b border-gold/10' : 'py-10 bg-transparent'
+        <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-1000 ${scrolled ? 'py-4 bg-primary/80 backdrop-blur-2xl border-b border-gold/10' : 'py-5 bg-transparent'
             }`}>
             <div className="absolute inset-0 bg-silk opacity-5 pointer-events-none" />
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex justify-between items-center relative z-10 w-full">
@@ -201,6 +201,20 @@ export default function Navbar() {
                                                 <span className="text-xs font-bold uppercase tracking-widest">{link.name}</span>
                                             </Link>
                                         ))}
+
+                                        {/* Mobile Logout Action */}
+                                        <button
+                                            onClick={() => {
+                                                logout();
+                                                setMobileMenuOpen(false);
+                                            }}
+                                            className={`flex items-center gap-4 p-4 border border-red-500/20 bg-red-500/5 text-red-400 mt-4 transition-all active:scale-95`}
+                                        >
+                                            <LogOut size={16} strokeWidth={1.5} />
+                                            <span className="text-xs font-bold uppercase tracking-widest">
+                                                {isAdmin ? 'Exit Governance' : 'Terminate Session'}
+                                            </span>
+                                        </button>
                                     </div>
                                 </div>
                             )}

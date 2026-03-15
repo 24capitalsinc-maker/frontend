@@ -11,7 +11,7 @@ export default function TransferPage() {
 
             <Navbar />
 
-            <div className="flex flex-1 pt-24">
+            <div className="flex flex-1 pt-20">
                 <Sidebar />
                 <div className="flex-1 min-w-0 p-6 md:p-12 z-10">
                     <div className="max-w-4xl mx-auto">

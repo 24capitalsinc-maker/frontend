@@ -63,7 +63,7 @@ export default function DashboardPage() {
 
             <Navbar />
 
-            <div className="flex flex-1 pt-24 relative z-10">
+            <div className="flex flex-1 pt-20 relative z-10">
                 <Sidebar />
 
                 <div className="flex-1 min-w-0 p-6 md:p-12 overflow-y-auto">

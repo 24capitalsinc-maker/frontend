@@ -98,7 +98,7 @@ export default function AdminTransactionsPage() {
         <div className="min-h-screen bg-primary flex flex-col font-sans selection:bg-gold/30">
             <Navbar />
 
-            <div className="flex flex-1 pt-20 md:pt-24 lg:pt-24">
+            <div className="flex flex-1 pt-20">
                 <AdminSidebar />
                 <div className="flex-1 min-w-0 w-full overflow-hidden p-4 sm:p-6 md:p-10 lg:p-12 z-10">
                     <header className="mb-14 border-b border-gold/10 pb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
