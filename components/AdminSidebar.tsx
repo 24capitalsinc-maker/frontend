@@ -2,8 +2,9 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion';
-import { ShieldCheck, Users, Activity, Landmark, Gavel } from 'lucide-react'
-import { usePathname } from 'next/navigation'
+import { ShieldCheck, Users, Activity, Landmark, Gavel, LogOut } from 'lucide-react'
+import { usePathname, useRouter } from 'next/navigation'
+import { useAuthStore } from '@/store/useAuthStore'
 
 export const adminLinks = [
     { name: 'Admin Home', href: '/admin', icon: ShieldCheck },
@@ -15,6 +16,8 @@ export const adminLinks = [
 
 export default function AdminSidebar() {
     const pathname = usePathname()
+    const router = useRouter()
+    const { logout } = useAuthStore()
     const [mounted, setMounted] = useState(false)
 
     useEffect(() => {
@@ -58,6 +61,20 @@ export default function AdminSidebar() {
                                 </li>
                             )
                         })}
+
+                        {/* Administrative Logout */}
+                        <li>
+                            <button
+                                onClick={() => {
+                                    logout();
+                                    router.push('/login');
+                                }}
+                                className="w-full group flex items-center gap-5 py-4 text-accent/40 hover:text-red-500 transition-all duration-500 relative"
+                            >
+                                <LogOut size={18} strokeWidth={1.5} className="group-hover:text-red-500 transition-colors duration-500" />
+                                <span className="text-[10px] tracking-[0.3em] font-bold uppercase">Exit Governance</span>
+                            </button>
+                        </li>
                     </ul>
                 </div>
 

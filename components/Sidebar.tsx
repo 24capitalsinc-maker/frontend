@@ -2,9 +2,9 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion';
-import { LayoutDashboard, Send, History, Settings, ShieldCheck } from 'lucide-react'
+import { LayoutDashboard, Send, History, Settings, ShieldCheck, LogOut } from 'lucide-react'
 import { useAuthStore } from '@/store/useAuthStore'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useSettingsStore } from '@/store/useSettingsStore'
 
 export const dashboardLinks = [
@@ -15,9 +15,10 @@ export const dashboardLinks = [
 ]
 
 export default function Sidebar() {
-    const { user } = useAuthStore()
+    const { user, logout } = useAuthStore()
     const { settings } = useSettingsStore()
     const pathname = usePathname()
+    const router = useRouter()
     const [mounted, setMounted] = useState(false)
 
     useEffect(() => {
@@ -72,6 +73,20 @@ export default function Sidebar() {
                                 </li>
                             )
                         })}
+
+                        {/* Logout Action */}
+                        <li>
+                            <button
+                                onClick={() => {
+                                    logout();
+                                    router.push('/login');
+                                }}
+                                className="w-full group flex items-center gap-6 py-4 text-accent/30 hover:text-red-500/80 transition-all duration-700 relative"
+                            >
+                                <LogOut size={16} strokeWidth={1} className="group-hover:text-red-500 transition-colors duration-700" />
+                                <span className="text-[10px] tracking-[0.3em] font-bold uppercase">Terminate Session</span>
+                            </button>
+                        </li>
                     </ul>
                 </div>
 
