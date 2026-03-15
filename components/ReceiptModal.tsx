@@ -28,20 +28,20 @@ export default function ReceiptModal({ isOpen, onClose, transaction }: ReceiptMo
     return (
         <AnimatePresence>
             {isOpen && (
-                <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 sm:p-6">
+                <div className="fixed inset-0 z-[50] flex items-center justify-center p-4 sm:p-8">
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="absolute inset-0 bg-primary/90 backdrop-blur-md"
+                        className="absolute inset-0 bg-primary/40 backdrop-blur-sm"
                     />
 
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        className="relative w-full max-w-lg bg-primary border border-gold/20 shadow-2xl overflow-hidden"
+                        className="relative w-full max-w-lg bg-primary border border-gold/20 shadow-2xl overflow-y-auto max-h-[90vh]"
                     >
                         {/* Decorative background elements */}
                         <div className="absolute top-0 right-0 w-64 h-64 bg-gold/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
