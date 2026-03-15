@@ -60,10 +60,11 @@ export default function ReceiptModal({ isOpen, onClose, transaction }: ReceiptMo
         try {
             const element = receiptRef.current
             const canvas = await html2canvas(element, {
-                backgroundColor: '#050505',
+                backgroundColor: '#1a0d08', // Matches --primary
                 scale: 2,
                 logging: false,
-                useCORS: true
+                useCORS: true,
+                allowTaint: true
             })
 
             const imgData = canvas.toDataURL('image/png')
@@ -88,29 +89,36 @@ export default function ReceiptModal({ isOpen, onClose, transaction }: ReceiptMo
     return (
         <AnimatePresence>
             {isOpen && (
-                <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8">
+                <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8 font-sans">
+                    {/* Backdrop */}
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="absolute inset-0 bg-primary/20 backdrop-blur-sm"
+                        className="absolute inset-0 backdrop-blur-sm"
+                        style={{ backgroundColor: 'rgba(26, 13, 8, 0.4)' }}
                     />
 
+                    {/* Modal Content */}
                     <motion.div
                         initial={{ opacity: 0, scale: 0.98, y: 10 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.98, y: 10 }}
-                        className="relative w-full max-w-md bg-primary border border-gold/20 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col scrollbar-none"
+                        className="relative w-full max-w-md border overflow-hidden flex flex-col no-scrollbar shadow-2xl"
                         ref={receiptRef}
-                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                        style={{
+                            backgroundColor: '#1a0d08',
+                            borderColor: 'rgba(212, 175, 55, 0.2)',
+                            scrollbarWidth: 'none'
+                        }}
                     >
                         {/* Decorative background elements */}
-                        <div className="absolute top-0 right-0 w-48 h-48 bg-gold/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-                        <div className="absolute inset-0 bg-silk opacity-5 pointer-events-none" />
+                        <div className="absolute top-0 right-0 w-48 h-48 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none" style={{ backgroundColor: 'rgba(212, 175, 55, 0.05)' }} />
+                        <div className="absolute inset-0 opacity-5 pointer-events-none bg-silk" />
 
                         {/* Top Accent Bar */}
-                        <div className="h-1 w-full bg-gold shadow-[0_0_10px_rgba(212,175,55,0.3)]" />
+                        <div className="h-1 w-full bg-gold" style={{ boxShadow: '0 0 10px rgba(212, 175, 55, 0.3)' }} />
 
                         <div className="p-6 md:p-10 relative z-10">
                             {/* Header */}
@@ -118,7 +126,7 @@ export default function ReceiptModal({ isOpen, onClose, transaction }: ReceiptMo
                                 <div className="space-y-1">
                                     <div className="flex items-center gap-1.5 mb-1">
                                         <div className="w-1 h-1 rounded-full bg-gold animate-pulse" />
-                                        <p className="text-[8px] text-gold/60 font-bold uppercase tracking-[0.4em]">Official Records</p>
+                                        <p className="text-[8px] font-bold uppercase tracking-[0.4em]" style={{ color: 'rgba(212, 175, 55, 0.6)' }}>Official Records</p>
                                     </div>
                                     <h2 className="text-2xl font-light text-accent tracking-tighter">Transaction <span className="text-gold">Receipt.</span></h2>
                                 </div>
@@ -132,76 +140,80 @@ export default function ReceiptModal({ isOpen, onClose, transaction }: ReceiptMo
                             </div>
 
                             {/* Status Icon & Amount */}
-                            <div className="flex flex-col items-center justify-center mb-8 py-6 bg-gold/[0.02] border-y border-gold/5">
-                                <div className="w-12 h-12 bg-primary border border-gold/10 flex items-center justify-center mb-4 shadow-inner relative">
-                                    <div className="absolute inset-0 bg-gold/5 animate-pulse" />
+                            <div className="flex flex-col items-center justify-center mb-8 py-6 border-y" style={{ backgroundColor: 'rgba(212, 175, 55, 0.02)', borderColor: 'rgba(212, 175, 55, 0.05)' }}>
+                                <div className="w-12 h-12 border flex items-center justify-center mb-4 shadow-inner relative" style={{ backgroundColor: '#1a0d08', borderColor: 'rgba(212, 175, 55, 0.1)' }}>
+                                    <div className="absolute inset-0 animate-pulse" style={{ backgroundColor: 'rgba(212, 175, 55, 0.05)' }} />
                                     <CheckCircle2 size={20} className="text-gold relative z-10" />
                                 </div>
                                 <p className="text-3xl font-light text-accent tracking-tighter tabular-nums">
                                     {isDebit ? '-' : '+'}{transaction.currency === 'USD' ? '$' : transaction.currency === 'EUR' ? '€' : '£'}{transaction.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                                 </p>
-                                <p className="text-[9px] text-accent/30 font-bold uppercase tracking-[0.3em] mt-2">Settlement Authenticated</p>
+                                <p className="text-[9px] font-bold uppercase tracking-[0.3em] mt-2" style={{ color: 'rgba(252, 249, 245, 0.3)' }}>Settlement Authenticated</p>
                             </div>
 
-                            {/* Details Grid - Optimized for space */}
+                            {/* Details Grid */}
                             <div className="grid grid-cols-2 gap-y-6 gap-x-4 mb-8">
                                 <div className="space-y-1">
-                                    <p className="text-[8px] text-accent/20 font-bold uppercase tracking-[0.2em]">Protocol</p>
+                                    <p className="text-[8px] font-bold uppercase tracking-[0.2em]" style={{ color: 'rgba(252, 249, 245, 0.2)' }}>Protocol</p>
                                     <div className="flex items-center gap-2">
-                                        {transaction.routingProtocol === 'Domestic' && <Landmark size={12} className="text-gold/60" />}
-                                        {transaction.routingProtocol === 'International' && <Globe size={12} className="text-gold/60" />}
-                                        {transaction.routingProtocol === 'Offshore' && <Shield size={12} className="text-gold/60" />}
+                                        {transaction.routingProtocol === 'Domestic' && <Landmark size={12} style={{ color: 'rgba(212, 175, 55, 0.6)' }} />}
+                                        {transaction.routingProtocol === 'International' && <Globe size={12} style={{ color: 'rgba(212, 175, 55, 0.6)' }} />}
+                                        {transaction.routingProtocol === 'Offshore' && <Shield size={12} style={{ color: 'rgba(212, 175, 55, 0.6)' }} />}
                                         <p className="text-[10px] font-medium text-accent uppercase tracking-widest">{transaction.routingProtocol}</p>
                                     </div>
                                 </div>
                                 <div className="space-y-1 text-right">
-                                    <p className="text-[8px] text-accent/20 font-bold uppercase tracking-[0.2em]">Settlement Date</p>
+                                    <p className="text-[8px] font-bold uppercase tracking-[0.2em]" style={{ color: 'rgba(252, 249, 245, 0.2)' }}>Settlement Date</p>
                                     <p className="text-[10px] font-medium text-accent uppercase tracking-widest">
                                         {format(new Date(transaction.createdAt), 'MMM dd, yyyy')}
                                     </p>
                                 </div>
                                 <div className="space-y-1">
-                                    <p className="text-[8px] text-accent/20 font-bold uppercase tracking-[0.2em]">Reference ID</p>
-                                    <p className="text-[10px] font-mono text-gold/80 tracking-widest uppercase">{transaction.referenceId}</p>
+                                    <p className="text-[8px] font-bold uppercase tracking-[0.2em]" style={{ color: 'rgba(252, 249, 245, 0.2)' }}>Reference ID</p>
+                                    <p className="text-[10px] font-mono tracking-widest uppercase" style={{ color: 'rgba(212, 175, 55, 0.8)' }}>{transaction.referenceId}</p>
                                 </div>
                                 <div className="space-y-1 text-right">
-                                    <p className="text-[8px] text-accent/20 font-bold uppercase tracking-[0.2em]">Beneficiary</p>
+                                    <p className="text-[8px] font-bold uppercase tracking-[0.2em]" style={{ color: 'rgba(252, 249, 245, 0.2)' }}>Beneficiary</p>
                                     <p className="text-[10px] font-medium text-accent uppercase tracking-widest truncate">{transaction.receiverAccountNumber}</p>
                                 </div>
                                 <div className="space-y-1 col-span-2">
-                                    <p className="text-[8px] text-accent/20 font-bold uppercase tracking-[0.2em]">Institutional Note</p>
-                                    <p className="text-[10px] font-light text-accent/60 leading-relaxed italic line-clamp-2">"{transaction.description || 'Institutional Distribution'}"</p>
+                                    <p className="text-[8px] font-bold uppercase tracking-[0.2em]" style={{ color: 'rgba(252, 249, 245, 0.2)' }}>Institutional Note</p>
+                                    <p className="text-[10px] font-light leading-relaxed italic line-clamp-2" style={{ color: 'rgba(252, 249, 245, 0.6)' }}>"{transaction.description || 'Institutional Distribution'}"</p>
                                 </div>
                             </div>
 
                             {/* Footer / Actions */}
-                            <div className="pt-6 border-t border-gold/10 flex items-center justify-between" data-html2canvas-ignore="true">
-                                <div className="flex items-center gap-2">
-                                    <ShieldCheck size={14} className="text-gold/30" />
-                                    <p className="text-[7px] text-accent/20 font-bold uppercase tracking-[0.4em]">Vault Security Alpha-7</p>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <button
-                                        onClick={handleShare}
-                                        className="p-2 text-accent/40 hover:text-gold transition-colors border border-transparent hover:border-gold/10 hover:bg-gold/5"
-                                        title="Share Metadata"
-                                    >
-                                        <Share2 size={14} strokeWidth={1} />
-                                    </button>
-                                    <button
-                                        onClick={handleDownloadPDF}
-                                        className="p-2 px-3 text-accent/40 hover:text-gold transition-colors border border-transparent hover:border-gold/10 hover:bg-gold/5 font-bold uppercase text-[9px] tracking-widest flex items-center gap-2"
-                                        title="Download PDF"
-                                    >
-                                        <Download size={14} strokeWidth={1} />
-                                        PDF
-                                    </button>
+                            <div className="pt-6 border-t" style={{ borderColor: 'rgba(212, 175, 55, 0.1)' }} data-html2canvas-ignore="true">
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                        <ShieldCheck size={14} style={{ color: 'rgba(212, 175, 55, 0.3)' }} />
+                                        <p className="text-[7px] font-bold uppercase tracking-[0.4em]" style={{ color: 'rgba(252, 249, 245, 0.2)' }}>Vault Security Alpha-7</p>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <button
+                                            onClick={handleShare}
+                                            className="p-2 text-accent hover:text-gold transition-colors border border-transparent"
+                                            style={{ color: 'rgba(252, 249, 245, 0.4)' }}
+                                            title="Share Metadata"
+                                        >
+                                            <Share2 size={14} strokeWidth={1} />
+                                        </button>
+                                        <button
+                                            onClick={handleDownloadPDF}
+                                            className="p-2 px-3 text-accent hover:text-gold transition-colors border border-transparent font-bold uppercase text-[9px] tracking-widest flex items-center gap-2"
+                                            style={{ color: 'rgba(252, 249, 245, 0.4)' }}
+                                            title="Download PDF"
+                                        >
+                                            <Download size={14} strokeWidth={1} />
+                                            PDF
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         {/* Security Strip */}
-                        <div className="bg-gold/[0.03] py-2 px-10 border-t border-gold/10 flex justify-between items-center overflow-hidden whitespace-nowrap opacity-30">
+                        <div className="py-2 px-10 border-t flex justify-between items-center overflow-hidden whitespace-nowrap opacity-30" style={{ backgroundColor: 'rgba(212, 175, 55, 0.03)', borderColor: 'rgba(212, 175, 55, 0.1)' }}>
                             <span className="text-[6px] text-gold/20 font-serif uppercase tracking-[1em] tabular-nums">
                                 AUTH_TX_{transaction.referenceId.slice(-4).toUpperCase()}_SECURE_VAULT_ENCRYPTED_LEDGER_BUFFER
                             </span>
