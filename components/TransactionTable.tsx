@@ -79,8 +79,8 @@ export default function TransactionTable({ transactions = [], itemsPerPage = 10 
                             type="button"
                             onClick={() => { setFilterType(type); setCurrentPage(1); }}
                             className={`px-6 py-4 text-[9px] font-bold uppercase tracking-[0.2em] border transition-all ${filterType === type
-                                    ? 'bg-gold text-primary border-gold shadow-lg shadow-gold/10'
-                                    : 'bg-primary/20 border-gold/10 text-accent/40 hover:border-gold/30'
+                                ? 'bg-gold text-primary border-gold shadow-lg shadow-gold/10'
+                                : 'bg-primary/20 border-gold/10 text-accent/40 hover:border-gold/30'
                                 }`}
                         >
                             {type}
@@ -90,7 +90,7 @@ export default function TransactionTable({ transactions = [], itemsPerPage = 10 
             </div>
 
             {/* Table */}
-            <div className="overflow-x-auto border border-gold/10 bg-primary/20 backdrop-blur-xl">
+            <div className="overflow-x-auto border border-gold/10 bg-primary/20 backdrop-blur-xl no-scrollbar">
                 <table className="w-full text-left border-collapse">
                     <thead>
                         <tr className="border-b border-gold/10 bg-gold/[0.02]">

@@ -107,7 +107,7 @@ export default function AdminPage() {
                             <h2 className="text-xl md:text-2xl font-light text-accent tracking-tight">System <span className="text-gold">Users.</span></h2>
                             <div className="h-0.5 w-8 md:w-12 bg-gold/20" />
                         </div>
-                        <div className="overflow-x-auto w-full scrollbar-thin scrollbar-thumb-gold/20 scrollbar-track-transparent">
+                        <div className="overflow-x-auto w-full no-scrollbar">
                             <table className="w-full text-left">
                                 <thead>
                                     <tr className="bg-gold/5 border-b border-gold/10 text-nowrap">

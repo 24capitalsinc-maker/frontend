@@ -149,7 +149,7 @@ export default function AdminUsersPage() {
                     <div className="grid grid-cols-1 xl:grid-cols-3 gap-10">
                         <div className="xl:col-span-2">
                             <div className="bg-primary-light/10 border border-gold/10 relative overflow-hidden">
-                                <div className="overflow-x-auto w-full scrollbar-thin scrollbar-thumb-gold/20 scrollbar-track-transparent">
+                                <div className="overflow-x-auto w-full no-scrollbar">
                                     <table className="w-full text-left border-collapse">
                                         <thead>
                                             <tr className="bg-gold/5 border-b border-gold/10 text-nowrap">
