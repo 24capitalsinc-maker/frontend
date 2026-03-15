@@ -29,7 +29,7 @@ export default function Navbar() {
         { label: 'Home', href: '/' },
         { label: 'Business', href: '/business' },
         { label: 'Personal', href: '/personal' },
-        { label: 'Credit Cards', href: '/cards' },
+        { label: 'Cards', href: '/cards' },
         { label: 'Loans', href: '/loans' },
         { label: 'Support', href: '/support' },
         { label: 'Contact', href: '/contact' },
@@ -48,7 +48,7 @@ export default function Navbar() {
             }`}>
             <div className="absolute inset-0 bg-silk opacity-5 pointer-events-none" />
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex justify-between items-center relative z-10">
-                <div className="flex items-center gap-10">
+                <div className="flex items-center gap-8">
                     <Link href="/" className="flex items-center gap-4 group">
                         {mounted && settings?.logoUrl ? (
                             <img src={settings.logoUrl} alt={settings.companyName} className="h-10 w-auto object-contain transition-transform duration-700 group-hover:scale-105" />
@@ -116,15 +116,15 @@ export default function Navbar() {
                             </button>
                         </div>
                     ) : (
-                        <div className="flex items-center gap-10">
-                            <Link href="/login" className="text-[10px] font-bold tracking-[0.4em] uppercase text-accent/50 hover:text-gold transition-all duration-500">
+                        <div className="flex items-center gap-6">
+                            <Link href="/login" className="text-[10px] font-bold tracking-[0.4em] uppercase text-accent/50 hover:text-gold transition-all duration-500 whitespace-nowrap">
                                 Sign In
                             </Link>
                             <Link
                                 href="/verify"
-                                className="group relative bg-gold text-primary px-10 py-4 font-bold tracking-[0.2em] uppercase text-[10px] overflow-hidden shadow-2xl shadow-gold/10"
+                                className="group relative bg-gold text-primary px-8 py-3 font-bold tracking-[0.2em] uppercase text-[10px] overflow-hidden shadow-2xl shadow-gold/10 whitespace-nowrap"
                             >
-                                <span className="relative z-10">Sign Up</span>
+                                <span className="relative z-10">Open Account</span>
                                 <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
                             </Link>
                         </div>
