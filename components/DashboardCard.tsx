@@ -40,7 +40,7 @@ export default function DashboardCard({
             transition={{ duration: 1 }}
             className="group"
         >
-            <div className="bg-primary/40 backdrop-blur-3xl border border-gold/20 p-10 h-full relative overflow-hidden transition-all duration-1000 hover:border-gold/50 shadow-2xl group-hover:bg-primary/60">
+            <div className="bg-primary/40 backdrop-blur-3xl border border-gold/20 p-6 sm:p-10 h-full relative overflow-hidden transition-all duration-1000 hover:border-gold/50 shadow-2xl group-hover:bg-primary/60">
                 {/* Prestige Textures */}
                 <div className="absolute inset-0 bg-silk opacity-10 pointer-events-none" />
                 <div className="absolute top-0 right-0 w-32 h-32 bg-gold/5 rounded-full blur-3xl -mr-16 -mt-16 transition-all duration-1000 group-hover:bg-gold/15" />
@@ -81,7 +81,8 @@ export default function DashboardCard({
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -5 }}
                                 transition={{ duration: 0.3 }}
-                                className="text-4xl font-medium text-accent tracking-tighter transition-all duration-700 group-hover:tracking-normal"
+                                className="text-2xl sm:text-3xl lg:text-4xl font-medium text-accent tracking-tighter transition-all duration-700 group-hover:tracking-normal truncate max-w-full"
+                                title={String(value)}
                             >
                                 {isSensitive && !isVisible ? "••••••••" : value}
                             </motion.h3>
