@@ -210,7 +210,7 @@ export default function AuthForm({ type }: { type: 'login' | 'register' }) {
                                         <div className="p-5 border border-gold/10 bg-gold/5 flex items-start gap-4">
                                             <Shield size={18} className="text-gold mt-1 shrink-0" />
                                             <p className="text-[10px] leading-relaxed text-accent/50 uppercase tracking-widest">
-                                                By finalizing, you agree to Capital24's premium banking terms and institutional privacy standards.
+                                                By finalizing, you agree to Capital24's premium banking <Link href="/terms" className="text-gold hover:underline">terms</Link> and institutional <Link href="/privacy" className="text-gold hover:underline">privacy standards</Link>.
                                             </p>
                                         </div>
                                     </motion.div>

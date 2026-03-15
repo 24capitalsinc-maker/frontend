@@ -240,8 +240,8 @@ export default function VerifyPage() {
                                     <span className="text-[9px] text-accent/30 uppercase tracking-[0.2em]">Protected by Capital24</span>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                    <a href="#" className="text-[9px] text-accent/20 hover:text-accent/40 uppercase tracking-widest transition-colors">Privacy</a>
-                                    <a href="#" className="text-[9px] text-accent/20 hover:text-accent/40 uppercase tracking-widest transition-colors">Terms</a>
+                                    <Link href="/privacy" className="text-[9px] text-accent/20 hover:text-accent/40 uppercase tracking-widest transition-colors">Privacy</Link>
+                                    <Link href="/terms" className="text-[9px] text-accent/20 hover:text-accent/40 uppercase tracking-widest transition-colors">Terms</Link>
                                 </div>
                             </div>
                         </div>

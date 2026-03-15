@@ -67,8 +67,6 @@ export default function Footer() {
                         <ul className="space-y-4">
                             <li><Link href="/support" className="text-[10px] text-accent/50 hover:text-gold transition-colors uppercase tracking-widest">Support Portal</Link></li>
                             <li><Link href="/contact" className="text-[10px] text-accent/50 hover:text-gold transition-colors uppercase tracking-widest">Contact Node</Link></li>
-                            <li><Link href="/login" className="text-[10px] text-accent/50 hover:text-gold transition-colors uppercase tracking-widest">Security Access</Link></li>
-                            <li><Link href="/verify" className="text-[10px] text-accent/50 hover:text-gold transition-colors uppercase tracking-widest">Entity Verification</Link></li>
                         </ul>
                     </div>
 
