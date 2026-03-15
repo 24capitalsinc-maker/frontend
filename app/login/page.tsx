@@ -19,7 +19,7 @@ export default function LoginPage() {
 
             <Navbar />
 
-            <div className="flex-1 flex flex-col items-center justify-center p-6 md:p-12 relative z-10">
+            <div className="flex-1 flex flex-col items-center justify-center p-6 pt-32 md:p-12 md:pt-40 relative z-10">
                 <AuthForm type="login" />
             </div>
         </main>
