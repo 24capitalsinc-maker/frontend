@@ -1,7 +1,11 @@
 'use client'
+import { useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Download, Share2, CheckCircle2, ShieldCheck, Landmark, Globe, Shield } from 'lucide-react'
 import { format } from 'date-fns'
+import html2canvas from 'html2canvas'
+import { jsPDF } from 'jspdf'
+import { toast } from 'sonner'
 
 interface ReceiptModalProps {
     isOpen: boolean
@@ -21,9 +25,65 @@ interface ReceiptModalProps {
 }
 
 export default function ReceiptModal({ isOpen, onClose, transaction }: ReceiptModalProps) {
+    const receiptRef = useRef<HTMLDivElement>(null)
+
     if (!transaction) return null
 
     const isDebit = transaction.type === 'debit'
+
+    const handleShare = async () => {
+        const shareData = {
+            title: `Capital24 Settlement: ${transaction.referenceId}`,
+            text: `Settlement of ${transaction.currency} ${transaction.amount.toLocaleString()} to ${transaction.receiverAccountNumber}.`,
+            url: window.location.href,
+        }
+
+        try {
+            if (navigator.share) {
+                await navigator.share(shareData)
+            } else {
+                await navigator.clipboard.writeText(
+                    `Capital24 Receipt [${transaction.referenceId}]\nAmount: ${transaction.currency} ${transaction.amount.toLocaleString()}\nBeneficiary: ${transaction.receiverAccountNumber}`
+                )
+                toast.success('Financial metadata copied to clipboard')
+            }
+        } catch (error) {
+            console.error('Error sharing:', error)
+        }
+    }
+
+    const handleDownloadPDF = async () => {
+        if (!receiptRef.current) return
+
+        const loadingToast = toast.loading('Generating high-security PDF document...')
+
+        try {
+            const element = receiptRef.current
+            const canvas = await html2canvas(element, {
+                backgroundColor: '#050505',
+                scale: 2,
+                logging: false,
+                useCORS: true
+            })
+
+            const imgData = canvas.toDataURL('image/png')
+            const pdf = new jsPDF({
+                orientation: 'portrait',
+                unit: 'px',
+                format: [canvas.width / 2, canvas.height / 2]
+            })
+
+            pdf.addImage(imgData, 'PNG', 0, 0, canvas.width / 2, canvas.height / 2)
+            pdf.save(`Capital24_Receipt_${transaction.referenceId.slice(-8)}.pdf`)
+
+            toast.dismiss(loadingToast)
+            toast.success('Document exported successfully')
+        } catch (error) {
+            console.error('PDF Generation Error:', error)
+            toast.dismiss(loadingToast)
+            toast.error('Failed to generate institutional document')
+        }
+    }
 
     return (
         <AnimatePresence>
@@ -42,6 +102,7 @@ export default function ReceiptModal({ isOpen, onClose, transaction }: ReceiptMo
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
                         className="relative w-full max-w-lg bg-primary border border-gold/20 shadow-2xl overflow-y-auto max-h-[90vh]"
+                        ref={receiptRef}
                     >
                         {/* Decorative background elements */}
                         <div className="absolute top-0 right-0 w-64 h-64 bg-gold/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
@@ -63,6 +124,7 @@ export default function ReceiptModal({ isOpen, onClose, transaction }: ReceiptMo
                                 </div>
                                 <button
                                     onClick={onClose}
+                                    data-html2canvas-ignore="true"
                                     className="p-2 text-accent/20 hover:text-accent transition-colors border border-accent/5 hover:border-accent/10 bg-accent/5 rounded-sm"
                                 >
                                     <X size={20} strokeWidth={1} />
@@ -119,16 +181,24 @@ export default function ReceiptModal({ isOpen, onClose, transaction }: ReceiptMo
                             </div>
 
                             {/* Footer / Actions */}
-                            <div className="pt-10 border-t border-gold/10 flex items-center justify-between">
+                            <div className="pt-10 border-t border-gold/10 flex items-center justify-between" data-html2canvas-ignore="true">
                                 <div className="flex items-center gap-3">
                                     <ShieldCheck size={16} className="text-gold/40" />
                                     <p className="text-[8px] text-accent/30 font-bold uppercase tracking-[0.4em]">End-to-End Encrypted Receipt</p>
                                 </div>
                                 <div className="flex items-center gap-4">
-                                    <button className="p-3 text-accent/40 hover:text-gold transition-colors border border-transparent hover:border-gold/20 hover:bg-gold/5">
+                                    <button
+                                        onClick={handleShare}
+                                        className="p-3 text-accent/40 hover:text-gold transition-colors border border-transparent hover:border-gold/20 hover:bg-gold/5"
+                                        title="Share Settlement Metadata"
+                                    >
                                         <Share2 size={16} strokeWidth={1.5} />
                                     </button>
-                                    <button className="p-3 text-accent/40 hover:text-gold transition-colors border border-transparent hover:border-gold/20 hover:bg-gold/5 font-bold uppercase text-[10px] tracking-widest flex items-center gap-2">
+                                    <button
+                                        onClick={handleDownloadPDF}
+                                        className="p-3 text-accent/40 hover:text-gold transition-colors border border-transparent hover:border-gold/20 hover:bg-gold/5 font-bold uppercase text-[10px] tracking-widest flex items-center gap-2"
+                                        title="Export Institutional PDF"
+                                    >
                                         <Download size={16} strokeWidth={1.5} />
                                         PDF
                                     </button>
