@@ -32,7 +32,6 @@ export default function Navbar() {
         { label: 'Cards', href: '/cards' },
         { label: 'Loans', href: '/loans' },
         { label: 'Support', href: '/support' },
-        { label: 'Contact', href: '/contact' },
     ]
 
     const isDashboard = pathname.startsWith('/dashboard') || pathname.startsWith('/transfer') || pathname.startsWith('/transactions') || pathname.startsWith('/settings')
