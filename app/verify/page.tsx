@@ -109,7 +109,7 @@ export default function VerifyPage() {
                         <div className="absolute top-0 left-0 w-16 h-[2px] bg-gold" />
                         <div className="absolute top-0 left-0 w-[2px] h-16 bg-gold" />
 
-                        <div className="p-8">
+                        <div className="p-6 sm:p-8">
                             {/* Brand strip */}
                             <div className="flex justify-between items-center mb-6 pb-5 border-b border-gold/10">
                                 <div className="flex items-center gap-2">
@@ -160,14 +160,14 @@ export default function VerifyPage() {
                                         <p className="text-accent/50 text-xs uppercase tracking-widest mb-6">Solve the security challenge</p>
 
                                         {/* Math challenge display */}
-                                        <div className="bg-primary border border-gold/20 p-8 text-center mb-6">
-                                            <p className="text-accent/40 text-[10px] uppercase tracking-[0.3em] mb-4">What is the answer?</p>
-                                            <div className="flex items-center justify-center gap-4">
-                                                <span className="text-5xl font-light text-accent font-mono">{challenge.a}</span>
-                                                <span className="text-3xl text-gold font-light">{challenge.op}</span>
-                                                <span className="text-5xl font-light text-accent font-mono">{challenge.b}</span>
-                                                <span className="text-3xl text-accent/30">=</span>
-                                                <span className="text-4xl text-gold font-mono">?</span>
+                                        <div className="bg-primary border border-gold/20 p-4 sm:p-8 text-center mb-6">
+                                            <p className="text-accent/40 text-[9px] sm:text-[10px] uppercase tracking-[0.3em] mb-4">What is the answer?</p>
+                                            <div className="flex items-center justify-center gap-3 sm:gap-4">
+                                                <span className="text-3xl sm:text-5xl font-light text-accent font-mono">{challenge.a}</span>
+                                                <span className="text-xl sm:text-3xl text-gold font-light">{challenge.op}</span>
+                                                <span className="text-3xl sm:text-5xl font-light text-accent font-mono">{challenge.b}</span>
+                                                <span className="text-xl sm:text-3xl text-accent/30">=</span>
+                                                <span className="text-2xl sm:text-4xl text-gold font-mono">?</span>
                                             </div>
                                         </div>
 

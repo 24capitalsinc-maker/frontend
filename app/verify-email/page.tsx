@@ -143,7 +143,7 @@ export default function VerifyEmailPage() {
                         <div className="absolute top-0 left-0 w-16 h-[2px] bg-gold" />
                         <div className="absolute top-0 left-0 w-[2px] h-16 bg-gold" />
 
-                        <div className="p-10 md:p-12">
+                        <div className="p-6 sm:p-10 md:p-12">
                             <AnimatePresence mode="wait">
                                 {phase === 'input' ? (
                                     <motion.div
@@ -153,28 +153,28 @@ export default function VerifyEmailPage() {
                                         exit={{ opacity: 0 }}
                                     >
                                         {/* Header */}
-                                        <div className="mb-10 pb-8 border-b border-gold/10">
-                                            <div className="flex items-center gap-3 mb-6">
-                                                <div className="w-9 h-9 bg-primary border border-gold/30 flex items-center justify-center">
+                                        <div className="mb-8 sm:mb-10 pb-6 sm:pb-8 border-b border-gold/10">
+                                            <div className="flex items-center gap-3 mb-4 sm:mb-6">
+                                                <div className="w-8 h-8 sm:w-9 sm:h-9 bg-primary border border-gold/30 flex items-center justify-center">
                                                     <Shield size={14} className="text-gold" />
                                                 </div>
-                                                <span className="text-gold font-mono text-[10px] tracking-[0.3em] uppercase">Identity Verification</span>
+                                                <span className="text-gold font-mono text-[9px] sm:text-[10px] tracking-[0.3em] uppercase">Identity Verification</span>
                                             </div>
-                                            <h2 className="text-3xl font-light text-accent mb-3 tracking-tight">
+                                            <h2 className="text-2xl sm:text-3xl font-light text-accent mb-3 tracking-tight">
                                                 Verify Your Account.
                                             </h2>
-                                            <p className="text-accent/50 font-light text-sm leading-relaxed">
+                                            <p className="text-accent/50 font-light text-xs sm:text-sm leading-relaxed">
                                                 A 6-digit verification code has been sent to your registered email address. Enter it below to activate your Capital24 account.
                                             </p>
                                         </div>
 
-                                        <form onSubmit={handleSubmit} className="space-y-8">
+                                        <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
                                             {/* 6-digit code inputs */}
                                             <div>
                                                 <label className="text-[10px] font-bold uppercase tracking-[0.25em] text-accent/40 block mb-4">
                                                     Verification Code
                                                 </label>
-                                                <div className="flex gap-3 justify-between">
+                                                <div className="grid grid-cols-6 gap-2 sm:gap-3">
                                                     {code.map((digit, i) => (
                                                         <input
                                                             key={i}
@@ -186,19 +186,19 @@ export default function VerifyEmailPage() {
                                                             onChange={(e) => handleChange(i, e.target.value)}
                                                             onKeyDown={(e) => handleKeyDown(i, e)}
                                                             autoFocus={i === 0}
-                                                            className="w-12 h-14 text-center text-xl font-bold text-gold bg-primary border border-gold/20 focus:border-gold outline-none transition-colors tracking-widest"
+                                                            className="w-full h-12 sm:h-14 text-center text-lg sm:text-xl font-bold text-gold bg-primary border border-gold/20 focus:border-gold outline-none transition-colors tracking-widest"
                                                         />
                                                     ))}
                                                 </div>
                                                 {error && (
-                                                    <p className="text-red-400 text-xs mt-3 font-bold uppercase tracking-widest">{error}</p>
+                                                    <p className="text-red-400 text-[10px] sm:text-xs mt-3 font-bold uppercase tracking-widest">{error}</p>
                                                 )}
                                             </div>
 
                                             <button
                                                 type="submit"
                                                 disabled={loading || pinValue.length !== 6}
-                                                className="w-full bg-gold text-primary font-bold tracking-[0.2em] uppercase py-5 hover:bg-gold-dark transition-colors flex items-center justify-center gap-3 disabled:opacity-50 text-sm"
+                                                className="w-full bg-gold text-primary font-bold tracking-[0.2em] uppercase py-4 sm:py-5 hover:bg-gold-dark transition-colors flex items-center justify-center gap-3 disabled:opacity-50 text-[12px] sm:text-sm"
                                             >
                                                 {loading
                                                     ? <><Loader2 className="animate-spin" size={18} /> Verifying…</>
