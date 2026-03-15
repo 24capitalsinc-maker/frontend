@@ -79,7 +79,7 @@ export default function VerifyPage() {
 
             <Navbar />
 
-            <div className="flex-1 flex flex-col items-center justify-center p-6 relative z-10 pt-32">
+            <div className="flex-1 flex flex-col items-center justify-center p-6 relative z-10 pt-32 sm:pt-40">
                 <motion.div
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}

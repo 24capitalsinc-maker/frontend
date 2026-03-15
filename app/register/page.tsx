@@ -43,7 +43,7 @@ export default function RegisterPage() {
 
             <Navbar />
 
-            <div className="flex-1 flex flex-col items-center justify-center p-6 pt-32 md:p-12 md:pt-40 relative z-10">
+            <div className="flex-1 flex flex-col items-center justify-center p-6 pt-32 sm:pt-40 md:p-12 md:pt-40 relative z-10">
                 <AuthForm type="register" />
             </div>
         </main>
