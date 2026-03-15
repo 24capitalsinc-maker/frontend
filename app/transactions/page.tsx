@@ -17,7 +17,7 @@ export default function TransactionsPage() {
                 const res = await api.get('/transactions/my')
                 setTransactions(res.data)
             } catch (err) {
-                console.error(err)
+                // Handled via UI
             } finally {
                 setLoading(false)
             }

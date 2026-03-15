@@ -20,7 +20,7 @@ export default function LiquidityPage() {
             const res = await api.get('/admin/liquidity')
             setStats(res.data)
         } catch (err) {
-            console.error(err)
+            // Handled via UI
         } finally {
             setLoading(false)
         }

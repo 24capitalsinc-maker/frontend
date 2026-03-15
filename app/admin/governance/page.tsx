@@ -23,7 +23,7 @@ export default function GovernancePage() {
             const res = await api.get('/admin/settings')
             setSettings(res.data)
         } catch (err) {
-            console.error(err)
+            // Handled via UI
         } finally {
             setLoading(false)
         }

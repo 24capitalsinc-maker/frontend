@@ -27,22 +27,14 @@ export default function DashboardPage() {
         }
 
         const fetchProfile = async () => {
-            console.log('DEBUG: Dashboard Fetching Profile...');
-            console.log('DEBUG: Access Token in store:', accessToken ? 'PRESENT' : 'MISSING');
             try {
                 const [profileRes, transactionsRes] = await Promise.all([
                     api.get('/users/profile'),
                     api.get('/transactions/my')
                 ])
-                console.log('DEBUG: Profile and Transactions fetched successfully');
                 setProfile(profileRes.data)
                 setTransactions(transactionsRes.data)
             } catch (err: any) {
-                console.error('DEBUG: Dashboard Fetch Error:', err.message);
-                if (err.response) {
-                    console.error('DEBUG: Error Data:', err.response.data);
-                    console.error('DEBUG: Error Status:', err.response.status);
-                }
                 if (err.response?.status === 401) {
                     router.push('/login')
                 }

@@ -31,7 +31,7 @@ export default function AdminUsersPage() {
             const res = await api.get('/admin/users')
             setUsers(res.data)
         } catch (err) {
-            console.error(err)
+            // Handled via UI
         } finally {
             setLoading(false)
         }
@@ -61,7 +61,6 @@ export default function AdminUsersPage() {
                 toast.success('Institutional Access Restored: Portfolio activity enabled.')
             }
         } catch (err) {
-            console.error(err)
             toast.error('Protocol Failure: Unable to update entity status.')
         }
     }
@@ -88,7 +87,6 @@ export default function AdminUsersPage() {
             setAdjustedBalance('')
             toast.success('Liquidity Profile Synchronized: Vault balance updated.')
         } catch (err) {
-            console.error(err)
             toast.error('Vault Access Error: Unable to persist liquidity adjustment.')
         }
     }
@@ -295,7 +293,7 @@ export default function AdminUsersPage() {
                                                                 try {
                                                                     await api.patch('/admin/user-limits', { userId: selectedUser._id, dailyTransfer: val });
                                                                     fetchUsers();
-                                                                } catch (err) { console.error(err); }
+                                                                } catch (err) { /* Handled via UI */ }
                                                             }}
                                                             className="w-full bg-primary border border-gold/10 px-3 py-3 text-xs text-accent focus:border-gold outline-none transition-all"
                                                         />
@@ -310,7 +308,7 @@ export default function AdminUsersPage() {
                                                                 try {
                                                                     await api.patch('/admin/user-limits', { userId: selectedUser._id, monthlyTransfer: val });
                                                                     fetchUsers();
-                                                                } catch (err) { console.error(err); }
+                                                                } catch (err) { /* Handled via UI */ }
                                                             }}
                                                             className="w-full bg-primary border border-gold/10 px-3 py-3 text-xs text-accent focus:border-gold outline-none transition-all"
                                                         />

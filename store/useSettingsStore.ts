@@ -28,7 +28,6 @@ export const useSettingsStore = create<SettingsState>((set) => ({
             const res = await axios.get(`${API_URL}/public/settings`);
             set({ settings: res.data });
         } catch (error) {
-            console.error('Failed to fetch global settings:', error);
             // Fallback defaults
             set({
                 settings: {

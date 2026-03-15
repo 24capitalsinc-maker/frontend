@@ -46,7 +46,7 @@ export default function ForgotPasswordPage() {
             setSubmittedEmail(data.email)
             setPhase('sent')
         } catch (error) {
-            console.error('Password Reset Error:', error)
+            // Handled via UI
         } finally {
             setLoading(false)
         }

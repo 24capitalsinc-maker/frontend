@@ -35,7 +35,6 @@ export default function AdminPage() {
                 setMetrics(mRes.data)
                 setUsers(uRes.data)
             } catch (err) {
-                console.error(err)
                 toast.error('Failed to synchronize administrative metrics.')
             } finally {
                 setLoading(false)

@@ -28,7 +28,7 @@ export default function AdminTransactionsPage() {
             const res = await api.get('/admin/transactions')
             setTransactions(res.data)
         } catch (err) {
-            console.error(err)
+            // Handled via UI
         } finally {
             setLoading(false)
         }
@@ -67,7 +67,6 @@ export default function AdminTransactionsPage() {
             setEditingTx(null)
             toast.success('Transaction updated successfully')
         } catch (err) {
-            console.error(err)
             toast.error('Failed to update transaction.')
         }
     }

@@ -54,7 +54,7 @@ export default function ReceiptModal({ isOpen, onClose, transaction }: ReceiptMo
                 toast.success('Financial metadata copied to clipboard')
             }
         } catch (error) {
-            console.error('Error sharing:', error)
+            // Handled via fallback or toast
         }
     }
 
@@ -98,7 +98,6 @@ export default function ReceiptModal({ isOpen, onClose, transaction }: ReceiptMo
             toast.dismiss(loadingToast)
             toast.success('Document exported successfully')
         } catch (error) {
-            console.error('PDF Generation Error:', error)
             toast.dismiss(loadingToast)
             toast.error('Failed to generate institutional document')
         }

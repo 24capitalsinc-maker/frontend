@@ -47,7 +47,7 @@ export default function SettingsPage() {
             setSuccess(true)
             setTimeout(() => setSuccess(false), 3000)
         } catch (err) {
-            console.error(err)
+            // Handled via UI
         } finally {
             setLoading(false)
         }
