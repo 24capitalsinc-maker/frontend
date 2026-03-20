@@ -104,7 +104,7 @@ export default function ForgotPasswordPage() {
                                                 Reset Password.
                                             </h2>
                                             <p className="text-accent/50 font-light text-sm leading-relaxed">
-                                                Enter the email address linked to your Capital24 account and we'll send you a secure reset link.
+                                                Enter the email address linked to your optimanexgen account and we'll send you a secure reset link.
                                             </p>
                                         </div>
 
@@ -118,7 +118,7 @@ export default function ForgotPasswordPage() {
                                                     type="email"
                                                     autoFocus
                                                     className="w-full bg-primary border border-gold/20 focus:border-gold px-5 py-4 outline-none transition-colors text-accent placeholder:text-accent/20 font-light text-sm"
-                                                    placeholder="client@capital24.com"
+                                                    placeholder="client@optimanexgen.org"
                                                 />
                                                 {errors.email && (
                                                     <p className="text-red-400 text-xs mt-1">{errors.email.message as string}</p>
@@ -168,14 +168,14 @@ export default function ForgotPasswordPage() {
                                         <div>
                                             <h3 className="text-2xl font-light text-accent mb-3">Check your inbox.</h3>
                                             <p className="text-accent/50 text-sm font-light leading-relaxed">
-                                                If <span className="text-gold font-medium">{submittedEmail}</span> is registered with Capital24, you'll receive a password reset link within a few minutes.
+                                                If <span className="text-gold font-medium">{submittedEmail}</span> is registered with optimanexgen, you'll receive a password reset link within a few minutes.
                                             </p>
                                         </div>
 
                                         <div className="w-full bg-primary border border-gold/10 p-5 text-left space-y-2">
                                             <p className="text-[10px] text-gold uppercase tracking-widest font-bold mb-3">What to do next</p>
                                             {[
-                                                "Check your inbox (and spam folder) for an email from noreply@capital24.com",
+                                                "Check your inbox (and spam folder) for an email from noreply@optimanexgen.org",
                                                 "Click the secure reset link in the email — it expires in 15 minutes",
                                                 "Create a new strong password and log back in",
                                             ].map((step, i) => (

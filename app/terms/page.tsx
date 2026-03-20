@@ -31,7 +31,7 @@ export default function TermsPage() {
                                 Terms of <span className="text-gold font-medium">Service.</span>
                             </h1>
                             <p className="text-accent/40 text-sm md:text-lg font-light tracking-wide max-w-2xl leading-relaxed">
-                                The governing protocols and legal stipulations for entities accessing the Capital24 institutional banking network.
+                                The governing protocols and legal stipulations for entities accessing the optimanexgen institutional banking network.
                             </p>
                         </motion.div>
                     </header>
@@ -48,7 +48,7 @@ export default function TermsPage() {
                             <Briefcase className="text-gold mb-6" size={24} />
                             <h3 className="text-accent font-medium uppercase tracking-widest text-xs mb-4">Institutional Eligibility</h3>
                             <p className="text-accent/40 text-xs leading-relaxed font-light">
-                                Access to the Capital24 network is restricted to verified entities that meet our strict diagnostic liquidity and ethical compliance standards.
+                                Access to the optimanexgen network is restricted to verified entities that meet our strict diagnostic liquidity and ethical compliance standards.
                             </p>
                         </div>
                     </div>
@@ -68,7 +68,7 @@ export default function TermsPage() {
                                 <span className="text-gold font-mono text-sm">02.</span> Capital Movement Protocols
                             </h2>
                             <p className="text-accent/50 text-sm leading-relaxed font-light">
-                                Transfer instructions are finalized upon the 4-second institutional routing delay. Revocation after finalization is only possible through a verified manual diagnostic appeal. Capital24 reserves the right to delay settlements pending internal audit.
+                                Transfer instructions are finalized upon the 4-second institutional routing delay. Revocation after finalization is only possible through a verified manual diagnostic appeal. optimanexgen reserves the right to delay settlements pending internal audit.
                             </p>
                         </section>
 
@@ -77,7 +77,7 @@ export default function TermsPage() {
                                 <span className="text-gold font-mono text-sm">03.</span> Liability Limitations
                             </h2>
                             <p className="text-accent/50 text-sm leading-relaxed font-light">
-                                Capital24 provides high-prestige routing rails but does not accept liability for external sovereign regulatory actions or network volatility outside our primary diagnostic nodes.
+                                optimanexgen provides high-prestige routing rails but does not accept liability for external sovereign regulatory actions or network volatility outside our primary diagnostic nodes.
                             </p>
                         </section>
 

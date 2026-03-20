@@ -164,7 +164,7 @@ export default function VerifyEmailPage() {
                                                 Verify Your Account.
                                             </h2>
                                             <p className="text-accent/50 font-light text-xs sm:text-sm leading-relaxed">
-                                                A 6-digit verification code has been sent to your registered email address. Enter it below to activate your Capital24 account.
+                                                A 6-digit verification code has been sent to your registered email address. Enter it below to activate your optimanexgen account.
                                             </p>
                                         </div>
 

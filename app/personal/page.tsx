@@ -105,7 +105,7 @@ export default function PersonalPage() {
                         {[
                             { icon: <PiggyBank size={28} />, title: "Savings Vault", value: "5.24% APY", desc: "Earn the highest yield on the market with no lockup period and daily interest accrual." },
                             { icon: <CreditCard size={28} />, title: "Debit Card", value: "Zero Fees", desc: "Free metal debit card with worldwide ATM access, zero foreign transaction fees, and real-time spend notifications." },
-                            { icon: <Zap size={28} />, title: "Instant Transfers", value: "Under 60s", desc: "Send money to any Capital24 member instantly using just their email or phone number." },
+                            { icon: <Zap size={28} />, title: "Instant Transfers", value: "Under 60s", desc: "Send money to any optimanexgen member instantly using just their email or phone number." },
                             { icon: <Clock size={28} />, title: "Early Paycheck", value: "2 Days Early", desc: "Get your direct deposit up to 48 hours earlier than traditional banks through our instant routing system." },
                         ].map((p, i) => (
                             <motion.div key={i} whileHover={{ y: -4 }} {...fadeIn} className="bg-primary border border-gold/10 hover:border-gold/30 p-8 group transition-all">
@@ -119,16 +119,16 @@ export default function PersonalPage() {
                 </div>
             </section>
 
-            {/* Why Capital24 */}
+            {/* Why optimanexgen */}
             <section className="py-24 px-4 md:px-12 bg-primary border-b border-gold/10">
                 <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     <motion.div {...fadeIn}>
-                        <p className="text-gold font-mono text-[10px] tracking-[0.3em] uppercase mb-6">Why Capital24</p>
+                        <p className="text-gold font-mono text-[10px] tracking-[0.3em] uppercase mb-6">Why optimanexgen</p>
                         <h2 className="text-3xl md:text-4xl font-light text-accent tracking-tighter mb-8 leading-tight">
                             A completely <span className="text-gold font-medium">frictionless</span> financial ecosystem.
                         </h2>
                         <p className="text-accent/50 font-light mb-10 leading-relaxed">
-                            Traditional banks rely on confusing fee structures and manual processes to generate profit. Capital24 is built differently — every product we offer is designed to save you money, not cost you money.
+                            Traditional banks rely on confusing fee structures and manual processes to generate profit. optimanexgen is built differently — every product we offer is designed to save you money, not cost you money.
                         </p>
                         <ul className="space-y-5">
                             {[
@@ -150,7 +150,7 @@ export default function PersonalPage() {
 
                     <motion.div {...fadeIn}>
                         <div className="bg-primary-light border border-gold/20 p-10">
-                            <h3 className="text-accent font-light text-lg mb-8 pb-4 border-b border-gold/10">Capital24 vs. Traditional Bank</h3>
+                            <h3 className="text-accent font-light text-lg mb-8 pb-4 border-b border-gold/10">optimanexgen vs. Traditional Bank</h3>
                             <div className="space-y-4">
                                 {[
                                     { feature: "Monthly maintenance fee", us: "Free", them: "$12-25/mo" },
@@ -168,7 +168,7 @@ export default function PersonalPage() {
                                 ))}
                                 <div className="pt-2 grid grid-cols-3 gap-4 text-[10px] uppercase tracking-widest text-accent/30">
                                     <span></span>
-                                    <span className="text-gold text-center">Capital24</span>
+                                    <span className="text-gold text-center">optimanexgen</span>
                                     <span className="text-right">Traditional Bank</span>
                                 </div>
                             </div>

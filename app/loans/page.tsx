@@ -156,7 +156,7 @@ export default function LoansPage() {
                             { step: "01", title: "Apply Online", desc: "Complete a simple 5-minute application. No paperwork. Soft credit pull only." },
                             { step: "02", title: "Instant Decision", desc: "Our AI credit engine delivers an approval decision in under 3 minutes." },
                             { step: "03", title: "Review Offer", desc: "Compare rate, term, and monthly payment options. No pressure, no obligation." },
-                            { step: "04", title: "Get Funded", desc: "Accept your offer and receive funds directly to your Capital24 account today." },
+                            { step: "04", title: "Get Funded", desc: "Accept your offer and receive funds directly to your optimanexgen account today." },
                         ].map((s, i) => (
                             <motion.div key={i} {...fadeIn} className="p-10 border border-gold/10 hover:border-gold/30 transition-colors relative group">
                                 <div className="text-gold/10 font-mono text-7xl font-bold absolute top-4 right-4 leading-none select-none">{s.step}</div>

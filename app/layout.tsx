@@ -15,7 +15,7 @@ const inter = Inter({
 })
 
 export const metadata = {
-    title: 'Capital24 | Elite Digital Banking',
+    title: 'optimanexgen | Elite Digital Banking',
     description: 'Pro production-level digital banking application',
 }
 

@@ -16,8 +16,8 @@ export default function SupportPage() {
     const [openFaq, setOpenFaq] = useState<number | null>(null)
 
     const faqs = [
-        { q: "How do I open a Capital24 account?", a: "Simply click 'Open Account', complete our secure 3-minute form, verify your identity with a government-issued ID, and fund your account. You'll be banking within the hour." },
-        { q: "Is my money safe with Capital24?", a: "Yes. Capital24 deposits are FDIC insured up to $250,000 per depositor. All data is encrypted with AES-256, and our systems undergo annual SOC 2 Type II audits." },
+        { q: "How do I open a optimanexgen account?", a: "Simply click 'Open Account', complete our secure 3-minute form, verify your identity with a government-issued ID, and fund your account. You'll be banking within the hour." },
+        { q: "Is my money safe with optimanexgen?", a: "Yes. optimanexgen deposits are FDIC insured up to $250,000 per depositor. All data is encrypted with AES-256, and our systems undergo annual SOC 2 Type II audits." },
         { q: "How do I send an international wire transfer?", a: "Log into your dashboard, select 'Transfers', choose 'International Wire', enter the recipient's SWIFT/BIC code and IBAN/account number. Wires typically settle within 1-4 business hours." },
         { q: "What are the fees for foreign currency conversion?", a: "Standard accounts use mid-market rates plus a 0.5% conversion fee. Signature and Reserve cardholders enjoy zero FX fees on all foreign currency transactions." },
         { q: "How do I dispute a transaction?", a: "In your dashboard or mobile app, locate the transaction, tap 'Dispute', and complete the brief form. We'll freeze the charge immediately and investigate within 24 hours." },
@@ -82,7 +82,7 @@ export default function SupportPage() {
                             {
                                 icon: <Mail size={32} />, title: "Email Concierge", badge: "Detailed",
                                 desc: "For non-urgent documentation requests, compliance queries, or formal complaint submissions.",
-                                meta: "support@capital24.com · Reply within 4 hours",
+                                meta: "support@optimanexgen.org · Reply within 4 hours",
                                 action: "Use Contact Form", href: "/contact"
                             },
                         ].map((c, i) => (

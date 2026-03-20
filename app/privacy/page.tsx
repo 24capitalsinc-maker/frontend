@@ -32,7 +32,7 @@ export default function PrivacyPage() {
                             </h1>
                             <p className="text-accent/40 text-sm md:text-lg font-light tracking-wide max-w-2xl leading-relaxed">
                                 Our commitment to institutional-grade confidentiality and the protection of sovereign financial data.
-                                Capital24 operates under strict diagnostic encryption standards.
+                                optimanexgen operates under strict diagnostic encryption standards.
                             </p>
                         </motion.div>
                     </header>
@@ -49,7 +49,7 @@ export default function PrivacyPage() {
                             <Shield className="text-gold mb-6" size={24} />
                             <h3 className="text-accent font-medium uppercase tracking-widest text-xs mb-4">Sovereign Data Rights</h3>
                             <p className="text-accent/40 text-xs leading-relaxed font-light">
-                                Entities retain full governance over their liquidity data. Capital24 does not engage in secondary data monetization or third-party disclosure without explicit authorization.
+                                Entities retain full governance over their liquidity data. optimanexgen does not engage in secondary data monetization or third-party disclosure without explicit authorization.
                             </p>
                         </div>
                     </div>

@@ -202,7 +202,7 @@ export default function BusinessPage() {
             <section className="py-24 px-4 md:px-12 bg-gold text-center">
                 <motion.div {...fadeIn} className="max-w-3xl mx-auto">
                     <h2 className="text-4xl font-light text-primary tracking-tighter mb-6">Ready to elevate your <span className="font-bold">Enterprise?</span></h2>
-                    <p className="text-primary/70 mb-10 font-light">Join industry leaders executing billions through Capital24's fiscal network.</p>
+                    <p className="text-primary/70 mb-10 font-light">Join industry leaders executing billions through optimanexgen's fiscal network.</p>
                     <Link href="/verify" className="bg-primary text-gold px-12 py-5 font-bold tracking-[0.2em] uppercase inline-flex items-center gap-4 hover:bg-primary-light transition-colors">
                         Initiate Onboarding <ArrowRight size={18} />
                     </Link>

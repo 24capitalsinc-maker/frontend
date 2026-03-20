@@ -364,7 +364,7 @@ export default function HomePage() {
                             {
                                 name: "Marcus W.",
                                 role: "CFO, Stellar Dynamics",
-                                text: "Capital24 completely transformed our payroll operations. 40 employees across 6 countries — all paid on time, every time. The multi-currency dashboard is exceptional.",
+                                text: "optimanexgen completely transformed our payroll operations. 40 employees across 6 countries — all paid on time, every time. The multi-currency dashboard is exceptional.",
                                 avatar: "MW"
                             },
                             {
@@ -446,7 +446,7 @@ export default function HomePage() {
                                 tag: "Security Architecture",
                                 date: "10 MAR 2026",
                                 title: "The Obsidian Standard: Hardened Hardware Enclaves in Private Banking",
-                                excerpt: "Technical insights into how Capital24 utilizes aerospace-grade security for institutional asset protection.",
+                                excerpt: "Technical insights into how optimanexgen utilizes aerospace-grade security for institutional asset protection.",
                                 readTime: "6 MIN READ"
                             },
                         ].map((post, i) => (

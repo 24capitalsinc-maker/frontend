@@ -31,11 +31,11 @@ export const useSettingsStore = create<SettingsState>((set) => ({
             // Fallback defaults
             set({
                 settings: {
-                    companyName: 'Capital24',
-                    logoText: 'Capital',
-                    logoAccent: '24',
-                    logoUrl: '',
-                    supportEmail: 'support@capital24.com',
+                    companyName: 'optimanexgen',
+                    logoText: 'optima',
+                    logoAccent: 'nexgen',
+                    logoUrl: '/logo.png',
+                    supportEmail: 'support@optimanexgen.org',
                     isRegistrationEnabled: true,
                     socialLinks: {}
                 }

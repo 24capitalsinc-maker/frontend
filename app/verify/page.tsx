@@ -114,7 +114,7 @@ export default function VerifyPage() {
                             <div className="flex justify-between items-center mb-6 pb-5 border-b border-gold/10">
                                 <div className="flex items-center gap-2">
                                     <Lock size={12} className="text-gold" />
-                                    <span className="text-[10px] text-gold uppercase tracking-[0.3em] font-bold">Capital24 SecureCheck™</span>
+                                    <span className="text-[10px] text-gold uppercase tracking-[0.3em] font-bold">optimanexgen SecureCheck™</span>
                                 </div>
                                 <span className="text-accent/20 text-[10px] uppercase tracking-widest">v3.1</span>
                             </div>
@@ -237,7 +237,7 @@ export default function VerifyPage() {
                             <div className="flex justify-between items-center mt-6 pt-5 border-t border-gold/10">
                                 <div className="flex items-center gap-1.5">
                                     <Shield size={10} className="text-gold/60" />
-                                    <span className="text-[9px] text-accent/30 uppercase tracking-[0.2em]">Protected by Capital24</span>
+                                    <span className="text-[9px] text-accent/30 uppercase tracking-[0.2em]">Protected by optimanexgen</span>
                                 </div>
                                 <div className="flex items-center gap-3">
                                     <Link href="/privacy" className="text-[9px] text-accent/20 hover:text-accent/40 uppercase tracking-widest transition-colors">Privacy</Link>

@@ -95,7 +95,7 @@ export default function ResetPasswordPage() {
                                                 New Access.
                                             </h2>
                                             <p className="text-accent/50 font-light text-sm leading-relaxed">
-                                                Establish a new secure password for your Capital24 institutional portfolio.
+                                                Establish a new secure password for your optimanexgen institutional portfolio.
                                             </p>
                                         </div>
 

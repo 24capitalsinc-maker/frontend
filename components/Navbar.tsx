@@ -56,12 +56,12 @@ export default function Navbar() {
                             <>
                                 <div className="w-12 h-12 border border-gold/20 flex items-center justify-center bg-gold/5 group-hover:border-gold/50 transition-colors duration-700">
                                     <span className="text-gold font-sans text-3xl font-light pr-1 leading-none">
-                                        {(settings?.logoText || 'Capital').charAt(0)}
+                                        {(settings?.logoText || 'optima').charAt(0)}
                                     </span>
                                 </div>
                                 <div className="flex flex-col">
                                     <span className="text-xl font-sans font-light tracking-[0.4em] text-accent uppercase leading-none">
-                                        {settings?.logoText || 'Capital'}<span className="text-gold font-medium translate-x-1">{settings?.logoAccent || '24'}</span>
+                                        {settings?.logoText || 'optima'}<span className="text-gold font-medium translate-x-1">{settings?.logoAccent || 'nexgen'}</span>
                                     </span>
                                     <span className="text-[7px] text-gold/40 uppercase tracking-[0.6em] font-bold mt-1">Digital Banking</span>
                                 </div>

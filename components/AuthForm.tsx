@@ -99,7 +99,7 @@ export default function AuthForm({ type }: { type: 'login' | 'register' }) {
                                     <Shield size={16} className="text-gold" />
                                 </div>
                                 <div className="h-4 w-[1px] bg-gold/20 mr-1"></div>
-                                <span className="text-gold font-bold text-[10px] tracking-[0.4em] uppercase">Capital24 Secure</span>
+                                <span className="text-gold font-bold text-[10px] tracking-[0.4em] uppercase">optimanexgen Secure</span>
                             </div>
                             {type === 'register' && (
                                 <div className="flex gap-2">
@@ -124,7 +124,7 @@ export default function AuthForm({ type }: { type: 'login' | 'register' }) {
                             <div className="space-y-6">
                                 <div className="space-y-2">
                                     <label className={labelClasses}>Email Address</label>
-                                    <input {...register('email')} type="email" className={inputClasses} placeholder="client@capital24.com" />
+                                    <input {...register('email')} type="email" className={inputClasses} placeholder="client@optimanexgen.org" />
                                     {errors.email && <p className="text-red-400 text-[10px] uppercase font-bold tracking-widest mt-1">{errors.email.message as string}</p>}
                                 </div>
                                 <div className="space-y-2">
@@ -152,7 +152,7 @@ export default function AuthForm({ type }: { type: 'login' | 'register' }) {
                                         </div>
                                         <div className="space-y-2">
                                             <label className={labelClasses}>Primary Email</label>
-                                            <input {...register('email')} type="email" className={inputClasses} placeholder="client@capital24.com" />
+                                            <input {...register('email')} type="email" className={inputClasses} placeholder="client@optimanexgen.org" />
                                             {errors.email && <p className="text-red-400 text-[10px] mt-1">{errors.email.message as string}</p>}
                                         </div>
                                         <div className="space-y-2">
@@ -210,7 +210,7 @@ export default function AuthForm({ type }: { type: 'login' | 'register' }) {
                                         <div className="p-5 border border-gold/10 bg-gold/5 flex items-start gap-4">
                                             <Shield size={18} className="text-gold mt-1 shrink-0" />
                                             <p className="text-[10px] leading-relaxed text-accent/50 uppercase tracking-widest">
-                                                By finalizing, you agree to Capital24's premium banking <Link href="/terms" className="text-gold hover:underline">terms</Link> and institutional <Link href="/privacy" className="text-gold hover:underline">privacy standards</Link>.
+                                                By finalizing, you agree to optimanexgen's premium banking <Link href="/terms" className="text-gold hover:underline">terms</Link> and institutional <Link href="/privacy" className="text-gold hover:underline">privacy standards</Link>.
                                             </p>
                                         </div>
                                     </motion.div>
@@ -250,7 +250,7 @@ export default function AuthForm({ type }: { type: 'login' | 'register' }) {
                     <div className="mt-12 pt-8 border-t border-gold/10 text-center">
                         <Link href={type === 'login' ? '/verify' : '/login'} className="text-[10px] text-accent/30 uppercase tracking-[0.2em] hover:text-gold transition-colors group">
                             {type === 'login' ? "Don't have an account?" : "Already a premium member?"}
-                            <span className="text-gold font-bold ml-2 group-hover:underline">{type === 'login' ? 'Join Capital24' : 'Secure Sign In'}</span>
+                            <span className="text-gold font-bold ml-2 group-hover:underline">{type === 'login' ? 'Join optimanexgen' : 'Secure Sign In'}</span>
                         </Link>
                     </div>
                 </div>

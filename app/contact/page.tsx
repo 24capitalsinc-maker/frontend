@@ -79,7 +79,7 @@ export default function ContactPage() {
                             <div className="grid gap-8">
                                 {[
                                     { icon: <Globe size={20} />, label: "Headquarters", val: "Sovereign District, Node 01, London" },
-                                    { icon: <Mail size={20} />, label: "Encrypted Email", val: "support@capital24.com" },
+                                    { icon: <Mail size={20} />, label: "Encrypted Email", val: "support@optimanexgen.org" },
                                     { icon: <Phone size={20} />, label: "Institutional Hotline", val: "+1 (555) 240-0000" },
                                     { icon: <Clock size={20} />, label: "Availability", val: "24/7 Global Coverage" }
                                 ].map((item, i) => (

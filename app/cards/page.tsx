@@ -32,7 +32,7 @@ export default function CardsPage() {
                             Cards that <br /><span className="font-medium text-gold">Define You.</span>
                         </h1>
                         <p className="text-lg text-accent/60 mb-10 leading-relaxed font-light">
-                            From everyday cashback to elite travel rewards and metal cards reserved for high-net-worth members — Capital24 has the card to match your lifestyle.
+                            From everyday cashback to elite travel rewards and metal cards reserved for high-net-worth members — optimanexgen has the card to match your lifestyle.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-5">
                             <Link href="/verify" className="bg-gold text-primary px-10 py-5 font-medium text-sm tracking-widest uppercase hover:bg-gold-dark transition-colors inline-flex items-center justify-center">Apply Now</Link>
@@ -47,7 +47,7 @@ export default function CardsPage() {
                         {/* Reserve Card */}
                         <div className="relative w-full aspect-[1.6/1] bg-gradient-to-br from-gold/80 via-gold to-gold-dark border border-gold/30 p-8 flex flex-col justify-between group hover:scale-105 transition-transform duration-500">
                             <div className="flex justify-between items-start">
-                                <span className="text-primary font-light text-xs uppercase tracking-[0.3em]">Capital24</span>
+                                <span className="text-primary font-light text-xs uppercase tracking-[0.3em]">optimanexgen</span>
                                 <span className="text-primary font-bold text-xs uppercase tracking-widest">Reserve</span>
                             </div>
                             <div>
@@ -58,7 +58,7 @@ export default function CardsPage() {
                         {/* Black Card */}
                         <div className="relative w-4/5 ml-auto aspect-[1.6/1] bg-primary-light border border-gold/20 p-8 flex flex-col justify-between hover:border-gold/40 transition-colors duration-500">
                             <div className="flex justify-between items-start">
-                                <span className="text-accent/60 font-light text-xs uppercase tracking-[0.3em]">Capital24</span>
+                                <span className="text-accent/60 font-light text-xs uppercase tracking-[0.3em]">optimanexgen</span>
                                 <span className="text-accent/60 text-xs uppercase tracking-widest">Black</span>
                             </div>
                             <div>

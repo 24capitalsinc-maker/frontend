@@ -22,11 +22,11 @@ export default function Footer() {
                                 <>
                                     <div className="w-8 h-8 border border-gold/30 rounded flex items-center justify-center">
                                         <span className="text-gold font-serif text-xl pr-0.5">
-                                            {(settings?.logoText || 'Capital').charAt(0)}
+                                            {(settings?.logoText || 'optima').charAt(0)}
                                         </span>
                                     </div>
                                     <span className="text-lg font-light tracking-[0.2em] text-accent uppercase">
-                                        {settings?.logoText || 'Capital'}<span className="text-gold font-medium">{settings?.logoAccent || '24'}</span>
+                                        {settings?.logoText || 'optima'}<span className="text-gold font-medium">{settings?.logoAccent || 'nexgen'}</span>
                                     </span>
                                 </>
                             )}
@@ -77,7 +77,7 @@ export default function Footer() {
                             <div className="flex items-start gap-4">
                                 <Mail size={14} className="text-gold/40 mt-1" />
                                 <div>
-                                    <p className="text-[10px] text-accent font-light tracking-wide">{settings?.supportEmail || 'support@capital24.com'}</p>
+                                    <p className="text-[10px] text-accent font-light tracking-wide">{settings?.supportEmail || 'support@optimanexgen.org'}</p>
                                     <p className="text-[8px] text-accent/30 uppercase mt-1 tracking-widest font-bold">Encrypted Channel</p>
                                 </div>
                             </div>
@@ -96,7 +96,7 @@ export default function Footer() {
                     <div className="flex items-center gap-4">
                         <Shield size={16} className="text-gold/20" />
                         <p className="text-[9px] text-accent/30 uppercase tracking-[0.3em] font-medium">
-                            &copy; {currentYear} {settings?.companyName || 'Capital24'} Institutional. All rights reserved.
+                            &copy; {currentYear} {settings?.companyName || 'optimanexgen'} Institutional. All rights reserved.
                         </p>
                     </div>
                     <div className="flex items-center gap-10">

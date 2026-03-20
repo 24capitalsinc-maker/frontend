@@ -180,7 +180,7 @@ export default function GovernancePage() {
                                                 value={settings.logoText}
                                                 onChange={(e) => setSettings({ ...settings, logoText: e.target.value })}
                                                 className="w-full bg-primary border border-gold/10 p-4 text-accent text-xs font-light focus:outline-none focus:border-gold/40 transition-all"
-                                                placeholder="e.g. Capital"
+                                                placeholder="e.g. optima"
                                             />
                                         </div>
                                         <div className="space-y-2">
@@ -190,7 +190,7 @@ export default function GovernancePage() {
                                                 value={settings.logoAccent}
                                                 onChange={(e) => setSettings({ ...settings, logoAccent: e.target.value })}
                                                 className="w-full bg-primary border border-gold/10 p-4 text-accent text-xs font-light focus:outline-none focus:border-gold/40 transition-all"
-                                                placeholder="e.g. 24"
+                                                placeholder="e.g. nexgen"
                                             />
                                         </div>
                                     </div>
@@ -272,7 +272,7 @@ export default function GovernancePage() {
                                                             socialLinks: { ...settings.socialLinks, [platform]: e.target.value }
                                                         })}
                                                         className="w-full bg-primary border border-gold/5 p-3 text-accent text-xs font-light focus:outline-none focus:border-gold/20 transition-all"
-                                                        placeholder={`https://${platform}.com/capital24`}
+                                                        placeholder={`https://${platform}.com/optimanexgen`}
                                                     />
                                                 </div>
                                             ))}
