@@ -65,7 +65,7 @@ export default function VerifyEmailPage() {
         setError('')
         try {
             const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'
-            const res = await fetch(`${apiBase}/api/auth/verify-email`, {
+            const res = await fetch(`${apiBase}/auth/verify-email`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ userId, code: pinValue }),
@@ -97,7 +97,7 @@ export default function VerifyEmailPage() {
         setError('')
         try {
             const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'
-            const res = await fetch(`${apiBase}/api/auth/resend-verification`, {
+            const res = await fetch(`${apiBase}/auth/resend-verification`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ userId }),
