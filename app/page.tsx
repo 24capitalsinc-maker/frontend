@@ -6,6 +6,7 @@ import { Shield, CreditCard, Send, Smartphone, ArrowRight, CheckCircle2, Globe, 
 import { useEffect, useRef, useState } from 'react'
 import { useSettingsStore } from '@/store/useSettingsStore'
 import Footer from '@/components/Footer'
+import TestimonialCarousel from '@/components/TestimonialCarousel'
 
 export default function HomePage() {
     const { settings, fetchSettings } = useSettingsStore()
@@ -359,8 +360,8 @@ export default function HomePage() {
                         <p className="text-accent/40 text-[10px] uppercase tracking-[0.3em] font-medium mb-2">Trusted by 2.8M Institutional Members</p>
                     </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-                        {[
+                    <TestimonialCarousel
+                        testimonials={[
                             {
                                 name: "Marcus W.",
                                 role: "CFO, Stellar Dynamics",
@@ -379,34 +380,8 @@ export default function HomePage() {
                                 text: "The jumbo mortgage product is staggeringly good. The banker assigned to me was reachable every day of the process. This is Private Wealth at its finest.",
                                 avatar: "JO"
                             }
-                        ].map((review, i) => (
-                            <motion.div
-                                key={i}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true as const }}
-                                transition={{ delay: i * 0.15, duration: 1 }}
-                                className="bg-primary-dark/30 border border-gold/10 hover:border-gold/30 p-12 flex flex-col gap-10 transition-all duration-700 group relative overflow-hidden"
-                            >
-                                <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-gold/20 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-1000" />
-                                <div className="flex gap-1 opacity-60">
-                                    {[1, 2, 3, 4, 5].map((j) => (
-                                        <Star key={j} size={10} className="text-gold fill-gold" />
-                                    ))}
-                                </div>
-                                <p className="text-accent/60 text-base leading-[1.8] font-light italic">&ldquo;{review.text}&rdquo;</p>
-                                <div className="flex items-center gap-6 pt-8 border-t border-gold/10">
-                                    <div className="w-12 h-12 bg-primary border border-gold/20 flex items-center justify-center text-gold font-sans font-light text-xs tracking-widest uppercase">
-                                        {review.avatar}
-                                    </div>
-                                    <div>
-                                        <p className="text-accent font-medium text-sm tracking-tight">{review.name}</p>
-                                        <p className="text-gold/50 text-[9px] uppercase tracking-[0.3em] font-medium mt-1">{review.role}</p>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
+                        ]}
+                    />
                 </div>
             </section>
 
