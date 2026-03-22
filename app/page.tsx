@@ -405,21 +405,18 @@ export default function HomePage() {
                         {[
                             {
                                 tag: "Global Settlement",
-                                date: "14 MAR 2026",
                                 title: "Monetary Sovereignty: The Role of Digital Ledgers in 2026 Wealth Management",
                                 excerpt: "An editorial analysis on the shift from legacy clearing systems to real-time institutional settlement protocols.",
                                 readTime: "8 MIN READ"
                             },
                             {
                                 tag: "Yield Alpha",
-                                date: "12 MAR 2026",
                                 title: "Optimizing Institutional Liquidity: High-Yield Vaults vs. Sovereign Bonds",
                                 excerpt: "Comparative research on achieving alpha in a stabilized interest rate environment through algorithmic rebalancing.",
                                 readTime: "12 MIN READ"
                             },
                             {
                                 tag: "Security Architecture",
-                                date: "10 MAR 2026",
                                 title: "The Obsidian Standard: Hardened Hardware Enclaves in Private Banking",
                                 excerpt: "Technical insights into how optimanexgen utilizes aerospace-grade security for institutional asset protection.",
                                 readTime: "6 MIN READ"
@@ -436,7 +433,6 @@ export default function HomePage() {
                                 <div className="space-y-8">
                                     <div className="flex justify-between items-center">
                                         <span className="text-[8px] text-gold uppercase tracking-[0.4em] font-bold italic">{post.tag}</span>
-                                        <span className="text-accent/20 text-[8px] uppercase tracking-[0.3em] font-mono">{post.date}</span>
                                     </div>
                                     <h3 className="text-2xl font-light text-accent group-hover:text-gold transition-colors duration-500 leading-tight tracking-[0.01em]">{post.title}</h3>
                                     <p className="text-accent/40 text-sm leading-relaxed font-light line-clamp-3 italic">{post.excerpt}</p>
