@@ -1,7 +1,7 @@
 "use client"
 import Navbar from '@/components/Navbar'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
+import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion'
 import { Shield, CreditCard, Send, Smartphone, ArrowRight, CheckCircle2, Globe, PlayCircle, Landmark, Star, TrendingUp, Users, Banknote, Clock, Zap, BarChart3, Lock, ChevronRight } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { useSettingsStore } from '@/store/useSettingsStore'
@@ -11,6 +11,28 @@ import TestimonialCarousel from '@/components/TestimonialCarousel'
 export default function HomePage() {
     const { settings, fetchSettings } = useSettingsStore()
     const [mounted, setMounted] = useState(false)
+
+    // Parallax logic
+    const mouseX = useMotionValue(0)
+    const mouseY = useMotionValue(0)
+
+    const springConfig = { damping: 25, stiffness: 150 }
+    const springX = useSpring(mouseX, springConfig)
+    const springY = useSpring(mouseY, springConfig)
+
+    const backgroundX = useTransform(springX, [-500, 500], [20, -20])
+    const backgroundY = useTransform(springY, [-500, 500], [20, -20])
+    const backgroundRotateX = useTransform(springY, [-500, 500], [2, -2])
+    const backgroundRotateY = useTransform(springX, [-500, 500], [-2, 2])
+
+    function handleMouseMove(event: React.MouseEvent) {
+        const { clientX, clientY, currentTarget } = event
+        const { left, top, width, height } = currentTarget.getBoundingClientRect()
+        const x = clientX - (left + width / 2)
+        const y = clientY - (top + height / 2)
+        mouseX.set(x)
+        mouseY.set(y)
+    }
 
     useEffect(() => {
         setMounted(true)
@@ -29,19 +51,27 @@ export default function HomePage() {
             <Navbar />
 
             {/* ===== HERO SECTION ===== */}
-            <section className="relative min-h-screen flex items-center justify-center pt-24 sm:pt-32 pb-20 px-4 md:px-12 overflow-hidden bg-silk">
+            <section
+                onMouseMove={handleMouseMove}
+                className="relative min-h-screen flex items-center justify-center pt-24 sm:pt-32 pb-40 sm:pb-32 px-4 md:px-12 overflow-hidden bg-silk group/hero"
+            >
                 <div className="absolute inset-0 bg-noise opacity-10 pointer-events-none" />
 
                 <motion.div
                     initial={{ scale: 1.1, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 0.4 }}
-                    transition={{ duration: 2, ease: "easeOut" }}
-                    className="absolute inset-0 z-0 mix-blend-overlay"
+                    animate={{ scale: 1.05, opacity: 0.65 }}
                     style={{
                         backgroundImage: "url('/hero.png')",
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
+                        x: backgroundX,
+                        y: backgroundY,
+                        rotateX: backgroundRotateX,
+                        rotateY: backgroundRotateY,
+                        transformPerspective: 1000
                     }}
+                    transition={{ duration: 2, ease: "easeOut" }}
+                    className="absolute inset-0 z-0 mix-blend-overlay will-change-transform"
                 />
 
                 <div className="absolute inset-0 z-0 bg-gradient-to-t from-primary via-primary/40 to-primary/80" />
@@ -95,15 +125,20 @@ export default function HomePage() {
                     </div>
                 </div>
 
-                <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 opacity-30">
-                    <p className="text-[10px] uppercase tracking-[0.5em] text-accent">Scroll Discovery</p>
-                    <div className="w-[1px] h-16 bg-gradient-to-b from-gold to-transparent" />
+                <div className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 sm:gap-4 opacity-30">
+                    <p className="text-[8px] sm:text-[10px] uppercase tracking-[0.5em] text-accent">Scroll Discovery</p>
+                    <div className="w-[1px] h-8 sm:h-16 bg-gradient-to-b from-gold to-transparent" />
                 </div>
             </section>
 
             {/* ===== LIVE STATS BAR ===== */}
-            <section className="py-12 px-4 md:px-12 bg-primary-dark border-y border-gold/10 overflow-hidden relative">
-                <div className="absolute inset-0 bg-silk pointer-events-none" />
+            <section className="py-12 px-4 md:px-12 bg-primary-dark border-y border-gold/10 overflow-hidden relative group/stats">
+                <div
+                    className="absolute inset-0 bg-cover bg-center opacity-10 transition-opacity duration-700 group-hover/stats:opacity-20 translate-z-0"
+                    style={{ backgroundImage: "url('/stats-bg.png')" }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-primary-dark via-transparent to-primary-dark opacity-80" />
+                <div className="absolute inset-0 bg-silk pointer-events-none opacity-20" />
                 <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 text-center relative z-10">
                     {[
                         { value: "$4.2B+", label: "Capital Vault Liquidity" },
