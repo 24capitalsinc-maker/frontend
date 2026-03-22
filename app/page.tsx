@@ -85,7 +85,7 @@ export default function HomePage() {
                             className="flex flex-col sm:flex-row gap-8"
                         >
                             <Link href="/verify" className="group relative bg-gold text-primary px-12 py-6 font-bold text-xs tracking-[0.3em] uppercase transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-gold/20 overflow-hidden">
-                                <span className="relative z-10">Initialize Account</span>
+                                <span className="relative z-10">Create Account</span>
                                 <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
                             </Link>
                             <Link href="#banking" className="px-12 py-6 font-bold text-xs tracking-[0.3em] uppercase text-accent border border-gold/30 hover:border-gold/60 transition-all hover:bg-gold/5 flex items-center justify-center gap-3">
@@ -456,22 +456,22 @@ export default function HomePage() {
             </section>
 
             {/* ===== CTA BANNER ===== */}
-            <section className="py-60 px-4 md:px-12 bg-primary-dark relative overflow-hidden text-center">
+            <section className="py-32 sm:py-48 px-4 md:px-12 bg-primary-dark relative overflow-hidden text-center">
                 <div className="absolute inset-0 bg-hero opacity-30 pointer-events-none" />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/80 to-transparent" />
                 <div className="absolute inset-0 bg-silk opacity-10" />
 
                 <motion.div {...fadeIn} className="max-w-4xl mx-auto relative z-10">
                     <div className="text-gold font-bold text-[10px] tracking-[0.6em] uppercase mb-8 italic">The Sovereign Call</div>
-                    <h2 className="text-prestige text-6xl md:text-9xl text-accent mb-12">
+                    <h2 className="text-prestige text-5xl md:text-7xl text-accent mb-12">
                         Bank Without <span className="text-gold italic">Limits.</span>
                     </h2>
                     <p className="text-accent/40 text-xl font-light mb-16 max-w-2xl mx-auto leading-relaxed">
-                        Join the world's most elite financial ecosystem. Initialize your institutional membership in under three minutes.
+                        Join the world's most elite financial ecosystem. Create your institutional membership in under three minutes.
                     </p>
                     <div className="flex flex-col sm:flex-row justify-center gap-12">
                         <Link href="/verify" className="group relative bg-gold text-primary px-16 py-8 font-bold text-xs tracking-[0.4em] uppercase transition-all hover:scale-105 active:scale-95 shadow-3xl shadow-gold/20 overflow-hidden">
-                            <span className="relative z-10">Initialize Account</span>
+                            <span className="relative z-10">Create Account</span>
                             <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
                         </Link>
                     </div>
