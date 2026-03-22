@@ -59,7 +59,7 @@ export default function HomePage() {
 
                 <motion.div
                     initial={{ scale: 1.1, opacity: 0 }}
-                    animate={{ scale: 1.05, opacity: 0.85 }}
+                    animate={{ scale: 1.05, opacity: 1.0 }}
                     style={{
                         backgroundImage: "url('/hero.png')",
                         backgroundSize: 'cover',
@@ -71,10 +71,10 @@ export default function HomePage() {
                         transformPerspective: 1000
                     }}
                     transition={{ duration: 2, ease: "easeOut" }}
-                    className="absolute inset-0 z-0 mix-blend-soft-light will-change-transform"
+                    className="absolute inset-0 z-0 mix-blend-normal will-change-transform"
                 />
 
-                <div className="absolute inset-0 z-0 bg-gradient-to-t from-primary via-primary/20 to-primary/60" />
+                <div className="absolute inset-0 z-0 bg-gradient-to-t from-primary via-primary/10 to-transparent" />
 
                 <div className="max-w-7xl w-full mx-auto relative z-10">
                     <div className="flex flex-col items-center text-center">
