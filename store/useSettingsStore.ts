@@ -22,7 +22,15 @@ interface SettingsState {
 }
 
 export const useSettingsStore = create<SettingsState>((set) => ({
-    settings: null,
+    settings: {
+        companyName: 'optimanexgen',
+        logoText: 'optima',
+        logoAccent: 'nexgen',
+        logoUrl: '/logo.png',
+        supportEmail: 'support@optimanexgen.org',
+        isRegistrationEnabled: true,
+        socialLinks: {}
+    },
     fetchSettings: async () => {
         try {
             const res = await axios.get(`${API_URL}/public/settings`);

@@ -50,23 +50,14 @@ export default function Navbar() {
                 {/* Left: Branding */}
                 <div className="flex-1 flex justify-start items-center gap-4 md:gap-8">
                     <Link href="/" className="flex items-center gap-2 md:gap-4 group">
-                        {mounted && settings?.logoUrl ? (
-                            <img src={settings.logoUrl} alt={settings.companyName} className="h-7 md:h-10 w-auto object-contain transition-transform duration-700 group-hover:scale-105" />
-                        ) : (
-                            <>
-                                <div className="w-8 h-8 md:w-12 md:h-12 border border-gold/20 flex items-center justify-center bg-gold/5 group-hover:border-gold/50 transition-colors duration-700">
-                                    <span className="text-gold font-sans text-xl md:text-3xl font-light pr-1 leading-none">
-                                        {(settings?.logoText || 'optima').charAt(0)}
-                                    </span>
-                                </div>
-                                <div className="flex flex-col">
-                                    <span className="text-xs md:text-xl font-sans font-light tracking-[0.2em] md:tracking-[0.4em] text-accent uppercase leading-none">
-                                        {settings?.logoText || 'optima'}<span className="text-gold font-medium translate-x-1">{settings?.logoAccent || 'nexgen'}</span>
-                                    </span>
-                                    <span className="text-[5px] md:text-[7px] text-gold/40 uppercase tracking-[0.4em] md:tracking-[0.6em] font-bold mt-1">Digital Banking</span>
-                                </div>
-                            </>
-                        )}
+                        <img
+                            src={settings?.logoUrl || '/logo.png'}
+                            alt={settings?.companyName || 'Capital24'}
+                            className="h-7 md:h-10 w-auto object-contain transition-transform duration-700 group-hover:scale-105"
+                        />
+                        <span className="text-sm md:text-lg font-light tracking-[0.2em] text-accent uppercase hidden sm:block">
+                            {settings?.logoText || 'Capital'}<span className="text-gold font-medium">{settings?.logoAccent || '24'}</span>
+                        </span>
                     </Link>
                     {isDashboard ? (
                         <div className="hidden md:flex items-center gap-4">

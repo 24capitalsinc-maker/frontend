@@ -12,11 +12,11 @@ export default function FaviconSync() {
     }, [settings, fetchSettings])
 
     useEffect(() => {
-        const logoUrl = settings?.logoUrl || '/logo.png'
+        const faviconUrl = settings?.logoUrl || '/favicon.png'
         const link: HTMLLinkElement | null = document.querySelector("link[rel*='icon']") || document.createElement('link')
         link.type = 'image/png'
         link.rel = 'shortcut icon'
-        link.href = logoUrl + '?v=' + Date.now() // Cache busting
+        link.href = faviconUrl + '?v=' + Date.now()
         document.getElementsByTagName('head')[0].appendChild(link)
     }, [settings?.logoUrl])
 

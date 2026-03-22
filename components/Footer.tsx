@@ -16,20 +16,14 @@ export default function Footer() {
                     {/* Brand Section */}
                     <div className="space-y-8">
                         <Link href="/" className="flex items-center gap-2 md:gap-3">
-                            {settings?.logoUrl ? (
-                                <img src={settings.logoUrl} alt={settings.companyName} className="h-5 md:h-8 w-auto object-contain" />
-                            ) : (
-                                <>
-                                    <div className="w-7 h-7 md:w-10 md:h-10 border border-gold/30 rounded flex items-center justify-center">
-                                        <span className="text-gold font-serif text-base md:text-xl pr-0.5">
-                                            {(settings?.logoText || 'optima').charAt(0)}
-                                        </span>
-                                    </div>
-                                    <span className="text-sm md:text-lg font-light tracking-[0.1em] md:tracking-[0.2em] text-accent uppercase">
-                                        {settings?.logoText || 'optima'}<span className="text-gold font-medium">{settings?.logoAccent || 'nexgen'}</span>
-                                    </span>
-                                </>
-                            )}
+                            <img
+                                src={settings?.logoUrl || '/logo.png'}
+                                alt={settings?.companyName || 'Capital24'}
+                                className="h-5 md:h-8 w-auto object-contain"
+                            />
+                            <span className="text-sm md:text-lg font-light tracking-[0.1em] md:tracking-[0.2em] text-accent uppercase">
+                                {settings?.logoText || 'Capital'}<span className="text-gold font-medium">{settings?.logoAccent || '24'}</span>
+                            </span>
                         </Link>
                         <p className="text-[10px] text-accent/40 uppercase leading-relaxed tracking-widest font-light max-w-xs">
                             Leading the evolution of institutional liquidity and sovereign wealth management through advanced diagnostic protocols.
