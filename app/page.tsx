@@ -59,7 +59,7 @@ export default function HomePage() {
 
                 <motion.div
                     initial={{ scale: 1.1, opacity: 0 }}
-                    animate={{ scale: 1.05, opacity: 1.0 }}
+                    animate={{ scale: 1.05, opacity: 0.9 }}
                     style={{
                         backgroundImage: "url('/hero.png')",
                         backgroundSize: 'cover',
