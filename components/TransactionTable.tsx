@@ -94,10 +94,10 @@ export default function TransactionTable({ transactions = [], itemsPerPage = 10 
                 <table className="w-full text-left border-collapse">
                     <thead>
                         <tr className="border-b border-gold/10 bg-gold/[0.02]">
-                            <th className="px-8 py-6 text-[10px] uppercase font-bold tracking-[0.3em] text-accent/40">Timestamp</th>
-                            <th className="px-8 py-6 text-[10px] uppercase font-bold tracking-[0.3em] text-accent/40">Reference</th>
-                            <th className="px-8 py-6 text-[10px] uppercase font-bold tracking-[0.3em] text-accent/40">Registry</th>
-                            <th className="px-8 py-6 text-[10px] uppercase font-bold tracking-[0.3em] text-accent/40 text-right">Volume</th>
+                            <th className="px-4 sm:px-8 py-6 text-[10px] uppercase font-bold tracking-[0.3em] text-accent/40">Timestamp</th>
+                            <th className="px-4 sm:px-8 py-6 text-[10px] uppercase font-bold tracking-[0.3em] text-accent/40">Reference</th>
+                            <th className="px-4 sm:px-8 py-6 text-[10px] uppercase font-bold tracking-[0.3em] text-accent/40 hidden sm:table-cell">Registry</th>
+                            <th className="px-4 sm:px-8 py-6 text-[10px] uppercase font-bold tracking-[0.3em] text-accent/40 text-right">Volume</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gold/5">
@@ -112,30 +112,30 @@ export default function TransactionTable({ transactions = [], itemsPerPage = 10 
                                     onClick={() => handleRowClick(tx)}
                                     className="hover:bg-gold/[0.03] transition-colors group cursor-pointer"
                                 >
-                                    <td className="px-8 py-6">
+                                    <td className="px-4 sm:px-8 py-6">
                                         <p className="text-[10px] font-bold text-accent group-hover:text-gold transition-colors">{tx.createdAt ? format(new Date(tx.createdAt), 'MMM dd, HH:mm') : 'N/A'}</p>
                                         <p className="text-[8px] text-accent/20 uppercase tracking-widest mt-1">Institutional Time</p>
                                     </td>
-                                    <td className="px-8 py-6">
-                                        <div className="flex items-center gap-3">
-                                            <div className={`p-2 rounded-sm ${tx.type === 'debit' ? 'bg-red-500/10 text-red-400' : 'bg-green-500/10 text-green-400'}`}>
-                                                {tx.type === 'debit' ? <ArrowUpRight size={14} /> : <ArrowDownLeft size={14} />}
+                                    <td className="px-4 sm:px-8 py-6">
+                                        <div className="flex items-center gap-2 sm:gap-3">
+                                            <div className={`p-1.5 sm:p-2 rounded-sm ${tx.type === 'debit' ? 'bg-red-500/10 text-red-400' : 'bg-green-500/10 text-green-400'}`}>
+                                                {tx.type === 'debit' ? <ArrowUpRight size={12} /> : <ArrowDownLeft size={12} />}
                                             </div>
                                             <div>
                                                 <p className="text-[10px] font-bold text-accent uppercase tracking-widest">{tx.referenceId}</p>
-                                                <p className="text-[8px] text-accent/30 uppercase mt-1 tracking-tighter truncate max-w-[150px]">{tx.description}</p>
+                                                <p className="text-[8px] text-accent/30 uppercase mt-1 tracking-tighter truncate max-w-[80px] sm:max-w-[150px]">{tx.description}</p>
                                             </div>
                                         </div>
                                     </td>
-                                    <td className="px-8 py-6">
+                                    <td className="px-4 sm:px-8 py-6 hidden sm:table-cell">
                                         <div className="flex items-center gap-2 mb-1">
                                             <div className={`w-1 h-1 rounded-full ${tx.status === 'success' ? 'bg-gold animate-pulse' : tx.status === 'pending' ? 'bg-blue-400' : 'bg-red-500'}`} />
                                             <p className="text-[9px] font-bold text-accent/60 uppercase tracking-widest">{tx.status}</p>
                                         </div>
                                         <p className="text-[8px] text-accent/20 font-bold uppercase tracking-widest">Global Node V4</p>
                                     </td>
-                                    <td className="px-8 py-6 text-right">
-                                        <p className={`text-sm font-medium tabular-nums ${tx.type === 'debit' ? 'text-accent' : 'text-gold'}`}>
+                                    <td className="px-4 sm:px-8 py-6 text-right">
+                                        <p className={`text-[12px] sm:text-sm font-medium tabular-nums ${tx.type === 'debit' ? 'text-accent' : 'text-gold'}`}>
                                             {tx.type === 'debit' ? '-' : '+'}{tx.currency === 'USD' ? '$' : tx.currency === 'EUR' ? '€' : '£'}{tx.amount?.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                                         </p>
                                         <div className="flex items-center justify-end gap-1 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">

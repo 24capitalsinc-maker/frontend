@@ -73,7 +73,7 @@ export default function DashboardPage() {
                                 <span className="bg-gold/10 text-gold text-[9px] font-bold px-4 py-2 border border-gold/20 uppercase tracking-[0.4em]">Executive Member // Private Wealth</span>
                                 <div className="h-[1px] w-12 bg-gold/20"></div>
                             </div>
-                            <h1 className="text-prestige text-5xl md:text-7xl text-accent leading-none">
+                            <h1 className="text-prestige text-3xl sm:text-4xl md:text-7xl text-accent leading-none">
                                 Account <span className="text-gold font-medium">Dashboard.</span>
                             </h1>
                             <p className="text-accent/30 mt-6 text-sm tracking-widest font-light">Welcome back, {profile?.name}. Your institutional portfolios are synchronized across all global meridians.</p>
@@ -153,36 +153,36 @@ export default function DashboardPage() {
                         <div className="lg:col-span-2 space-y-12">
                             {/* Global Liquidity Distribution */}
                             <div className="bg-primary/40 backdrop-blur-3xl border border-gold/10 p-10 relative overflow-hidden group shadow-2xl">
-                                <div className="flex justify-between items-center mb-12 border-b border-gold/5 pb-8">
-                                    <h2 className="text-2xl font-light text-accent tracking-tighter">Global <span className="text-gold font-medium">Liquidity Distribution.</span></h2>
+                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-12 border-b border-gold/5 pb-8 gap-4">
+                                    <h2 className="text-xl sm:text-2xl font-light text-accent tracking-tighter">Global <span className="text-gold font-medium">Liquidity Distribution.</span></h2>
                                     <span className="text-[8px] text-accent/20 uppercase tracking-[0.5em] font-bold">Protocol Alpha-7</span>
                                 </div>
 
                                 <div className="space-y-12">
                                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
                                         <div className="group/item cursor-help">
-                                            <p className="text-3xl font-medium text-accent mb-2 tracking-tight">$72,400.00</p>
+                                            <p className="text-2xl sm:text-3xl font-medium text-accent mb-2 tracking-tight">$72,400.00</p>
                                             <p className="text-[10px] text-gold font-bold uppercase tracking-[0.2em] mb-4">New York Ledger</p>
                                             <div className="h-[2px] w-full bg-gold/20 rounded-full overflow-hidden">
                                                 <motion.div initial={{ width: 0 }} whileInView={{ width: '80%' }} transition={{ duration: 2 }} className="h-full bg-gold" />
                                             </div>
                                         </div>
                                         <div className="group/item cursor-help">
-                                            <p className="text-3xl font-medium text-accent/60 mb-2 tracking-tight">€45,100.00</p>
+                                            <p className="text-2xl sm:text-3xl font-medium text-accent/60 mb-2 tracking-tight">€45,100.00</p>
                                             <p className="text-[10px] text-accent/40 font-bold uppercase tracking-[0.2em] mb-4">Zurich Ledger</p>
                                             <div className="h-[2px] w-full bg-gold/5 rounded-full overflow-hidden">
                                                 <motion.div initial={{ width: 0 }} whileInView={{ width: '40%' }} transition={{ duration: 2 }} className="h-full bg-accent/20" />
                                             </div>
                                         </div>
                                         <div className="group/item cursor-help">
-                                            <p className="text-3xl font-medium text-accent/60 mb-2 tracking-tight">£28,950.00</p>
+                                            <p className="text-2xl sm:text-3xl font-medium text-accent/60 mb-2 tracking-tight">£28,950.00</p>
                                             <p className="text-[10px] text-accent/40 font-bold uppercase tracking-[0.2em] mb-4">London Ledger</p>
                                             <div className="h-[2px] w-full bg-gold/5 rounded-full overflow-hidden">
                                                 <motion.div initial={{ width: 0 }} whileInView={{ width: '30%' }} transition={{ duration: 2 }} className="h-full bg-accent/20" />
                                             </div>
                                         </div>
                                         <div className="group/item cursor-help">
-                                            <p className="text-3xl font-medium text-accent/60 mb-2 tracking-tight">S$12,000.00</p>
+                                            <p className="text-2xl sm:text-3xl font-medium text-accent/60 mb-2 tracking-tight">S$12,000.00</p>
                                             <p className="text-[10px] text-accent/40 font-bold uppercase tracking-[0.2em] mb-4">Singapore Ledger</p>
                                             <div className="h-[2px] w-full bg-gold/5 rounded-full overflow-hidden">
                                                 <motion.div initial={{ width: 0 }} whileInView={{ width: '15%' }} transition={{ duration: 2 }} className="h-full bg-accent/20" />

@@ -48,22 +48,22 @@ export default function Navbar() {
             <div className="absolute inset-0 bg-silk opacity-5 pointer-events-none" />
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex justify-between items-center relative z-10 w-full">
                 {/* Left: Branding */}
-                <div className="flex-1 flex justify-start items-center gap-8">
-                    <Link href="/" className="flex items-center gap-4 group">
+                <div className="flex-1 flex justify-start items-center gap-4 md:gap-8">
+                    <Link href="/" className="flex items-center gap-2 md:gap-4 group">
                         {mounted && settings?.logoUrl ? (
-                            <img src={settings.logoUrl} alt={settings.companyName} className="h-10 w-auto object-contain transition-transform duration-700 group-hover:scale-105" />
+                            <img src={settings.logoUrl} alt={settings.companyName} className="h-7 md:h-10 w-auto object-contain transition-transform duration-700 group-hover:scale-105" />
                         ) : (
                             <>
-                                <div className="w-12 h-12 border border-gold/20 flex items-center justify-center bg-gold/5 group-hover:border-gold/50 transition-colors duration-700">
-                                    <span className="text-gold font-sans text-3xl font-light pr-1 leading-none">
+                                <div className="w-8 h-8 md:w-12 md:h-12 border border-gold/20 flex items-center justify-center bg-gold/5 group-hover:border-gold/50 transition-colors duration-700">
+                                    <span className="text-gold font-sans text-xl md:text-3xl font-light pr-1 leading-none">
                                         {(settings?.logoText || 'optima').charAt(0)}
                                     </span>
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className="text-xl font-sans font-light tracking-[0.4em] text-accent uppercase leading-none">
+                                    <span className="text-xs md:text-xl font-sans font-light tracking-[0.2em] md:tracking-[0.4em] text-accent uppercase leading-none">
                                         {settings?.logoText || 'optima'}<span className="text-gold font-medium translate-x-1">{settings?.logoAccent || 'nexgen'}</span>
                                     </span>
-                                    <span className="text-[7px] text-gold/40 uppercase tracking-[0.6em] font-bold mt-1">Digital Banking</span>
+                                    <span className="text-[5px] md:text-[7px] text-gold/40 uppercase tracking-[0.4em] md:tracking-[0.6em] font-bold mt-1">Digital Banking</span>
                                 </div>
                             </>
                         )}

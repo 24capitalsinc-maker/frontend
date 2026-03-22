@@ -40,17 +40,17 @@ export default function Sidebar() {
                 <div className="flex-1 space-y-12">
                     <div className="flex flex-col gap-3 mb-12">
                         <div className="flex items-center gap-1">
-                            <span className="text-gold font-sans text-xl font-light pr-0.5 leading-none">
+                            <span className="text-gold font-sans text-lg md:text-xl font-light pr-0.5 leading-none">
                                 {(settings?.logoText || 'Capital').charAt(0)}
                             </span>
                             <div className="flex flex-col">
-                                <span className="text-[10px] font-sans font-light tracking-[0.4em] text-accent uppercase leading-none">
+                                <span className="text-[8px] md:text-[10px] font-sans font-light tracking-[0.2em] md:tracking-[0.4em] text-accent uppercase leading-none">
                                     {settings?.logoText || 'Capital'}<span className="text-gold font-medium translate-x-0.5">{settings?.logoAccent || '24'}</span>
                                 </span>
-                                <span className="text-[5px] text-gold/40 uppercase tracking-[0.6em] font-bold mt-0.5">Digital Banking</span>
+                                <span className="text-[4px] md:text-[5px] text-gold/40 uppercase tracking-[0.4em] md:tracking-[0.6em] font-bold mt-0.5">Digital Banking</span>
                             </div>
                         </div>
-                        <div className="h-[1px] w-12 bg-gold/20" />
+                        <div className="h-[1px] w-8 md:w-12 bg-gold/20" />
                     </div>
                     <ul className="space-y-6">
                         {links.map((link) => {

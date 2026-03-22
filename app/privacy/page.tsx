@@ -13,9 +13,9 @@ export default function PrivacyPage() {
 
             <Navbar />
 
-            <div className="flex-1 pt-32 pb-24 px-6 lg:px-12 relative z-10">
+            <div className="flex-1 pt-24 sm:pt-32 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-12 relative z-10">
                 <div className="max-w-4xl mx-auto">
-                    <header className="mb-20">
+                    <header className="mb-12 sm:mb-20">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -27,7 +27,7 @@ export default function PrivacyPage() {
                                 </span>
                                 <div className="h-[1px] w-12 bg-gold/20"></div>
                             </div>
-                            <h1 className="text-4xl md:text-6xl font-light text-accent tracking-tighter mb-6">
+                            <h1 className="text-3xl sm:text-4xl md:text-6xl font-light text-accent tracking-tighter mb-6">
                                 Privacy <span className="text-gold font-medium">Protocol.</span>
                             </h1>
                             <p className="text-accent/40 text-sm md:text-lg font-light tracking-wide max-w-2xl leading-relaxed">
@@ -37,15 +37,15 @@ export default function PrivacyPage() {
                         </motion.div>
                     </header>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
-                        <div className="p-8 bg-primary-light/20 border border-gold/10">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 mb-16 sm:mb-20">
+                        <div className="p-6 sm:p-8 bg-primary-light/20 border border-gold/10">
                             <Lock className="text-gold mb-6" size={24} />
                             <h3 className="text-accent font-medium uppercase tracking-widest text-xs mb-4">Diagnostic Encryption</h3>
                             <p className="text-accent/40 text-xs leading-relaxed font-light">
                                 All financial movements and entity data are protected by AES-256 bit encryption protocols, ensuring that your institutional footprint remains invisible.
                             </p>
                         </div>
-                        <div className="p-8 bg-primary-light/20 border border-gold/10">
+                        <div className="p-6 sm:p-8 bg-primary-light/20 border border-gold/10">
                             <Shield className="text-gold mb-6" size={24} />
                             <h3 className="text-accent font-medium uppercase tracking-widest text-xs mb-4">Sovereign Data Rights</h3>
                             <p className="text-accent/40 text-xs leading-relaxed font-light">

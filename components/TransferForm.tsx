@@ -126,17 +126,17 @@ export default function TransferForm() {
                 </div>
 
                 <div className="space-y-8 mb-12">
-                    <div className="grid grid-cols-2 gap-8 py-6 border-b border-gold/5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 py-6 border-b border-gold/5">
                         <div className="space-y-1">
                             <p className="text-[9px] text-accent/30 font-bold uppercase tracking-[0.3em]">Protocol</p>
                             <p className="text-accent font-medium tracking-widest">{protocol === 'Domestic' ? 'Domestic / Same Bank' : protocol === 'Other' ? 'Other Banks' : 'Offshore'}</p>
                         </div>
-                        <div className="space-y-1 text-right">
+                        <div className="space-y-1 text-left sm:text-right">
                             <p className="text-[9px] text-accent/30 font-bold uppercase tracking-[0.3em]">Amount</p>
-                            <p className="text-2xl font-light text-gold tracking-tight">{currentCurrency} {formData.amount.toLocaleString()}</p>
+                            <p className="text-xl sm:text-2xl font-light text-gold tracking-tight">{currentCurrency} {formData.amount.toLocaleString()}</p>
                         </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-8 py-6 border-b border-gold/5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 py-6 border-b border-gold/5">
                         <div className="space-y-1">
                             <p className="text-[9px] text-accent/30 font-bold uppercase tracking-[0.3em]">Beneficiary Account</p>
                             <p className="text-accent font-medium tracking-widest">{formData.receiverAccountNumber}</p>
@@ -247,16 +247,16 @@ export default function TransferForm() {
                 </div>
             </div>
 
-            <form onSubmit={handleSubmit(handleInitialSubmit)} className="space-y-12 font-sans text-nowrap">
+            <form onSubmit={handleSubmit(handleInitialSubmit)} className="space-y-12 font-sans">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                     <div className="space-y-4">
                         <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 block">Recipient Account Number</label>
                         <input
                             {...register('receiverAccountNumber')}
-                            className="w-full bg-transparent border-b border-gold/30 p-4 focus:border-gold outline-none transition-colors text-accent placeholder:text-accent/20 font-light text-xl tracking-wider"
+                            className="w-full bg-transparent border-b border-gold/30 p-4 focus:border-gold outline-none transition-colors text-accent placeholder:text-accent/20 font-light text-lg sm:text-xl tracking-wider"
                             placeholder="0000 0000 0000"
                         />
-                        {errors.receiverAccountNumber && <p className="text-nowrap text-red-400 text-[10px] font-bold uppercase tracking-wider mt-2">{errors.receiverAccountNumber.message}</p>}
+                        {errors.receiverAccountNumber && <p className="text-red-400 text-[10px] font-bold uppercase tracking-wider mt-2">{errors.receiverAccountNumber.message}</p>}
                     </div>
 
                     <AnimatePresence mode="wait">
@@ -283,15 +283,15 @@ export default function TransferForm() {
                     <div className="space-y-4">
                         <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 block">Amount</label>
                         <div className="relative">
-                            <span className="absolute left-0 bottom-4 text-2xl font-light text-gold/40">{currentCurrency === 'USD' ? '$' : currentCurrency === 'EUR' ? '€' : '£'}</span>
+                            <span className="absolute left-0 bottom-4 text-xl sm:text-2xl font-light text-gold/40">{currentCurrency === 'USD' ? '$' : currentCurrency === 'EUR' ? '€' : '£'}</span>
                             <input
                                 type="number"
                                 {...register('amount', { valueAsNumber: true })}
-                                className="w-full bg-transparent border-b border-gold/30 pl-8 p-4 focus:border-gold outline-none transition-colors text-gold font-light text-4xl tracking-tighter tabular-nums"
+                                className="w-full bg-transparent border-b border-gold/30 pl-8 p-4 focus:border-gold outline-none transition-colors text-gold font-light text-2xl sm:text-4xl tracking-tighter tabular-nums"
                                 placeholder="0.00"
                             />
                         </div>
-                        {errors.amount && <p className="text-nowrap text-red-400 text-[10px] font-bold uppercase tracking-wider mt-2">{errors.amount.message}</p>}
+                        {errors.amount && <p className="text-red-400 text-[10px] font-bold uppercase tracking-wider mt-2">{errors.amount.message}</p>}
                     </div>
 
                     <div className="space-y-4">

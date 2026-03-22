@@ -113,8 +113,8 @@ export default function GovernancePage() {
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
                         {/* Operational State */}
-                        <div className="space-y-10">
-                            <section className="bg-primary-light/10 border border-gold/10 p-8 md:p-10 relative overflow-hidden group">
+                        <div className="space-y-6 sm:space-y-10">
+                            <section className="bg-primary-light/10 border border-gold/10 p-6 sm:p-10 relative overflow-hidden group">
                                 <div className="absolute top-0 left-0 w-8 h-[1px] bg-red-500" />
                                 <div className="flex items-center gap-4 mb-8">
                                     <div className="w-10 h-10 bg-red-500/5 border border-red-500/20 flex items-center justify-center">
@@ -123,30 +123,30 @@ export default function GovernancePage() {
                                     <h2 className="text-xl font-light tracking-tight text-accent">Operational <span className="text-red-500">State</span></h2>
                                 </div>
 
-                                <div className="space-y-8">
-                                    <div className="flex items-center justify-between gap-6 p-6 border border-gold/5 bg-gold/[0.02]">
+                                <div className="space-y-6 sm:space-y-8">
+                                    <div className="flex items-center justify-between gap-4 sm:gap-6 p-4 sm:p-6 border border-gold/5 bg-gold/[0.02]">
                                         <div>
                                             <p className="text-[10px] font-bold uppercase tracking-widest text-accent mb-1">Maintenance Mode</p>
-                                            <p className="text-[9px] text-accent/30 leading-relaxed uppercase tracking-tighter">Suspends user access for global infrastructure upgrades.</p>
+                                            <p className="text-[9px] text-accent/30 leading-relaxed uppercase tracking-tighter">Suspends user access for upgrades.</p>
                                         </div>
                                         <button
                                             onClick={() => setSettings({ ...settings, isMaintenanceMode: !settings.isMaintenanceMode })}
-                                            className={`relative w-14 h-7 transition-all duration-500 rounded-full border ${settings.isMaintenanceMode ? 'bg-red-600 border-red-500' : 'bg-primary border-gold/20'}`}
+                                            className={`relative w-12 sm:w-14 h-6 sm:h-7 transition-all duration-500 rounded-full border flex-shrink-0 ${settings.isMaintenanceMode ? 'bg-red-600 border-red-500' : 'bg-primary border-gold/20'}`}
                                         >
-                                            <div className={`absolute top-1 w-4 h-4 rounded-full transition-all duration-500 ${settings.isMaintenanceMode ? 'left-8 bg-white' : 'left-1 bg-gold'}`} />
+                                            <div className={`absolute top-0.5 sm:top-1 w-4 h-4 rounded-full transition-all duration-500 ${settings.isMaintenanceMode ? 'left-7 sm:left-8 bg-white' : 'left-0.5 sm:left-1 bg-gold'}`} />
                                         </button>
                                     </div>
 
-                                    <div className="flex items-center justify-between gap-6 p-6 border border-gold/5 bg-gold/[0.02]">
+                                    <div className="flex items-center justify-between gap-4 sm:gap-6 p-4 sm:p-6 border border-gold/5 bg-gold/[0.02]">
                                         <div>
                                             <p className="text-[10px] font-bold uppercase tracking-widest text-accent mb-1">User Registration</p>
-                                            <p className="text-[9px] text-accent/30 leading-relaxed uppercase tracking-tighter">Enable or disable new account registrations.</p>
+                                            <p className="text-[9px] text-accent/30 leading-relaxed uppercase tracking-tighter">Enable new account registrations.</p>
                                         </div>
                                         <button
                                             onClick={() => setSettings({ ...settings, isRegistrationEnabled: !settings.isRegistrationEnabled })}
-                                            className={`relative w-14 h-7 transition-all duration-500 rounded-full border ${settings.isRegistrationEnabled ? 'bg-green-600 border-green-500' : 'bg-primary border-gold/20'}`}
+                                            className={`relative w-12 sm:w-14 h-6 sm:h-7 transition-all duration-500 rounded-full border flex-shrink-0 ${settings.isRegistrationEnabled ? 'bg-green-600 border-green-500' : 'bg-primary border-gold/20'}`}
                                         >
-                                            <div className={`absolute top-1 w-4 h-4 rounded-full transition-all duration-500 ${settings.isRegistrationEnabled ? 'left-8 bg-white' : 'left-1 bg-gold'}`} />
+                                            <div className={`absolute top-0.5 sm:top-1 w-4 h-4 rounded-full transition-all duration-500 ${settings.isRegistrationEnabled ? 'left-7 sm:left-8 bg-white' : 'left-0.5 sm:left-1 bg-gold'}`} />
                                         </button>
                                     </div>
 
@@ -155,14 +155,14 @@ export default function GovernancePage() {
                                         <textarea
                                             value={settings.maintenanceMessage}
                                             onChange={(e) => setSettings({ ...settings, maintenanceMessage: e.target.value })}
-                                            className="w-full bg-primary border border-gold/10 p-5 text-accent text-sm font-light focus:outline-none focus:border-red-500 focus:bg-red-500/[0.02] transition-all min-h-[120px]"
-                                            placeholder="Broadcast message for maintenance mode..."
+                                            className="w-full bg-primary border border-gold/10 p-4 sm:p-5 text-accent text-sm font-light focus:outline-none focus:border-red-500 focus:bg-red-500/[0.02] transition-all min-h-[100px] sm:min-h-[120px]"
+                                            placeholder="Broadcast message..."
                                         />
                                     </div>
                                 </div>
                             </section>
 
-                            <section className="bg-primary-light/10 border border-gold/10 p-8 md:p-10 relative overflow-hidden group">
+                            <section className="bg-primary-light/10 border border-gold/10 p-6 sm:p-10 relative overflow-hidden group">
                                 <div className="absolute top-0 left-0 w-8 h-[1px] bg-gold" />
                                 <div className="flex items-center gap-4 mb-8">
                                     <div className="w-10 h-10 bg-gold/5 border border-gold/20 flex items-center justify-center">
@@ -172,14 +172,14 @@ export default function GovernancePage() {
                                 </div>
 
                                 <div className="space-y-6">
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                                         <div className="space-y-2">
                                             <label className="text-[9px] font-bold uppercase tracking-widest text-accent/30">Logo Base Text</label>
                                             <input
                                                 type="text"
                                                 value={settings.logoText}
                                                 onChange={(e) => setSettings({ ...settings, logoText: e.target.value })}
-                                                className="w-full bg-primary border border-gold/10 p-4 text-accent text-xs font-light focus:outline-none focus:border-gold/40 transition-all"
+                                                className="w-full bg-primary border border-gold/10 p-3 sm:p-4 text-accent text-xs font-light focus:outline-none focus:border-gold/40 transition-all"
                                                 placeholder="e.g. optima"
                                             />
                                         </div>
@@ -189,7 +189,7 @@ export default function GovernancePage() {
                                                 type="text"
                                                 value={settings.logoAccent}
                                                 onChange={(e) => setSettings({ ...settings, logoAccent: e.target.value })}
-                                                className="w-full bg-primary border border-gold/10 p-4 text-accent text-xs font-light focus:outline-none focus:border-gold/40 transition-all"
+                                                className="w-full bg-primary border border-gold/10 p-3 sm:p-4 text-accent text-xs font-light focus:outline-none focus:border-gold/40 transition-all"
                                                 placeholder="e.g. nexgen"
                                             />
                                         </div>
@@ -197,21 +197,21 @@ export default function GovernancePage() {
 
                                     <div className="space-y-4">
                                         <label className="text-[9px] font-bold uppercase tracking-widest text-accent/30">Iconic Logo Asset</label>
-                                        <div className="flex items-start gap-6">
+                                        <div className="flex items-start gap-4 sm:gap-6">
                                             {settings.logoUrl && (
-                                                <div className="w-20 h-20 border border-gold/20 bg-primary-light flex items-center justify-center p-2">
+                                                <div className="w-16 h-16 sm:w-20 sm:h-20 border border-gold/20 bg-primary-light flex items-center justify-center p-2 flex-shrink-0">
                                                     <img src={settings.logoUrl} alt="Bank Logo" className="max-w-full max-h-full object-contain" />
                                                 </div>
                                             )}
                                             <div className="flex-1">
-                                                <label className="group flex flex-col items-center justify-center w-full h-20 border border-dashed border-gold/20 hover:border-gold/40 transition-all cursor-pointer bg-primary/30">
-                                                    <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                                                        <Save size={14} className="text-gold/40 group-hover:text-gold transition-colors mb-2" />
-                                                        <p className="text-[8px] text-accent/40 uppercase tracking-widest">{uploading ? 'Uploading...' : 'Upload Site Logo'}</p>
+                                                <label className="group flex flex-col items-center justify-center w-full h-16 sm:h-20 border border-dashed border-gold/20 hover:border-gold/40 transition-all cursor-pointer bg-primary/30">
+                                                    <div className="flex flex-col items-center justify-center pt-2 sm:pt-5 pb-2 sm:pb-6">
+                                                        <Save size={12} className="text-gold/40 group-hover:text-gold transition-colors mb-1 sm:mb-2" />
+                                                        <p className="text-[7px] sm:text-[8px] text-accent/40 uppercase tracking-widest">{uploading ? 'Uploading...' : 'Upload Site Logo'}</p>
                                                     </div>
                                                     <input type="file" className="hidden" onChange={handleLogoUpload} disabled={uploading} accept="image/*" />
                                                 </label>
-                                                <p className="text-[8px] text-accent/20 uppercase tracking-tighter mt-2">Accepted formats: SVG, PNG, ICO, JPG. This will be used for the logo and favicon.</p>
+                                                <p className="text-[7px] sm:text-[8px] text-accent/20 uppercase tracking-tighter mt-1 sm:mt-2">Formats: SVG, PNG, ICO, JPG.</p>
                                             </div>
                                         </div>
                                     </div>

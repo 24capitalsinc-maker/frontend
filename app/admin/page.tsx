@@ -110,42 +110,42 @@ export default function AdminPage() {
                             <table className="w-full text-left">
                                 <thead>
                                     <tr className="bg-gold/5 border-b border-gold/10 text-nowrap">
-                                        <th className="px-6 md:px-10 py-5 md:py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50">Entity</th>
-                                        <th className="px-6 md:px-10 py-5 md:py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50">Account</th>
-                                        <th className="px-6 md:px-10 py-5 md:py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 text-right">Liquidity</th>
-                                        <th className="px-6 md:px-10 py-5 md:py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 text-center">Security Status</th>
-                                        <th className="px-6 md:px-10 py-5 md:py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 text-right">Actions</th>
+                                        <th className="px-4 sm:px-10 py-5 md:py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50">Entity</th>
+                                        <th className="px-4 sm:px-10 py-5 md:py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 hidden md:table-cell">Account</th>
+                                        <th className="px-4 sm:px-10 py-5 md:py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 text-right">Liquidity</th>
+                                        <th className="px-4 sm:px-10 py-5 md:py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 text-center hidden sm:table-cell">Security Status</th>
+                                        <th className="px-4 sm:px-10 py-5 md:py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gold/5">
                                     {paginatedUsers.map((u: any) => (
                                         <tr key={u._id} className="hover:bg-gold/5 transition-all group/row text-nowrap">
-                                            <td className="px-6 md:px-10 py-6 md:py-8">
+                                            <td className="px-4 sm:px-10 py-6 md:py-8">
                                                 <div className="flex flex-col">
-                                                    <span className="font-light text-accent text-base md:text-lg tracking-tight">{u.name}</span>
-                                                    <span className="text-[10px] text-accent/30 uppercase tracking-[0.2em] font-bold">{u.email}</span>
+                                                    <span className="font-light text-accent text-sm sm:text-base md:text-lg tracking-tight">{u.name}</span>
+                                                    <span className="text-[9px] sm:text-[10px] text-accent/30 uppercase tracking-[0.2em] font-bold">{u.email}</span>
                                                 </div>
                                             </td>
-                                            <td className="px-6 md:px-10 py-6 md:py-8">
+                                            <td className="px-4 sm:px-10 py-6 md:py-8 hidden md:table-cell">
                                                 <span className="text-[10px] text-gold/60 font-bold uppercase tracking-widest border border-gold/10 px-3 py-1 bg-gold/5">
                                                     {u.accountNumber}
                                                 </span>
                                             </td>
-                                            <td className="px-6 md:px-10 py-6 md:py-8 text-right font-light text-accent text-lg md:text-xl tracking-tight">${u.accountBalance.toLocaleString()}</td>
-                                            <td className="px-6 md:px-10 py-6 md:py-8 text-center">
-                                                <span className={`px-3 md:px-4 py-1.5 text-[9px] font-bold uppercase tracking-widest transition-all ${u.isFrozen
+                                            <td className="px-4 sm:px-10 py-6 md:py-8 text-right font-light text-accent text-base sm:text-lg md:text-xl tracking-tight">${u.accountBalance.toLocaleString()}</td>
+                                            <td className="px-4 sm:px-10 py-6 md:py-8 text-center hidden sm:table-cell">
+                                                <span className={`px-2 sm:px-4 py-1.5 text-[8px] sm:text-[9px] font-bold uppercase tracking-widest transition-all ${u.isFrozen
                                                     ? 'bg-red-500/10 text-red-400 border border-red-500/20'
                                                     : 'bg-gold/10 text-gold border border-gold/20'
                                                     }`}>
                                                     {u.isFrozen ? 'Frozen Asset' : 'Active Flow'}
                                                 </span>
                                             </td>
-                                            <td className="px-6 md:px-10 py-6 md:py-8 text-right">
+                                            <td className="px-4 sm:px-10 py-6 md:py-8 text-right">
                                                 <Link
                                                     href="/admin/users"
-                                                    className="px-4 md:px-6 py-2.5 md:py-3 text-[10px] font-bold uppercase tracking-[0.2em] border border-gold/10 text-gold hover:bg-gold/5 transition-all inline-block"
+                                                    className="px-3 sm:px-6 py-2 sm:py-3 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] border border-gold/10 text-gold hover:bg-gold/5 transition-all inline-block"
                                                 >
-                                                    Manage Entity
+                                                    Manage
                                                 </Link>
                                             </td>
                                         </tr>

@@ -60,32 +60,32 @@ export default function LiquidityPage() {
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6"
+                            className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"
                         >
-                            <div className="bg-primary-light/10 border border-gold/10 p-8 relative overflow-hidden group">
+                            <div className="bg-primary-light/10 border border-gold/10 p-6 sm:p-8 relative overflow-hidden group">
                                 <div className="absolute top-0 left-0 w-full h-[1px] bg-gold/10" />
                                 <div className="flex justify-between items-start mb-6">
-                                    <div className="w-10 h-10 bg-gold/5 border border-gold/20 flex items-center justify-center rounded-sm">
+                                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gold/5 border border-gold/20 flex items-center justify-center rounded-sm">
                                         <Landmark size={18} className="text-gold" />
                                     </div>
                                     <span className="text-[9px] font-bold text-gold/40 uppercase tracking-widest">Aggregate Reserve</span>
                                 </div>
-                                <h3 className="text-4xl font-light text-accent tracking-tighter mb-2">${stats.totalLiquidity.toLocaleString()}</h3>
+                                <h3 className="text-3xl sm:text-4xl font-light text-accent tracking-tighter mb-2">${stats.totalLiquidity.toLocaleString()}</h3>
                                 <div className="flex items-center gap-2 text-green-500">
                                     <TrendingUp size={14} />
                                     <span className="text-[10px] font-bold uppercase tracking-widest">+4.2% Flow</span>
                                 </div>
                             </div>
 
-                            <div className="bg-primary-light/10 border border-gold/10 p-8 relative overflow-hidden group">
+                            <div className="bg-primary-light/10 border border-gold/10 p-6 sm:p-8 relative overflow-hidden group">
                                 <div className="absolute top-0 left-0 w-full h-[1px] bg-gold/10" />
                                 <div className="flex justify-between items-start mb-6">
-                                    <div className="w-10 h-10 bg-gold/5 border border-gold/20 flex items-center justify-center rounded-sm">
+                                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gold/5 border border-gold/20 flex items-center justify-center rounded-sm">
                                         <Activity size={18} className="text-gold" />
                                     </div>
                                     <span className="text-[9px] font-bold text-gold/40 uppercase tracking-widest">24h System Volume</span>
                                 </div>
-                                <h3 className="text-4xl font-light text-accent tracking-tighter mb-2">${stats.volume24h.toLocaleString()}</h3>
+                                <h3 className="text-3xl sm:text-4xl font-light text-accent tracking-tighter mb-2">${stats.volume24h.toLocaleString()}</h3>
                                 <p className="text-[10px] text-accent/30 uppercase tracking-[0.2em] font-bold">Total Network Liquidity Shift</p>
                             </div>
                         </motion.div>

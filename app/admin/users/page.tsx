@@ -151,10 +151,10 @@ export default function AdminUsersPage() {
                                     <table className="w-full text-left border-collapse">
                                         <thead>
                                             <tr className="bg-gold/5 border-b border-gold/10 text-nowrap">
-                                                <th className="px-6 md:px-10 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50">User / Account Holder</th>
-                                                <th className="px-6 md:px-10 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50">Status</th>
-                                                <th className="px-6 md:px-10 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 text-right">Balance</th>
-                                                <th className="px-6 md:px-10 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 text-right">View</th>
+                                                <th className="px-4 sm:px-10 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50">User / Account Holder</th>
+                                                <th className="px-4 sm:px-10 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 hidden sm:table-cell">Status</th>
+                                                <th className="px-4 sm:px-10 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 text-right">Balance</th>
+                                                <th className="px-4 sm:px-10 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 text-right hidden md:table-cell">View</th>
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-gold/5">
@@ -164,23 +164,23 @@ export default function AdminUsersPage() {
                                                     onClick={() => setSelectedUser(u)}
                                                     className={`hover:bg-gold/[0.02] transition-all text-nowrap cursor-pointer group ${selectedUser?._id === u._id ? 'bg-gold/[0.03]' : ''}`}
                                                 >
-                                                    <td className="px-6 md:px-10 py-8">
+                                                    <td className="px-4 sm:px-10 py-8">
                                                         <div className="flex flex-col">
-                                                            <span className="text-accent font-light text-base md:text-lg tracking-tight">{u.name}</span>
-                                                            <span className="text-[10px] text-accent/30 font-bold uppercase tracking-[0.2em]">{u.email}</span>
+                                                            <span className="text-accent font-light text-sm sm:text-base md:text-lg tracking-tight">{u.name}</span>
+                                                            <span className="text-[9px] sm:text-[10px] text-accent/30 font-bold uppercase tracking-[0.2em]">{u.email}</span>
                                                         </div>
                                                     </td>
-                                                    <td className="px-6 md:px-10 py-8">
-                                                        <span className={`px-3 py-1 text-[9px] font-bold uppercase tracking-widest border transition-all ${u.isFrozen
+                                                    <td className="px-4 sm:px-10 py-8 hidden sm:table-cell">
+                                                        <span className={`px-2 py-1 text-[8px] sm:text-[9px] font-bold uppercase tracking-widest border transition-all ${u.isFrozen
                                                             ? 'bg-red-500/10 border-red-500/20 text-red-400'
                                                             : 'bg-green-500/10 border-green-500/20 text-green-400'}`}>
                                                             {u.isFrozen ? 'Suspended' : 'Active'}
                                                         </span>
                                                     </td>
-                                                    <td className="px-6 md:px-10 py-8 text-right font-light text-accent text-lg">
+                                                    <td className="px-4 sm:px-10 py-8 text-right font-light text-accent text-base sm:text-lg">
                                                         ${u.accountBalance.toLocaleString()}
                                                     </td>
-                                                    <td className="px-6 md:px-10 py-8 text-right">
+                                                    <td className="px-4 sm:px-10 py-8 text-right hidden md:table-cell">
                                                         <button
                                                             className="text-gold/40 hover:text-gold transition-colors"
                                                         >

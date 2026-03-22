@@ -90,7 +90,7 @@ export default function AuthForm({ type }: { type: 'login' | 'register' }) {
 
                 <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
 
-                <div className="p-10 md:p-14">
+                <div className="p-6 sm:p-10 md:p-14">
                     {/* Header */}
                     <div className="mb-12">
                         <div className="flex justify-between items-center mb-8">
@@ -109,7 +109,7 @@ export default function AuthForm({ type }: { type: 'login' | 'register' }) {
                                 </div>
                             )}
                         </div>
-                        <h2 className="text-4xl font-light text-accent mb-4 tracking-tighter">
+                        <h2 className="text-3xl sm:text-4xl font-light text-accent mb-4 tracking-tighter">
                             {type === 'login' ? 'Welcome Back.' : step === 1 ? 'Start Your Journey.' : step === 2 ? 'Personal Details.' : 'Finalize Profile.'}
                         </h2>
                         <p className="text-accent/40 font-light text-sm tracking-wide">
@@ -170,7 +170,7 @@ export default function AuthForm({ type }: { type: 'login' | 'register' }) {
 
                                 {step === 2 && (
                                     <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
-                                        <div className="grid grid-cols-2 gap-4">
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                             <div className="space-y-2">
                                                 <label className={labelClasses}>Phone Number</label>
                                                 <input {...register('phoneNumber')} className={inputClasses} placeholder="+1 (555) 000-0000" />

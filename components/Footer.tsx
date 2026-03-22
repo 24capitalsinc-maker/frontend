@@ -15,17 +15,17 @@ export default function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
                     {/* Brand Section */}
                     <div className="space-y-8">
-                        <Link href="/" className="flex items-center gap-3">
+                        <Link href="/" className="flex items-center gap-2 md:gap-3">
                             {settings?.logoUrl ? (
-                                <img src={settings.logoUrl} alt={settings.companyName} className="h-8 w-auto object-contain" />
+                                <img src={settings.logoUrl} alt={settings.companyName} className="h-5 md:h-8 w-auto object-contain" />
                             ) : (
                                 <>
-                                    <div className="w-8 h-8 border border-gold/30 rounded flex items-center justify-center">
-                                        <span className="text-gold font-serif text-xl pr-0.5">
+                                    <div className="w-7 h-7 md:w-10 md:h-10 border border-gold/30 rounded flex items-center justify-center">
+                                        <span className="text-gold font-serif text-base md:text-xl pr-0.5">
                                             {(settings?.logoText || 'optima').charAt(0)}
                                         </span>
                                     </div>
-                                    <span className="text-lg font-light tracking-[0.2em] text-accent uppercase">
+                                    <span className="text-sm md:text-lg font-light tracking-[0.1em] md:tracking-[0.2em] text-accent uppercase">
                                         {settings?.logoText || 'optima'}<span className="text-gold font-medium">{settings?.logoAccent || 'nexgen'}</span>
                                     </span>
                                 </>

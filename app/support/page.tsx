@@ -31,7 +31,7 @@ export default function SupportPage() {
             <Navbar />
 
             {/* Hero */}
-            <section className="relative min-h-[70vh] flex items-center justify-center pt-32 pb-20 px-4 md:px-12">
+            <section className="relative min-h-[50vh] sm:min-h-[70vh] flex items-center justify-center pt-24 sm:pt-32 pb-12 sm:pb-20 px-4 md:px-12">
                 <div className="absolute inset-0 z-0 opacity-20 mix-blend-overlay pointer-events-none"
                     style={{ backgroundImage: "url('https://static.wixstatic.com/media/c837a6_51db7f706561479b9f9f7570f739e702~mv2.png')", backgroundSize: 'cover', backgroundPosition: 'center' }} />
                 <div className="absolute inset-0 z-0 bg-gradient-to-t from-primary via-primary/95 to-primary/60 pointer-events-none" />
@@ -41,17 +41,17 @@ export default function SupportPage() {
                         <div className="inline-flex items-center justify-center gap-3 mb-8 border border-gold/20 px-4 py-2">
                             <span className="text-xs font-bold uppercase tracking-[0.3em] text-gold">24/7 Concierge</span>
                         </div>
-                        <h1 className="text-5xl md:text-7xl font-light text-accent tracking-tighter mb-8 leading-[1.1]">
+                        <h1 className="text-4xl sm:text-5xl md:text-7xl font-light text-accent tracking-tighter mb-8 leading-[1.1]">
                             Global <span className="font-medium text-gold">Support.</span>
                         </h1>
                         <p className="text-lg text-accent/60 mb-10 leading-relaxed font-light max-w-2xl mx-auto">
                             Our dedicated concierge team and specialist advisors are available around the clock to assist with account queries, urgent disputes, and large transaction authorizations.
                         </p>
-                        <div className="flex flex-col sm:flex-row justify-center gap-5">
-                            <Link href="/login" className="bg-gold text-primary px-10 py-5 font-medium text-sm tracking-widest uppercase hover:bg-gold-dark transition-colors inline-flex items-center justify-center gap-3">
+                        <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-5">
+                            <Link href="/login" className="bg-gold text-primary px-6 sm:px-10 py-4 sm:py-5 font-medium text-sm tracking-widest uppercase hover:bg-gold-dark transition-colors inline-flex items-center justify-center gap-3">
                                 <MessageCircle size={16} /> Start Live Chat
                             </Link>
-                            <a href="tel:+15552400000" className="px-10 py-5 text-sm tracking-widest uppercase text-accent border border-gold hover:bg-gold/5 transition-colors inline-flex items-center justify-center gap-3">
+                            <a href="tel:+15552400000" className="px-6 sm:px-10 py-4 sm:py-5 text-sm tracking-widest uppercase text-accent border border-gold hover:bg-gold/5 transition-colors inline-flex items-center justify-center gap-3">
                                 <Phone size={16} className="text-gold" /> Call Now
                             </a>
                         </div>
@@ -60,7 +60,7 @@ export default function SupportPage() {
             </section>
 
             {/* Contact Methods */}
-            <section className="py-24 px-4 md:px-12 bg-primary-light border-y border-gold/10">
+            <section className="py-16 sm:py-24 px-4 md:px-12 bg-primary-light border-y border-gold/10">
                 <div className="max-w-7xl mx-auto">
                     <motion.div {...fadeIn} className="text-center mb-16">
                         <h2 className="text-4xl font-light text-accent tracking-tighter">Reach us <span className="text-gold font-medium">your way.</span></h2>
@@ -86,9 +86,9 @@ export default function SupportPage() {
                                 action: "Use Contact Form", href: "/contact"
                             },
                         ].map((c, i) => (
-                            <motion.div key={i} whileHover={{ y: -4 }} {...fadeIn} className="bg-primary border border-gold/10 hover:border-gold/30 p-10 flex flex-col gap-5 group transition-all">
+                            <motion.div key={i} whileHover={{ y: -4 }} {...fadeIn} className="bg-primary border border-gold/10 hover:border-gold/30 p-6 sm:p-10 flex flex-col gap-5 group transition-all">
                                 <div className="flex justify-between items-start">
-                                    <div className="w-14 h-14 border border-gold/20 flex items-center justify-center text-gold group-hover:bg-gold group-hover:text-primary transition-all">{c.icon}</div>
+                                    <div className="w-12 h-12 sm:w-14 sm:h-14 border border-gold/20 flex items-center justify-center text-gold group-hover:bg-gold group-hover:text-primary transition-all">{c.icon}</div>
                                     <span className="text-[10px] text-primary bg-gold px-2 py-1 font-bold uppercase tracking-widest">{c.badge}</span>
                                 </div>
                                 <div className="flex-1">
@@ -139,9 +139,9 @@ export default function SupportPage() {
                             { icon: <Clock size={28} />, label: "Avg. Chat Response", value: "< 2 min" },
                             { icon: <Shield size={28} />, label: "Dispute Rate Won", value: "98.4%" },
                         ].map((stat, i) => (
-                            <div key={i} className="bg-primary-light border border-gold/10 hover:border-gold/30 p-8 flex flex-col items-center text-center gap-4 group transition-all">
-                                <div className="w-14 h-14 border border-gold/20 flex items-center justify-center text-gold group-hover:bg-gold group-hover:text-primary transition-all">{stat.icon}</div>
-                                <p className="text-2xl text-gold font-light">{stat.value}</p>
+                            <div key={i} className="bg-primary-light border border-gold/10 hover:border-gold/30 p-6 sm:p-8 flex flex-col items-center text-center gap-4 group transition-all">
+                                <div className="w-12 h-12 sm:w-14 sm:h-14 border border-gold/20 flex items-center justify-center text-gold group-hover:bg-gold group-hover:text-primary transition-all">{stat.icon}</div>
+                                <p className="text-xl sm:text-2xl text-gold font-light">{stat.value}</p>
                                 <p className="text-accent/40 text-[10px] uppercase tracking-widest">{stat.label}</p>
                             </div>
                         ))}
@@ -164,7 +164,7 @@ export default function SupportPage() {
                                 className="border border-gold/10 hover:border-gold/25 transition-colors overflow-hidden"
                             >
                                 <button
-                                    className="w-full flex justify-between items-center px-8 py-6 text-left gap-6"
+                                    className="w-full flex justify-between items-center px-6 sm:px-8 py-4 sm:py-6 text-left gap-6"
                                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
                                 >
                                     <span className="text-accent font-medium text-sm leading-snug">{faq.q}</span>

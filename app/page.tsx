@@ -62,7 +62,7 @@ export default function HomePage() {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1.2, delay: 0.7 }}
-                            className="text-prestige text-5xl sm:text-6xl md:text-8xl mb-8 text-accent max-w-5xl"
+                            className="text-prestige text-4xl sm:text-5xl md:text-7xl lg:text-8xl mb-8 text-accent max-w-5xl"
                         >
                             Where Ambition Meets <br />
                             <span className="text-gold-gradient font-medium italic">Absolute Precision.</span>
@@ -103,7 +103,7 @@ export default function HomePage() {
             {/* ===== LIVE STATS BAR ===== */}
             <section className="py-12 px-4 md:px-12 bg-primary-dark border-y border-gold/10 overflow-hidden relative">
                 <div className="absolute inset-0 bg-silk pointer-events-none" />
-                <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-12 text-center relative z-10">
+                <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 text-center relative z-10">
                     {[
                         { value: "$4.2B+", label: "Capital Vault Liquidity" },
                         { value: "0.01%", label: "Sovereign Tier Rates" },
@@ -111,9 +111,9 @@ export default function HomePage() {
                         { value: "24/7", label: "Executive Concierge" },
                     ].map((stat, i) => (
                         <motion.div key={i} {...fadeIn} className="flex flex-col items-center gap-4">
-                            <span className="text-3xl font-sans font-medium text-gold tracking-normal">{stat.value}</span>
+                            <span className="text-2xl md:text-3xl font-sans font-medium text-gold tracking-normal">{stat.value}</span>
                             <div className="h-[1px] w-6 bg-gold/20" />
-                            <span className="text-accent/60 text-[10px] uppercase tracking-[0.3em] font-semibold">{stat.label}</span>
+                            <span className="text-accent/60 text-[9px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] font-semibold">{stat.label}</span>
                         </motion.div>
                     ))}
                 </div>
@@ -133,7 +133,7 @@ export default function HomePage() {
                         <p className="text-accent/60 max-w-xs text-[11px] uppercase tracking-[0.2em] leading-relaxed font-medium">Architecting the future of wealth through absolute privacy and technical excellence.</p>
                     </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-16">
                         <EditorialFeature number="01" icon={<Send size={18} className="text-gold" />} title="Sovereign Ledger" desc="Execute high-volume wealth transfers across 128 global jurisdictions with real-time settlement and encrypted journaling." />
                         <EditorialFeature number="02" icon={<CreditCard size={18} className="text-gold" />} title="Obsidian Elite" desc="Precision-milled metal instruments with limitless liquidity and bespoke insurance protocols for the high-net-worth individual." />
                         <EditorialFeature number="03" icon={<BarChart3 size={18} className="text-gold" />} title="Yield Optimization" desc="Algorithmic portfolio rebalancing ensuring 5.24% minimum APY through diversifed institutional lending pools." />

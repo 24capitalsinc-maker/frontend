@@ -130,57 +130,57 @@ export default function AdminTransactionsPage() {
                             <table className="w-full text-left border-collapse">
                                 <thead>
                                     <tr className="bg-gold/5 border-b border-gold/10 text-nowrap">
-                                        <th className="px-4 sm:px-6 md:px-10 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50">Timestamp</th>
-                                        <th className="px-4 sm:px-6 md:px-10 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50">Sender / Receiver</th>
-                                        <th className="px-4 sm:px-6 md:px-10 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50">Reference</th>
-                                        <th className="px-4 sm:px-6 md:px-10 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 text-right">Amount</th>
-                                        <th className="px-4 sm:px-6 md:px-10 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 text-center">Status</th>
-                                        <th className="px-4 sm:px-6 md:px-10 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 text-center">Jurisdiction</th>
-                                        <th className="px-4 sm:px-6 md:px-10 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 text-right">Actions</th>
+                                        <th className="px-4 sm:px-10 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 hidden sm:table-cell">Timestamp</th>
+                                        <th className="px-4 sm:px-10 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50">Sender / Receiver</th>
+                                        <th className="px-4 sm:px-10 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 hidden lg:table-cell">Reference</th>
+                                        <th className="px-4 sm:px-10 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 text-right">Amount</th>
+                                        <th className="px-4 sm:px-10 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 text-center">Status</th>
+                                        <th className="px-4 sm:px-10 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 text-center hidden md:table-cell">Jurisdiction</th>
+                                        <th className="px-4 sm:px-10 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gold/5">
                                     {currentTransactions.map((tx) => (
                                         <tr key={tx._id} className="hover:bg-gold/[0.02] transition-all text-nowrap group">
-                                            <td className="px-4 sm:px-6 md:px-10 py-8">
+                                            <td className="px-4 sm:px-10 py-8 hidden sm:table-cell">
                                                 <div className="flex flex-col">
                                                     <span className="text-accent font-light text-sm">{new Date(tx.createdAt).toLocaleDateString()}</span>
-                                                    <p className="text-xs text-accent/30 uppercase font-bold tracking-widest">Last Rotation: {new Date().toLocaleDateString()}</p>
+                                                    <p className="text-[9px] text-accent/30 uppercase font-bold tracking-widest">Rotation ID: {tx._id.substring(0, 6)}</p>
                                                 </div>
                                             </td>
-                                            <td className="px-4 sm:px-6 md:px-10 py-8">
-                                                <div className="flex items-center gap-3">
+                                            <td className="px-4 sm:px-10 py-8">
+                                                <div className="flex items-center gap-2 sm:gap-3">
                                                     <div className="flex flex-col">
-                                                        <span className="text-accent text-sm font-light">{tx.sender?.name || 'External'}</span>
-                                                        <span className="text-[9px] text-gold/40 font-bold uppercase tracking-tighter">Source</span>
+                                                        <span className="text-accent text-xs sm:text-sm font-light max-w-[80px] sm:max-w-none truncate">{tx.sender?.name || 'External'}</span>
+                                                        <span className="text-[8px] sm:text-[9px] text-gold/40 font-bold uppercase tracking-tighter">Source</span>
                                                     </div>
-                                                    <ArrowRightLeft size={12} className="text-gold/20" />
+                                                    <ArrowRightLeft size={10} className="text-gold/20 flex-shrink-0" />
                                                     <div className="flex flex-col">
-                                                        <span className="text-accent text-sm font-light">{tx.receiver?.name || 'External'}</span>
-                                                        <span className="text-[9px] text-gold/40 font-bold uppercase tracking-tighter">Destination</span>
+                                                        <span className="text-accent text-xs sm:text-sm font-light max-w-[80px] sm:max-w-none truncate">{tx.receiver?.name || 'External'}</span>
+                                                        <span className="text-[8px] sm:text-[9px] text-gold/40 font-bold uppercase tracking-tighter">Dest</span>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td className="px-4 sm:px-6 md:px-10 py-8">
+                                            <td className="px-4 sm:px-10 py-8 hidden lg:table-cell">
                                                 <span className="text-[10px] text-accent/40 font-mono tracking-widest">{tx.referenceNumber || 'TX-' + tx._id.substring(0, 8).toUpperCase()}</span>
                                             </td>
-                                            <td className="px-4 sm:px-6 md:px-10 py-8 text-right">
-                                                <span className="text-accent font-light text-lg">${tx.amount.toLocaleString()}</span>
+                                            <td className="px-4 sm:px-10 py-8 text-right">
+                                                <span className="text-accent font-light text-base sm:text-lg">${tx.amount.toLocaleString()}</span>
                                             </td>
-                                            <td className="px-4 sm:px-6 md:px-10 py-8 text-center text-[10px] font-bold uppercase tracking-widest">
+                                            <td className="px-4 sm:px-10 py-8 text-center text-[9px] sm:text-[10px] font-bold uppercase tracking-widest">
                                                 <span className={`${tx.status === 'success' ? 'text-green-500' : tx.status === 'pending' ? 'text-gold' : 'text-red-500'}`}>
                                                     {tx.status}
                                                 </span>
                                             </td>
-                                            <td className="px-4 sm:px-6 md:px-10 py-8 text-center">
+                                            <td className="px-4 sm:px-10 py-8 text-center hidden md:table-cell">
                                                 <span className="text-[10px] text-accent/60 font-medium tracking-widest uppercase">{tx.jurisdiction || tx.routingProtocol || 'Domestic'}</span>
                                             </td>
-                                            <td className="px-4 sm:px-6 md:px-10 py-8 text-right">
+                                            <td className="px-4 sm:px-10 py-8 text-right">
                                                 <button
                                                     onClick={() => handleEdit(tx)}
-                                                    className="p-3 bg-gold/5 border border-gold/10 text-gold hover:bg-gold hover:text-primary transition-all duration-300"
+                                                    className="p-2 sm:p-3 bg-gold/5 border border-gold/10 text-gold hover:bg-gold hover:text-primary transition-all duration-300"
                                                 >
-                                                    <Edit2 size={14} />
+                                                    <Edit2 size={12} />
                                                 </button>
                                             </td>
                                         </tr>
