@@ -39,7 +39,7 @@ export default function ReceiptModal({ isOpen, onClose, transaction }: ReceiptMo
 
     const handleShare = async () => {
         const shareData = {
-            title: `Capital24 Settlement: ${transaction.referenceId}`,
+            title: `Optima Nexgen Settlement: ${transaction.referenceId}`,
             text: `Settlement of ${transaction.currency} ${transaction.amount.toLocaleString()} to ${transaction.receiverAccountNumber}.`,
             url: window.location.href,
         }
@@ -49,7 +49,7 @@ export default function ReceiptModal({ isOpen, onClose, transaction }: ReceiptMo
                 await navigator.share(shareData)
             } else {
                 await navigator.clipboard.writeText(
-                    `Capital24 Receipt [${transaction.referenceId}]\nAmount: ${transaction.currency} ${transaction.amount.toLocaleString()}\nBeneficiary: ${transaction.receiverAccountNumber}`
+                    `Optima Nexgen Receipt [${transaction.referenceId}]\nAmount: ${transaction.currency} ${transaction.amount.toLocaleString()}\nBeneficiary: ${transaction.receiverAccountNumber}`
                 )
                 toast.success('Financial metadata copied to clipboard')
             }
@@ -93,7 +93,7 @@ export default function ReceiptModal({ isOpen, onClose, transaction }: ReceiptMo
             })
 
             pdf.addImage(imgData, 'PNG', 0, 0, canvas.width / 2, canvas.height / 2)
-            pdf.save(`Capital24_Receipt_${transaction.referenceId.slice(-8)}.pdf`)
+            pdf.save(`OptimaNexgen_Receipt_${transaction.referenceId.slice(-8)}.pdf`)
 
             toast.dismiss(loadingToast)
             toast.success('Document exported successfully')

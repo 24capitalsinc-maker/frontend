@@ -212,8 +212,8 @@ export default function TransferForm() {
             />
 
             <div className="mb-14">
-                <p className="text-gold font-bold text-[10px] tracking-[0.4em] uppercase mb-4">Secure Money Transfer</p>
-                <h3 className="text-3xl md:text-4xl font-light text-accent tracking-tighter mb-4">Send <span className="text-gold">Money.</span></h3>
+                <p className="text-gold font-bold text-[10px] tracking-[0.4em] uppercase mb-4">Secure Funds Transfer</p>
+                <h3 className="text-3xl md:text-4xl font-light text-accent tracking-tighter mb-4">Transfer <span className="text-gold">Funds.</span></h3>
                 <div className="h-[1px] w-full bg-gold/10 mt-6" />
             </div>
 

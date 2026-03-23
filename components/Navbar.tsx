@@ -52,11 +52,11 @@ export default function Navbar() {
                     <Link href="/" className="flex items-center gap-2 md:gap-4 group">
                         <img
                             src={settings?.logoUrl || '/logo.png'}
-                            alt={settings?.companyName || 'Capital24'}
+                            alt={settings?.companyName || 'Optima Nexgen'}
                             className="h-7 md:h-10 w-auto object-contain transition-transform duration-700 group-hover:scale-105"
                         />
-                        <span className="text-sm md:text-lg font-light tracking-[0.2em] text-accent uppercase hidden sm:block">
-                            {settings?.logoText || 'Capital'}<span className="text-gold font-medium">{settings?.logoAccent || '24'}</span>
+                        <span className="text-[10px] md:text-lg font-light tracking-[0.2em] text-accent uppercase">
+                            {settings?.logoText || 'Optima'}<span className="text-gold font-medium">{settings?.logoAccent || 'Nexgen'}</span>
                         </span>
                     </Link>
                     {isDashboard ? (
@@ -201,10 +201,7 @@ export default function Navbar() {
                                             }}
                                             className={`flex items-center gap-4 p-4 border border-red-500/20 bg-red-500/5 text-red-400 mt-4 transition-all active:scale-95`}
                                         >
-                                            <LogOut size={16} strokeWidth={1.5} />
-                                            <span className="text-xs font-bold uppercase tracking-widest">
-                                                {isAdmin ? 'Exit Governance' : 'Terminate Session'}
-                                            </span>
+                                            <span className="text-xs font-bold uppercase tracking-widest">Logout</span>
                                         </button>
                                     </div>
                                 </div>

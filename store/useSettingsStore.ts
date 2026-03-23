@@ -23,9 +23,9 @@ interface SettingsState {
 
 export const useSettingsStore = create<SettingsState>((set) => ({
     settings: {
-        companyName: 'optimanexgen',
-        logoText: 'optima',
-        logoAccent: 'nexgen',
+        companyName: 'Optima Nexgen',
+        logoText: 'Optima',
+        logoAccent: 'Nexgen',
         logoUrl: '/logo.png',
         supportEmail: 'support@optimanexgen.org',
         isRegistrationEnabled: true,

@@ -64,42 +64,41 @@ export default function SettingsPage() {
     ]
 
     return (
-        <main className="min-h-screen bg-primary flex flex-col relative overflow-hidden font-sans">
+        <main className="min-h-screen bg-primary flex flex-col relative font-sans">
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay" style={{ backgroundImage: "url('https://static.wixstatic.com/media/c837a6_51db7f706561479b9f9f7570f739e702~mv2.png')", backgroundSize: 'cover' }} />
 
             <Navbar />
 
-            <div className="flex flex-1 pt-20 h-[calc(100vh-64px)] overflow-hidden">
+            <div className="flex flex-col lg:flex-row flex-1 pt-20">
                 <Sidebar />
 
-                <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
-                    {/* Inner Sidebar for Settings Sections */}
-                    <div className="w-full md:w-80 border-r border-gold/10 bg-primary-light/5 p-6 md:p-10 flex flex-col gap-2 overflow-y-auto">
-                        <p className="text-[10px] text-gold font-bold uppercase tracking-[0.4em] mb-10 pl-2 text-center md:text-left">Settings Console</p>
-                        {sections.map((s) => (
-                            <button
-                                key={s.id}
-                                onClick={() => setActiveSection(s.id)}
-                                className={`w-full flex items-center justify-between p-5 transition-all duration-500 group ${activeSection === s.id ? 'bg-gold/10 border border-gold/20 shadow-[0_0_20px_rgba(203,161,110,0.05)]' : 'hover:bg-gold/5'}`}
-                            >
-                                <div className="flex items-center gap-4">
-                                    <s.icon size={16} className={activeSection === s.id ? 'text-gold' : 'text-accent/30'} />
-                                    <span className={`text-[10px] uppercase font-bold tracking-[0.2em] ${activeSection === s.id ? 'text-accent' : 'text-accent/40 group-hover:text-accent/60'}`}>
-                                        {s.label}
-                                    </span>
-                                </div>
-                                {activeSection === s.id && <ChevronRight size={14} className="text-gold" />}
-                            </button>
-                        ))}
-
-                        <div className="mt-auto pt-10 border-t border-gold/5 opacity-50">
-                            <p className="text-[8px] text-accent/30 font-bold uppercase tracking-widest text-center md:text-left">System Status: Active</p>
-                            <p className="text-[8px] text-gold font-medium uppercase tracking-widest mt-1 text-center md:text-left">Secure Connection Active</p>
+                <div className="flex-1 flex flex-col min-h-0">
+                    {/* Settings Tab Navigation (Horizontal on Desktop) */}
+                    <div className="w-full border-b border-gold/10 bg-primary-light/5 flex flex-col overflow-visible">
+                        <div className="px-6 md:px-16 pt-10 pb-6">
+                            <p className="text-[10px] text-gold font-bold uppercase tracking-[0.4em] mb-8 text-left">Settings Console</p>
+                            <div className="flex flex-row items-center gap-1 overflow-x-auto custom-scrollbar no-scrollbar pb-2">
+                                {sections.map((s) => (
+                                    <button
+                                        key={s.id}
+                                        onClick={() => setActiveSection(s.id)}
+                                        className={`flex items-center gap-4 px-6 py-4 transition-all duration-500 whitespace-nowrap group relative ${activeSection === s.id ? 'text-accent' : 'text-accent/30 hover:text-accent/60'}`}
+                                    >
+                                        <s.icon size={14} className={activeSection === s.id ? 'text-gold' : 'text-accent/20'} />
+                                        <span className={`text-[10px] uppercase font-bold tracking-[0.2em]`}>
+                                            {s.label}
+                                        </span>
+                                        {activeSection === s.id && (
+                                            <motion.div layoutId="activeSettingsTab" className="absolute bottom-0 left-0 right-0 h-[2px] bg-gold" />
+                                        )}
+                                    </button>
+                                ))}
+                            </div>
                         </div>
                     </div>
 
                     {/* Content Area */}
-                    <div className="flex-1 min-w-0 p-6 md:p-16 overflow-y-auto custom-scrollbar bg-primary-light/5">
+                    <div className="flex-1 p-6 md:p-16 bg-primary-light/5">
                         <header className="mb-14 border-b border-gold/10 pb-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
                             <div>
                                 <h1 className="text-3xl md:text-5xl font-light text-accent tracking-tighter mb-4">
@@ -337,7 +336,7 @@ export default function SettingsPage() {
                             </motion.div>
                         </AnimatePresence>
 
-                        <div className="mt-24 -mx-6 md:-mx-16">
+                        <div className="mt-24">
                             <Footer />
                         </div>
                     </div>

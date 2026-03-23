@@ -18,11 +18,11 @@ export default function Footer() {
                         <Link href="/" className="flex items-center gap-2 md:gap-3">
                             <img
                                 src={settings?.logoUrl || '/logo.png'}
-                                alt={settings?.companyName || 'Capital24'}
+                                alt={settings?.companyName || 'Optima Nexgen'}
                                 className="h-5 md:h-8 w-auto object-contain"
                             />
                             <span className="text-sm md:text-lg font-light tracking-[0.1em] md:tracking-[0.2em] text-accent uppercase">
-                                {settings?.logoText || 'Capital'}<span className="text-gold font-medium">{settings?.logoAccent || '24'}</span>
+                                {settings?.logoText || 'Optima'}<span className="text-gold font-medium">{settings?.logoAccent || 'Nexgen'}</span>
                             </span>
                         </Link>
                         <p className="text-[10px] text-accent/40 uppercase leading-relaxed tracking-widest font-light max-w-xs">

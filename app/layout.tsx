@@ -15,8 +15,8 @@ const inter = Inter({
 })
 
 export const metadata = {
-    title: 'optimanexgen | Elite Digital Banking',
-    description: 'Pro production-level digital banking application',
+    title: 'Optima Nexgen | Institutional Multi-Party Financial Governance',
+    description: 'Elite-tier digital banking specifically engineered for institutional liquidity management and secure global settlements.',
     icons: {
         icon: '/logo.png',
         shortcut: '/logo.png',

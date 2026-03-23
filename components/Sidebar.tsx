@@ -8,10 +8,10 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useSettingsStore } from '@/store/useSettingsStore'
 
 export const dashboardLinks = [
-    { name: 'Accounts Overview', href: '/dashboard', icon: LayoutDashboard },
-    { name: 'Transfer Capital', href: '/transfer', icon: Send },
-    { name: 'Financial Ledger', href: '/transactions', icon: History },
-    { name: 'System Settings', href: '/settings', icon: Settings },
+    { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+    { name: 'Transfer', href: '/transfer', icon: Send },
+    { name: 'History', href: '/transactions', icon: History },
+    { name: 'Settings', href: '/settings', icon: Settings },
 ]
 
 export default function Sidebar() {
@@ -38,19 +38,21 @@ export default function Sidebar() {
             <div className="absolute inset-0 bg-silk opacity-5 pointer-events-none" />
             <div className="flex flex-col h-full relative z-10">
                 <div className="flex-1 space-y-12">
-                    <div className="flex flex-col gap-3 mb-12">
-                        <div className="flex items-center gap-1">
-                            <span className="text-gold font-sans text-lg md:text-xl font-light pr-0.5 leading-none">
-                                {(settings?.logoText || 'Capital').charAt(0)}
-                            </span>
+                    <div className="flex flex-col gap-4 mb-16 px-2">
+                        <Link href="/" className="flex items-center gap-3 group">
+                            <img
+                                src={settings?.logoUrl || '/logo.png'}
+                                alt={settings?.companyName || 'Optima Nexgen'}
+                                className="h-8 w-auto object-contain transition-transform duration-700 group-hover:scale-105"
+                            />
                             <div className="flex flex-col">
-                                <span className="text-[8px] md:text-[10px] font-sans font-light tracking-[0.2em] md:tracking-[0.4em] text-accent uppercase leading-none">
-                                    {settings?.logoText || 'Capital'}<span className="text-gold font-medium translate-x-0.5">{settings?.logoAccent || '24'}</span>
+                                <span className="text-xs font-light tracking-[0.2em] text-accent uppercase leading-tight">
+                                    {settings?.logoText || 'Optima'}<span className="text-gold font-medium">{settings?.logoAccent || 'Nexgen'}</span>
                                 </span>
-                                <span className="text-[4px] md:text-[5px] text-gold/40 uppercase tracking-[0.4em] md:tracking-[0.6em] font-bold mt-0.5">Digital Banking</span>
+                                <span className="text-[6px] text-gold/40 uppercase tracking-[0.5em] font-bold">Institutional</span>
                             </div>
-                        </div>
-                        <div className="h-[1px] w-8 md:w-12 bg-gold/20" />
+                        </Link>
+                        <div className="h-[1px] w-12 bg-gold/10" />
                     </div>
                     <ul className="space-y-6">
                         {links.map((link) => {
@@ -84,7 +86,7 @@ export default function Sidebar() {
                                 className="w-full group flex items-center gap-6 py-4 text-accent/30 hover:text-red-500/80 transition-all duration-700 relative"
                             >
                                 <LogOut size={16} strokeWidth={1} className="group-hover:text-red-500 transition-colors duration-700" />
-                                <span className="text-[10px] tracking-[0.3em] font-bold uppercase">Terminate Session</span>
+                                <span className="text-[10px] tracking-[0.3em] font-bold uppercase">Logout</span>
                             </button>
                         </li>
                     </ul>

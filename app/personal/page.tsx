@@ -105,7 +105,7 @@ export default function PersonalPage() {
                         {[
                             { icon: <PiggyBank size={28} />, title: "Savings Vault", value: "5.24% APY", desc: "Earn the highest yield on the market with no lockup period and daily interest accrual." },
                             { icon: <CreditCard size={28} />, title: "Debit Card", value: "Zero Fees", desc: "Free metal debit card with worldwide ATM access, zero foreign transaction fees, and real-time spend notifications." },
-                            { icon: <Zap size={28} />, title: "Instant Transfers", value: "Under 60s", desc: "Send money to any optimanexgen member instantly using just their email or phone number." },
+                            { icon: <Zap size={28} />, title: "Instant Transfers", value: "Under 60s", desc: "Transfer funds to any optimanexgen member instantly using just their email or phone number." },
                             { icon: <Clock size={28} />, title: "Early Paycheck", value: "2 Days Early", desc: "Get your direct deposit up to 48 hours earlier than traditional banks through our instant routing system." },
                         ].map((p, i) => (
                             <motion.div key={i} whileHover={{ y: -4 }} {...fadeIn} className="bg-primary border border-gold/10 hover:border-gold/30 p-8 group transition-all">

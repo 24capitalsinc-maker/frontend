@@ -87,7 +87,7 @@ export default function DashboardPage() {
                                 </div>
                             </div>
                             <button onClick={() => router.push('/transfer')} className="group relative bg-gold text-primary px-10 py-5 font-bold text-[10px] tracking-[0.3em] uppercase transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-gold/10 overflow-hidden">
-                                <span className="relative z-10">Send Money</span>
+                                <span className="relative z-10">Transfer Funds</span>
                                 <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
                             </button>
                         </div>

@@ -1,7 +1,7 @@
 "use client"
 import Navbar from '@/components/Navbar'
 import Link from 'next/link'
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion'
+import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from 'framer-motion'
 import { Shield, CreditCard, Send, Smartphone, ArrowRight, CheckCircle2, Globe, PlayCircle, Landmark, Star, TrendingUp, Users, Banknote, Clock, Zap, BarChart3, Lock, ChevronRight } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { useSettingsStore } from '@/store/useSettingsStore'
@@ -46,6 +46,20 @@ export default function HomePage() {
         transition: { duration: 0.8, ease: "easeOut" as const }
     }
 
+    const [currentSlide, setCurrentSlide] = useState(0)
+    const slides = [
+        { image: '/hero.png', title: 'Absolute Precision', subtitle: 'Where Ambition Meets' },
+        { image: '/hero-city.png', title: 'Global Dominance', subtitle: 'Engineered for' },
+        { image: '/hero-terminal.png', title: 'Sovereign Wealth', subtitle: 'The Future of' }
+    ]
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentSlide((prev) => (prev + 1) % slides.length)
+        }, 10000)
+        return () => clearInterval(timer)
+    }, [])
+
     return (
         <main className="min-h-screen bg-primary relative overflow-x-hidden font-sans">
             <Navbar />
@@ -57,24 +71,28 @@ export default function HomePage() {
             >
                 <div className="absolute inset-0 bg-noise opacity-10 pointer-events-none" />
 
-                <motion.div
-                    initial={{ scale: 1.1, opacity: 0 }}
-                    animate={{ scale: 1.05, opacity: 0.6 }}
-                    style={{
-                        backgroundImage: "url('/hero.png')",
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        x: backgroundX,
-                        y: backgroundY,
-                        rotateX: backgroundRotateX,
-                        rotateY: backgroundRotateY,
-                        transformPerspective: 1000
-                    }}
-                    transition={{ duration: 2, ease: "easeOut" }}
-                    className="absolute inset-0 z-0 mix-blend-overlay will-change-transform"
-                />
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={currentSlide}
+                        initial={{ scale: 1.1, opacity: 0 }}
+                        animate={{ scale: 1.05, opacity: 0.9 }}
+                        exit={{ scale: 1.15, opacity: 0 }}
+                        style={{
+                            backgroundImage: `url('${slides[currentSlide].image}')`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            x: backgroundX,
+                            y: backgroundY,
+                            rotateX: backgroundRotateX,
+                            rotateY: backgroundRotateY,
+                            transformPerspective: 1000
+                        }}
+                        transition={{ duration: 2, ease: "easeInOut" }}
+                        className="absolute inset-0 z-0 mix-blend-soft-light will-change-transform"
+                    />
+                </AnimatePresence>
 
-                <div className="absolute inset-0 z-0 bg-gradient-to-b from-primary/80 via-transparent to-primary/90" />
+                <div className="absolute inset-0 z-0 bg-gradient-to-b from-primary/40 via-transparent to-primary/60" />
 
                 <div className="max-w-7xl w-full mx-auto relative z-10">
                     <div className="flex flex-col items-center text-center">
@@ -85,24 +103,25 @@ export default function HomePage() {
                             className="inline-flex items-center gap-4 mb-8"
                         >
                             <div className="h-[1px] w-12 bg-gold/50" />
-                            <span className="text-xs font-bold uppercase tracking-[0.5em] text-gold-bright">Private Wealth Management</span>
+                            <span className="text-xs font-bold uppercase tracking-[0.5em] text-gold-bright">Optima Nexgen Institutional</span>
                             <div className="h-[1px] w-12 bg-gold/50" />
                         </motion.div>
 
                         <motion.h1
+                            key={`h1-${currentSlide}`}
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 1.2, delay: 0.7 }}
+                            transition={{ duration: 1.2, delay: 0.2 }}
                             className="text-prestige text-4xl sm:text-5xl md:text-7xl lg:text-8xl mb-8 text-accent max-w-5xl"
                         >
-                            Where Ambition Meets <br />
-                            <span className="text-gold-gradient font-medium italic">Absolute Precision.</span>
+                            {slides[currentSlide].subtitle} <br />
+                            <span className="text-gold-gradient font-medium italic">{slides[currentSlide].title}.</span>
                         </motion.h1>
 
                         <motion.p
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            transition={{ duration: 1.5, delay: 1.2 }}
+                            transition={{ duration: 1.5, delay: 0.6 }}
                             className="text-lg md:text-xl text-accent/70 mb-12 leading-relaxed font-normal max-w-2xl"
                         >
                             The pinnacle of digital banking for individual entities and sovereign institutions. Managed by humans, powered by foresight.
