@@ -18,15 +18,6 @@ const schema = z.object({
     iban: z.string().optional().or(z.literal('')),
     jurisdiction: z.string().optional().or(z.literal('')),
 }).superRefine((data, ctx) => {
-    if (data.routingProtocol === 'Offshore') {
-        if (!data.description || data.description.length < 3) {
-            ctx.addIssue({
-                code: z.ZodIssueCode.custom,
-                message: 'Settlement details required for Offshore transfers',
-                path: ['description'],
-            });
-        }
-    }
     if (data.routingProtocol === 'Other') {
         if (!data.swiftCode || data.swiftCode.length < 8) {
             ctx.addIssue({
