@@ -183,30 +183,30 @@ export default function DashboardPage() {
                                 </div>
 
                                 <div className="space-y-12">
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center sm:text-left">
+                                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 text-center sm:text-left">
                                         <div className="group/item cursor-help">
-                                            <p className="text-2xl sm:text-3xl font-medium text-accent mb-2 tracking-tight">$72,400.00</p>
+                                            <p className="text-lg sm:text-xl lg:text-2xl font-medium text-accent mb-2 tracking-tight">$72,400.00</p>
                                             <p className="text-[10px] text-gold font-bold uppercase tracking-[0.2em] mb-4">Savings Ledger</p>
                                             <div className="h-[2px] w-full bg-gold/20 rounded-full overflow-hidden">
                                                 <motion.div initial={{ width: 0 }} whileInView={{ width: '80%' }} transition={{ duration: 2 }} className="h-full bg-gold" />
                                             </div>
                                         </div>
                                         <div className="group/item cursor-help">
-                                            <p className="text-2xl sm:text-3xl font-medium text-accent/60 mb-2 tracking-tight">€45,100.00</p>
+                                            <p className="text-lg sm:text-xl lg:text-2xl font-medium text-accent/60 mb-2 tracking-tight">€45,100.00</p>
                                             <p className="text-[10px] text-accent/40 font-bold uppercase tracking-[0.2em] mb-4">Euro Business</p>
                                             <div className="h-[2px] w-full bg-gold/5 rounded-full overflow-hidden">
                                                 <motion.div initial={{ width: 0 }} whileInView={{ width: '40%' }} transition={{ duration: 2 }} className="h-full bg-accent/20" />
                                             </div>
                                         </div>
                                         <div className="group/item cursor-help">
-                                            <p className="text-2xl sm:text-3xl font-medium text-accent/60 mb-2 tracking-tight">£28,950.00</p>
+                                            <p className="text-lg sm:text-xl lg:text-2xl font-medium text-accent/60 mb-2 tracking-tight">£28,950.00</p>
                                             <p className="text-[10px] text-accent/40 font-bold uppercase tracking-[0.2em] mb-4">UK Account</p>
                                             <div className="h-[2px] w-full bg-gold/5 rounded-full overflow-hidden">
                                                 <motion.div initial={{ width: 0 }} whileInView={{ width: '30%' }} transition={{ duration: 2 }} className="h-full bg-accent/20" />
                                             </div>
                                         </div>
                                         <div className="group/item cursor-help">
-                                            <p className="text-2xl sm:text-3xl font-medium text-accent/60 mb-2 tracking-tight">S$12,000.00</p>
+                                            <p className="text-lg sm:text-xl lg:text-2xl font-medium text-accent/60 mb-2 tracking-tight">S$12,000.00</p>
                                             <p className="text-[10px] text-accent/40 font-bold uppercase tracking-[0.2em] mb-4">Global Wallet</p>
                                             <div className="h-[2px] w-full bg-gold/5 rounded-full overflow-hidden">
                                                 <motion.div initial={{ width: 0 }} whileInView={{ width: '15%' }} transition={{ duration: 2 }} className="h-full bg-accent/20" />
@@ -214,7 +214,7 @@ export default function DashboardPage() {
                                         </div>
                                     </div>
 
-                                    <div className="p-8 bg-gold/5 border border-gold/10 flex items-center justify-between group-hover:bg-gold/[0.08] transition-colors duration-500">
+                                    <div className="p-4 sm:p-8 bg-gold/5 border border-gold/10 flex flex-col sm:flex-row items-center justify-between gap-4 group-hover:bg-gold/[0.08] transition-colors duration-500">
                                         <div className="flex items-center gap-6">
                                             <div className="relative">
                                                 <div className="w-3 h-3 rounded-full bg-gold animate-ping absolute inset-0" />
