@@ -99,7 +99,7 @@ export default function AuthForm({ type }: { type: 'login' | 'register' }) {
                                     <Shield size={16} className="text-gold" />
                                 </div>
                                 <div className="h-4 w-[1px] bg-gold/20 mr-1"></div>
-                                <span className="text-gold font-bold text-[10px] tracking-[0.4em] uppercase">optimanexgen Secure</span>
+                                <span className="text-gold font-bold text-[10px] tracking-[0.4em] uppercase">Secure Login</span>
                             </div>
                             {type === 'register' && (
                                 <div className="flex gap-2">
@@ -110,12 +110,12 @@ export default function AuthForm({ type }: { type: 'login' | 'register' }) {
                             )}
                         </div>
                         <h2 className="text-3xl sm:text-4xl font-light text-accent mb-4 tracking-tighter">
-                            {type === 'login' ? 'Welcome Back.' : step === 1 ? 'Start Your Journey.' : step === 2 ? 'Personal Details.' : 'Finalize Profile.'}
+                            {type === 'login' ? 'Welcome Back.' : step === 1 ? 'Create an Account.' : step === 2 ? 'Personal Details.' : 'Almost Done.'}
                         </h2>
                         <p className="text-accent/40 font-light text-sm tracking-wide">
                             {type === 'login'
-                                ? 'Authenticate your session to access premium features.'
-                                : `Phase ${step} of 3: Establishing your secure digital banking identity.`}
+                                ? 'Enter your credentials to access your account.'
+                                : `Step ${step} of 3: Fill in your details to create your account.`}
                         </p>
                     </div>
 
@@ -129,8 +129,8 @@ export default function AuthForm({ type }: { type: 'login' | 'register' }) {
                                 </div>
                                 <div className="space-y-2">
                                     <div className="flex justify-between items-center mb-1">
-                                        <label className={labelClasses}>Secret Key</label>
-                                        <Link href="/forgot-password" className="text-[10px] uppercase tracking-widest text-gold/40 hover:text-gold transition-colors">Recover Account?</Link>
+                                        <label className={labelClasses}>Password</label>
+                                        <Link href="/forgot-password" className="text-[10px] uppercase tracking-widest text-gold/40 hover:text-gold transition-colors">Forgot Password?</Link>
                                     </div>
                                     <div className="relative">
                                         <input type={showPassword ? 'text' : 'password'} {...register('password')} className={inputClasses} placeholder="••••••••••••" />
@@ -210,7 +210,7 @@ export default function AuthForm({ type }: { type: 'login' | 'register' }) {
                                         <div className="p-5 border border-gold/10 bg-gold/5 flex items-start gap-4">
                                             <Shield size={18} className="text-gold mt-1 shrink-0" />
                                             <p className="text-[10px] leading-relaxed text-accent/50 uppercase tracking-widest">
-                                                By finalizing, you agree to optimanexgen's premium banking <Link href="/terms" className="text-gold hover:underline">terms</Link> and institutional <Link href="/privacy" className="text-gold hover:underline">privacy standards</Link>.
+                                                By creating an account, you agree to our <Link href="/terms" className="text-gold hover:underline">terms</Link> and <Link href="/privacy" className="text-gold hover:underline">privacy policy</Link>.
                                             </p>
                                         </div>
                                     </motion.div>
@@ -239,7 +239,7 @@ export default function AuthForm({ type }: { type: 'login' | 'register' }) {
                             >
                                 {loading ? <Loader2 className="animate-spin" size={16} /> : (
                                     <>
-                                        {type === 'login' ? 'Authenticate' : step === 3 ? 'Establish Account' : 'Continue'}
+                                        {type === 'login' ? 'Log In' : step === 3 ? 'Create Account' : 'Continue'}
                                         <Lock size={14} className="opacity-50" />
                                     </>
                                 )}
@@ -249,8 +249,8 @@ export default function AuthForm({ type }: { type: 'login' | 'register' }) {
 
                     <div className="mt-12 pt-8 border-t border-gold/10 text-center">
                         <Link href={type === 'login' ? '/verify' : '/login'} className="text-[10px] text-accent/30 uppercase tracking-[0.2em] hover:text-gold transition-colors group">
-                            {type === 'login' ? "Don't have an account?" : "Already a premium member?"}
-                            <span className="text-gold font-bold ml-2 group-hover:underline">{type === 'login' ? 'Join optimanexgen' : 'Secure Sign In'}</span>
+                            {type === 'login' ? "Don't have an account?" : "Already have an account?"}
+                            <span className="text-gold font-bold ml-2 group-hover:underline">{type === 'login' ? 'Sign Up' : 'Secure Sign In'}</span>
                         </Link>
                     </div>
                 </div>
@@ -258,7 +258,7 @@ export default function AuthForm({ type }: { type: 'login' | 'register' }) {
 
             <div className="mt-8 flex items-center justify-center gap-6 text-accent/20">
                 <div className="h-[1px] w-12 bg-gold/10" />
-                <span className="text-[9px] uppercase tracking-[0.4em] font-medium">Verified by Financial Conduct Authority</span>
+                <span className="text-[9px] uppercase tracking-[0.4em] font-medium">Regulated & Secure</span>
                 <div className="h-[1px] w-12 bg-gold/10" />
             </div>
         </motion.div>

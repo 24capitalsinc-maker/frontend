@@ -2,18 +2,17 @@
 import Navbar from '@/components/Navbar'
 import Sidebar from '@/components/Sidebar'
 import TransferForm from '@/components/TransferForm'
-import Footer from '@/components/Footer'
 
 export default function TransferPage() {
     return (
-        <main className="min-h-screen bg-primary flex flex-col relative overflow-hidden">
+        <main className="min-h-screen bg-primary flex flex-col relative overflow-x-hidden">
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay" style={{ backgroundImage: "url('https://static.wixstatic.com/media/c837a6_51db7f706561479b9f9f7570f739e702~mv2.png')", backgroundSize: 'cover' }} />
 
             <Navbar />
 
             <div className="flex flex-1 pt-20">
                 <Sidebar />
-                <div className="flex-1 min-w-0 p-6 md:p-12 z-10">
+                <div className="flex-1 min-w-0 p-6 md:p-12 lg:pl-80 z-10">
                     <div className="max-w-4xl mx-auto">
                         <header className="mb-14 border-b border-gold/10 pb-10">
                             <div className="flex items-center gap-3 mb-4">
@@ -31,9 +30,6 @@ export default function TransferPage() {
                         </div>
                     </div>
 
-                    <div className="mt-24 -mx-6 md:-mx-12">
-                        <Footer />
-                    </div>
                 </div>
             </div>
         </main>

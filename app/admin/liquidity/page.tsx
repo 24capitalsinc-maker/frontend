@@ -5,7 +5,6 @@ import AdminSidebar from '@/components/AdminSidebar'
 import api from '@/lib/api'
 import { motion } from 'framer-motion'
 import { Landmark, TrendingUp, TrendingDown, Activity, ShieldAlert, BarChart3, ArrowUpRight, ArrowDownRight } from 'lucide-react'
-import Footer from '@/components/Footer'
 
 export default function LiquidityPage() {
     const [stats, setStats] = useState<any>(null)
@@ -34,7 +33,7 @@ export default function LiquidityPage() {
 
             <div className="flex flex-1 pt-20">
                 <AdminSidebar />
-                <div className="flex-1 min-w-0 w-full overflow-hidden p-4 sm:p-6 md:p-10 lg:p-12 z-10">
+                <div className="flex-1 min-w-0 w-full overflow-hidden p-4 sm:p-6 md:p-10 lg:p-12 lg:pl-80 z-10">
                     <header className="mb-14 border-b border-gold/10 pb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
                         <div>
                             <div className="flex items-center gap-3 mb-4">
@@ -191,9 +190,6 @@ export default function LiquidityPage() {
                 </div>
             </div>
 
-            <div className="z-20">
-                <Footer />
-            </div>
         </div>
     )
 }

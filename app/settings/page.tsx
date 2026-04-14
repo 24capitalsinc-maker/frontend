@@ -10,9 +10,8 @@ import {
     Lock, ChevronRight, Check, Loader2, AlertTriangle,
     Globe, Clock, CreditCard
 } from 'lucide-react'
-import Footer from '@/components/Footer'
 
-type Section = 'Identity' | 'Security' | 'Notifications' | 'Global' | 'Governance';
+type Section = 'Identity' | 'Security' | 'Notifications' | 'Global' | 'Management';
 
 export default function SettingsPage() {
     const { user, setUser } = useAuthStore()
@@ -60,7 +59,7 @@ export default function SettingsPage() {
         { id: 'Security', label: 'Security & Access', icon: Shield },
         { id: 'Notifications', label: 'Alert Settings', icon: Bell },
         { id: 'Global', label: 'Language & Currency', icon: SettingsIcon },
-        { id: 'Governance', label: 'Account Management', icon: Lock },
+        { id: 'Management', label: 'Account Management', icon: Lock },
     ]
 
     return (
@@ -72,17 +71,17 @@ export default function SettingsPage() {
             <div className="flex flex-col lg:flex-row flex-1 pt-20">
                 <Sidebar />
 
-                <div className="flex-1 flex flex-col min-h-0">
+                <div className="flex-1 flex flex-col min-h-0 lg:pl-80">
                     {/* Settings Tab Navigation (Horizontal on Desktop) */}
                     <div className="w-full border-b border-gold/10 bg-primary-light/5 flex flex-col overflow-visible">
                         <div className="px-6 md:px-16 pt-10 pb-6">
-                            <p className="text-[10px] text-gold font-bold uppercase tracking-[0.4em] mb-8 text-left">Settings Console</p>
-                            <div className="flex flex-row items-center gap-1 overflow-x-auto custom-scrollbar no-scrollbar pb-2">
+                            <p className="text-[10px] text-gold font-bold uppercase tracking-[0.4em] mb-8 text-left">Account Settings</p>
+                            <div className="flex flex-row items-center gap-1 overflow-x-auto no-scrollbar pb-2 mask-linear">
                                 {sections.map((s) => (
                                     <button
                                         key={s.id}
                                         onClick={() => setActiveSection(s.id)}
-                                        className={`flex items-center gap-4 px-6 py-4 transition-all duration-500 whitespace-nowrap group relative ${activeSection === s.id ? 'text-accent' : 'text-accent/30 hover:text-accent/60'}`}
+                                        className={`flex items-center gap-4 px-6 py-4 transition-all duration-500 whitespace-nowrap group relative flex-shrink-0 ${activeSection === s.id ? 'text-accent' : 'text-accent/30 hover:text-accent/60'}`}
                                     >
                                         <s.icon size={14} className={activeSection === s.id ? 'text-gold' : 'text-accent/20'} />
                                         <span className={`text-[10px] uppercase font-bold tracking-[0.2em]`}>
@@ -200,13 +199,13 @@ export default function SettingsPage() {
 
                                         <div className="bg-primary-light/10 border border-gold/5 p-10 space-y-10">
                                             <div className="border-b border-gold/10 pb-6">
-                                                <h3 className="text-xl font-light text-accent mb-2 tracking-tight">Security Token (RSA)</h3>
-                                                <p className="text-xs text-accent/30 uppercase font-bold tracking-widest">Last Rotation: {new Date().toLocaleDateString()}</p>
+                                                <h3 className="text-xl font-light text-accent mb-2 tracking-tight">Login Password</h3>
+                                                <p className="text-xs text-accent/30 uppercase font-bold tracking-widest">Last Changed: {new Date().toLocaleDateString()}</p>
                                             </div>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                                 <button className="border border-gold/20 text-gold px-10 py-5 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-gold/5 transition-all flex items-center justify-center gap-4 group">
                                                     <Lock size={14} className="opacity-40 group-hover:opacity-100 transition-opacity" />
-                                                    Rotate Security Signature
+                                                    Change Password
                                                 </button>
                                                 <button className="border border-gold/20 text-gold px-10 py-5 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-gold/5 transition-all flex items-center justify-center gap-4 group">
                                                     <Shield size={14} className="opacity-40 group-hover:opacity-100 transition-opacity" />
@@ -236,7 +235,7 @@ export default function SettingsPage() {
                                                     })}
                                                     className={`mt-auto py-4 text-[10px] font-bold uppercase tracking-[0.3em] transition-all border ${formData.notifications[n.id] ? 'bg-gold/10 border-gold/40 text-gold' : 'border-gold/5 text-accent/20 hover:text-accent/40'}`}
                                                 >
-                                                    {formData.notifications[n.id] ? 'Connection Established' : 'Offline'}
+                                                    {formData.notifications[n.id] ? 'Enabled' : 'Disabled'}
                                                 </button>
                                             </div>
                                         ))}
@@ -256,9 +255,9 @@ export default function SettingsPage() {
                                                     onChange={(e) => setFormData({ ...formData, preferences: { ...formData.preferences, language: e.target.value } })}
                                                     className="w-full select-institutional bg-transparent border-b border-gold/20 p-4 focus:border-gold outline-none text-accent font-light text-xl cursor-pointer"
                                                 >
-                                                    <option value="English">English (Premium)</option>
-                                                    <option value="German">Deutsch (Private)</option>
-                                                    <option value="French">Français (Swiss)</option>
+                                                    <option value="English">English</option>
+                                                    <option value="German">Deutsch</option>
+                                                    <option value="French">Français</option>
                                                 </select>
                                             </div>
 
@@ -272,9 +271,9 @@ export default function SettingsPage() {
                                                     onChange={(e) => setFormData({ ...formData, preferences: { ...formData.preferences, timezone: e.target.value } })}
                                                     className="w-full select-institutional bg-transparent border-b border-gold/20 p-4 focus:border-gold outline-none text-accent font-light text-xl cursor-pointer"
                                                 >
-                                                    <option value="UTC">UTC - Global Standard</option>
-                                                    <option value="CET">CET - Zurich/Luxembourg</option>
-                                                    <option value="SGT">SGT - Singapore Operations</option>
+                                                    <option value="UTC">UTC</option>
+                                                    <option value="CET">CET (Europe)</option>
+                                                    <option value="SGT">SGT (Singapore)</option>
                                                 </select>
                                             </div>
 
@@ -288,16 +287,16 @@ export default function SettingsPage() {
                                                     onChange={(e) => setFormData({ ...formData, preferences: { ...formData.preferences, defaultCurrency: e.target.value } })}
                                                     className="w-full select-institutional bg-transparent border-b border-gold/20 p-4 focus:border-gold outline-none text-accent font-light text-xl cursor-pointer"
                                                 >
-                                                    <option value="USD">USD - Reserve Dollar</option>
+                                                    <option value="USD">USD - US Dollar</option>
                                                     <option value="CHF">CHF - Swiss Franc</option>
-                                                    <option value="EUR">EUR - Euro Sovereign</option>
+                                                    <option value="EUR">EUR - Euro</option>
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
                                 )}
 
-                                {activeSection === 'Governance' && (
+                                {activeSection === 'Management' && (
                                     <div className="space-y-12">
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                                             <div className="bg-primary-light/10 border border-gold/5 p-10 space-y-8">
@@ -324,7 +323,7 @@ export default function SettingsPage() {
                                                     <h3 className="text-[10px] font-bold uppercase tracking-[0.3em]">Close Account</h3>
                                                 </div>
                                                 <p className="text-sm text-accent/30 font-light leading-relaxed mb-auto pb-10">
-                                                    Initiating account closure results in permanent loss of all financial records and data. This action is **irreversible**.
+                                                    Closing your account will permanently delete all your data. This cannot be undone.
                                                 </p>
                                                 <button className="w-full border border-red-500/30 text-red-400/60 py-5 text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-red-500/20 hover:text-red-400 transition-all">
                                                     Close My Account
@@ -336,9 +335,6 @@ export default function SettingsPage() {
                             </motion.div>
                         </AnimatePresence>
 
-                        <div className="mt-24">
-                            <Footer />
-                        </div>
                     </div>
                 </div>
             </div>

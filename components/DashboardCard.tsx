@@ -32,6 +32,16 @@ export default function DashboardCard({
         setTimeout(() => setCopied(false), 2000)
     }
 
+    const getFontSizeClass = (val: string | number) => {
+        const length = String(val).length
+        if (length > 20) return "text-xs sm:text-sm lg:text-base xl:text-lg"
+        if (length > 15) return "text-sm sm:text-base lg:text-lg xl:text-xl"
+        if (length > 12) return "text-base sm:text-lg lg:text-xl xl:text-2xl"
+        return "text-lg sm:text-xl lg:text-2xl xl:text-3xl"
+    }
+
+    const valueToShow = isSensitive && !isVisible ? "••••••••" : value
+
     return (
         <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -81,10 +91,10 @@ export default function DashboardCard({
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -5 }}
                                 transition={{ duration: 0.3 }}
-                                className="text-2xl sm:text-3xl lg:text-4xl font-medium text-accent tracking-tighter transition-all duration-700 group-hover:tracking-normal truncate max-w-full"
+                                className={`${getFontSizeClass(valueToShow)} font-medium text-accent tracking-tight transition-all duration-700 group-hover:tracking-normal whitespace-nowrap overflow-visible`}
                                 title={String(value)}
                             >
-                                {isSensitive && !isVisible ? "••••••••" : value}
+                                {valueToShow}
                             </motion.h3>
                         </AnimatePresence>
                         {isCopyable && (!isSensitive || isVisible) && (

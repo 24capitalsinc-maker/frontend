@@ -62,7 +62,7 @@ export default function Navbar() {
                     {isDashboard ? (
                         <div className="hidden md:flex items-center gap-4">
                             <div className="h-[30px] w-px bg-gold/10"></div>
-                            <span className="text-[9px] font-bold text-gold uppercase tracking-[0.5em] px-4 py-2 bg-gold/5 border border-gold/10">Executive Portal</span>
+                            <span className="text-[9px] font-bold text-gold uppercase tracking-[0.5em] px-4 py-2 bg-gold/5 border border-gold/10">My Account</span>
                         </div>
                     ) : null}
                 </div>
@@ -177,7 +177,7 @@ export default function Navbar() {
                             {(isDashboard || isAdmin) && (
                                 <div className="mt-8 pt-8 border-t border-gold/10">
                                     <p className={`text-[10px] font-bold uppercase tracking-[0.3em] mb-6 ${isAdmin ? 'text-red-500/40' : 'text-gold/40'}`}>
-                                        {isAdmin ? 'System Governance' : 'Banking Operations'}
+                                        {isAdmin ? 'Admin Menu' : 'My Account'}
                                     </p>
                                     <div className="grid grid-cols-1 gap-2">
                                         {(isAdmin ? adminLinks : dashboardLinks).map((link) => (

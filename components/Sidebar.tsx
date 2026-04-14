@@ -34,26 +34,10 @@ export default function Sidebar() {
     }
 
     return (
-        <aside className="w-80 bg-primary/40 backdrop-blur-3xl border-r border-gold/10 min-h-[calc(100vh-80px)] p-12 hidden lg:block sticky top-20 self-start">
+        <aside className="w-64 bg-primary/40 backdrop-blur-3xl border-r border-gold/10 h-[calc(100vh-80px)] overflow-y-auto no-scrollbar p-10 hidden lg:block fixed top-20 left-0 z-30">
             <div className="absolute inset-0 bg-silk opacity-5 pointer-events-none" />
             <div className="flex flex-col h-full relative z-10">
                 <div className="flex-1 space-y-12">
-                    <div className="flex flex-col gap-4 mb-16 px-2">
-                        <Link href="/" className="flex items-center gap-3 group">
-                            <img
-                                src={settings?.logoUrl || '/logo.png'}
-                                alt={settings?.companyName || 'Optima Nexgen'}
-                                className="h-8 w-auto object-contain transition-transform duration-700 group-hover:scale-105"
-                            />
-                            <div className="flex flex-col">
-                                <span className="text-xs font-light tracking-[0.2em] text-accent uppercase leading-tight">
-                                    {settings?.logoText || 'Optima'}<span className="text-gold font-medium">{settings?.logoAccent || 'Nexgen'}</span>
-                                </span>
-                                <span className="text-[6px] text-gold/40 uppercase tracking-[0.5em] font-bold">Institutional</span>
-                            </div>
-                        </Link>
-                        <div className="h-[1px] w-12 bg-gold/10" />
-                    </div>
                     <ul className="space-y-6">
                         {links.map((link) => {
                             const isActive = pathname === link.href
@@ -100,8 +84,8 @@ export default function Sidebar() {
                             <ShieldCheck size={18} className="text-gold/40 group-hover:text-gold transition-colors duration-700" strokeWidth={1} />
                         </div>
                         <div>
-                            <p className="text-[8px] text-accent/20 uppercase font-bold tracking-[0.4em] mb-1">Security Status</p>
-                            <p className="text-[10px] text-gold font-bold uppercase tracking-[0.2em]">Verified Connection</p>
+                            <p className="text-[8px] text-accent/20 uppercase font-bold tracking-[0.4em] mb-1">Account Status</p>
+                            <p className="text-[10px] text-gold font-bold uppercase tracking-[0.2em]">Secure & Active</p>
                         </div>
                     </div>
                 </div>

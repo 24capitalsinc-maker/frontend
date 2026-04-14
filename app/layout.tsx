@@ -2,6 +2,8 @@ import './globals.css'
 import { Outfit, Inter } from 'next/font/google'
 import { Toaster } from 'sonner'
 import FaviconSync from '@/components/FaviconSync'
+import SessionProvider from '@/components/SessionProvider'
+import InactivityHandler from '@/components/InactivityHandler'
 
 const outfit = Outfit({
     subsets: ['latin'],
@@ -32,9 +34,12 @@ export default function RootLayout({
     return (
         <html lang="en" className={`${outfit.variable} ${inter.variable} overflow-x-hidden max-w-[100vw] text-ellipsis`} data-scroll-behavior="smooth">
             <body className="bg-primary text-slate-100 font-sans antialiased overflow-x-hidden max-w-[100vw]">
-                <FaviconSync />
-                <Toaster richColors position="top-right" closeButton />
-                {children}
+                <SessionProvider>
+                    <InactivityHandler />
+                    <FaviconSync />
+                    <Toaster richColors position="top-right" closeButton />
+                    {children}
+                </SessionProvider>
             </body>
         </html>
     )

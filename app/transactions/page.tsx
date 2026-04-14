@@ -5,7 +5,6 @@ import Sidebar from '@/components/Sidebar'
 import TransactionTable from '@/components/TransactionTable'
 import api from '@/lib/api'
 import { Filter } from 'lucide-react'
-import Footer from '@/components/Footer'
 
 export default function TransactionsPage() {
     const [transactions, setTransactions] = useState([])
@@ -33,7 +32,7 @@ export default function TransactionsPage() {
 
             <div className="flex flex-1 pt-20">
                 <Sidebar />
-                <div className="flex-1 min-w-0 p-4 sm:p-6 md:p-12 z-10 overflow-hidden">
+                <div className="flex-1 min-w-0 p-4 sm:p-6 lg:p-12 lg:pl-80 z-10 overflow-hidden">
                     <header className="mb-14 flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-gold/10 pb-10">
                         <div>
                             <div className="flex items-center gap-3 mb-4">
@@ -61,9 +60,6 @@ export default function TransactionsPage() {
                         )}
                     </div>
 
-                    <div className="mt-24 -mx-6 md:-mx-12">
-                        <Footer />
-                    </div>
                 </div>
             </div>
         </main>

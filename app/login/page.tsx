@@ -8,14 +8,14 @@ import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/store/useAuthStore'
 
 export default function LoginPage() {
-    const { user } = useAuthStore()
+    const { user, isInitialized } = useAuthStore()
     const router = useRouter()
 
     useEffect(() => {
-        if (user) {
+        if (isInitialized && user) {
             router.replace('/dashboard')
         }
-    }, [user, router])
+    }, [user, isInitialized, router])
     return (
         <main className="min-h-screen bg-primary flex flex-col relative overflow-x-hidden">
             {/* Editorial background texture */}

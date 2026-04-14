@@ -9,7 +9,7 @@ import { Loader2, Globe, Shield, Landmark, AlertCircle, CheckCircle2, ArrowRight
 import ReceiptModal from './ReceiptModal'
 
 const schema = z.object({
-    receiverAccountNumber: z.string().min(5, 'Valid account number is required'),
+    receiverAccountNumber: z.string().regex(/^\d{1,10}$/, 'Account number must be numeric and up to 10 digits'),
     amount: z.number().min(1, 'Minimum transfer amount is $1'),
     description: z.string().optional().or(z.literal('')),
     currency: z.string(),
@@ -111,7 +111,7 @@ export default function TransferForm() {
                 <div className="absolute top-0 right-0 w-64 h-64 bg-gold/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
                 <div className="mb-12">
-                    <p className="text-gold font-bold text-[10px] tracking-[0.4em] uppercase mb-4">Verification Phase</p>
+                    <p className="text-gold font-bold text-[10px] tracking-[0.4em] uppercase mb-4">Review Transfer</p>
                     <h3 className="text-3xl md:text-4xl font-light text-accent tracking-tighter mb-4">Confirm <span className="text-gold">Transfer.</span></h3>
                     <div className="h-[1px] w-full bg-gold/10 mt-6" />
                 </div>
@@ -119,8 +119,8 @@ export default function TransferForm() {
                 <div className="space-y-8 mb-12">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 py-6 border-b border-gold/5">
                         <div className="space-y-1">
-                            <p className="text-[9px] text-accent/30 font-bold uppercase tracking-[0.3em]">Protocol</p>
-                            <p className="text-accent font-medium tracking-widest">{protocol === 'Domestic' ? 'Domestic / Same Bank' : protocol === 'Other' ? 'Other Banks' : 'Offshore'}</p>
+                            <p className="text-[9px] text-accent/30 font-bold uppercase tracking-[0.3em] text-left">Transfer Type</p>
+                            <p className="text-accent font-medium tracking-widest text-left">{protocol === 'Domestic' ? 'Domestic / Same Bank' : protocol === 'Other' ? 'Other Banks' : 'Offshore'}</p>
                         </div>
                         <div className="space-y-1 text-left sm:text-right">
                             <p className="text-[9px] text-accent/30 font-bold uppercase tracking-[0.3em]">Amount</p>
@@ -128,12 +128,12 @@ export default function TransferForm() {
                         </div>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 py-6 border-b border-gold/5">
-                        <div className="space-y-1">
-                            <p className="text-[9px] text-accent/30 font-bold uppercase tracking-[0.3em]">Beneficiary Account</p>
-                            <p className="text-accent font-medium tracking-widest">{formData.receiverAccountNumber}</p>
+                        <div className="space-y-1 text-left">
+                            <p className="text-[9px] text-accent/30 font-bold uppercase tracking-[0.3em]">Recipient Account</p>
+                            <p className="text-accent font-medium tracking-widest break-all">{formData.receiverAccountNumber}</p>
                         </div>
                         {formData.swiftCode && (
-                            <div className="space-y-1 text-right">
+                            <div className="space-y-1 text-left sm:text-right">
                                 <p className="text-[9px] text-accent/30 font-bold uppercase tracking-[0.3em]">SWIFT / BIC</p>
                                 <p className="text-accent font-medium tracking-widest uppercase">{formData.swiftCode}</p>
                             </div>
@@ -144,7 +144,7 @@ export default function TransferForm() {
                 <div className="bg-gold/5 border border-gold/10 p-6 flex items-start gap-4 mb-12">
                     <Info size={16} className="text-gold mt-1" />
                     <p className="text-[10px] text-accent/60 leading-relaxed font-light">
-                        By confirming this transaction, you authorize the immediate allocation of capital from your institutional vault to the specified beneficiary. This action is recorded on the permanent financial ledger.
+                        By confirming, you authorise this transfer. This action cannot be undone once processed.
                     </p>
                 </div>
 
@@ -161,7 +161,7 @@ export default function TransferForm() {
                         className="flex-[2] bg-gold text-primary font-bold tracking-[0.3em] uppercase py-5 hover:bg-gold-dark transition-all flex items-center justify-center gap-3 shadow-2xl shadow-gold/20 text-[10px]"
                     >
                         {loading ? <Loader2 size={16} className="animate-spin" /> : <ShieldCheck size={16} />}
-                        Execute Settlement
+                        Confirm & Send
                     </button>
                 </div>
             </div>
@@ -184,9 +184,9 @@ export default function TransferForm() {
                     </div>
                 </div>
                 <div className="space-y-6">
-                    <p className="text-gold font-bold text-[10px] tracking-[0.5em] uppercase animate-pulse">Routing Protocol Active</p>
+                    <p className="text-gold font-bold text-[10px] tracking-[0.5em] uppercase animate-pulse">Processing Transfer…</p>
                     <h3 className="text-3xl font-light text-accent tracking-tighter">Your transfer is <span className="text-gold">on the way.</span></h3>
-                    <p className="text-accent/30 text-xs font-light max-w-xs mx-auto leading-relaxed">Securing institutional rails and authenticating multi-party settlement credentials…</p>
+                    <p className="text-accent/30 text-xs font-light max-w-xs mx-auto leading-relaxed">Please wait while your transfer is being processed securely.</p>
                 </div>
             </motion.div>
         )
@@ -203,7 +203,7 @@ export default function TransferForm() {
             />
 
             <div className="mb-14">
-                <p className="text-gold font-bold text-[10px] tracking-[0.4em] uppercase mb-4">Secure Funds Transfer</p>
+                <p className="text-gold font-bold text-[10px] tracking-[0.4em] uppercase mb-4">Send Money</p>
                 <h3 className="text-3xl md:text-4xl font-light text-accent tracking-tighter mb-4">Transfer <span className="text-gold">Funds.</span></h3>
                 <div className="h-[1px] w-full bg-gold/10 mt-6" />
             </div>
@@ -233,7 +233,7 @@ export default function TransferForm() {
                         className={`p-6 border flex flex-col items-center gap-3 transition-all duration-500 ${protocol === 'Offshore' ? 'border-gold bg-gold/10 shadow-[0_0_20px_rgba(203,161,110,0.1)]' : 'border-gold/10 hover:border-gold/30 bg-primary/50 opacity-40 hover:opacity-100'}`}
                     >
                         <Shield size={20} className={protocol === 'Offshore' ? 'text-gold' : 'text-accent/50'} />
-                        <span className={`text-[9px] font-bold tracking-widest uppercase text-center ${protocol === 'Offshore' ? 'text-gold' : 'text-accent/50'}`}>Offshore Private</span>
+                        <span className={`text-[9px] font-bold tracking-widest uppercase text-center ${protocol === 'Offshore' ? 'text-gold' : 'text-accent/50'}`}>International</span>
                     </button>
                 </div>
             </div>
@@ -245,7 +245,7 @@ export default function TransferForm() {
                         <input
                             {...register('receiverAccountNumber')}
                             className="w-full bg-transparent border-b border-gold/30 p-4 focus:border-gold outline-none transition-colors text-accent placeholder:text-accent/20 font-light text-lg sm:text-xl tracking-wider"
-                            placeholder="0000 0000 0000"
+                            placeholder="e.g. 1029384756"
                         />
                         {errors.receiverAccountNumber && <p className="text-red-400 text-[10px] font-bold uppercase tracking-wider mt-2">{errors.receiverAccountNumber.message}</p>}
                     </div>
@@ -278,7 +278,7 @@ export default function TransferForm() {
                             <input
                                 type="number"
                                 {...register('amount', { valueAsNumber: true })}
-                                className="w-full bg-transparent border-b border-gold/30 pl-8 p-4 focus:border-gold outline-none transition-colors text-gold font-light text-2xl sm:text-4xl tracking-tighter tabular-nums"
+                                className="w-full bg-transparent border-b border-gold/30 pl-8 p-4 focus:border-gold outline-none transition-colors text-gold font-light text-2xl sm:text-3xl lg:text-4xl tracking-tighter tabular-nums"
                                 placeholder="0.00"
                             />
                         </div>
@@ -301,7 +301,7 @@ export default function TransferForm() {
 
                     <div className="space-y-4">
                         <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 block">
-                            {protocol === 'Offshore' ? 'Settlement Jurisdiction' : 'Transfer Note (Optional)'}
+                            {protocol === 'Offshore' ? 'Destination' : 'Transfer Note (Optional)'}
                         </label>
                         {protocol === 'Offshore' ? (
                             <select
@@ -310,14 +310,14 @@ export default function TransferForm() {
                             >
                                 <option value="Zurich">Zurich, Switzerland</option>
                                 <option value="Cayman">Cayman Islands</option>
-                                <option value="Singapore">Singapore Terminal</option>
-                                <option value="Luxembourg">Luxembourg Vault</option>
+                                <option value="Singapore">Singapore</option>
+                                <option value="Luxembourg">Luxembourg</option>
                             </select>
                         ) : (
                             <input
                                 {...register('description')}
                                 className="w-full bg-transparent border-b border-gold/30 p-4 focus:border-gold outline-none transition-colors text-accent placeholder:text-accent/20 font-light text-xl"
-                                placeholder="Distribution Reference"
+                                placeholder="e.g. Rent payment"
                             />
                         )}
                     </div>
@@ -336,18 +336,14 @@ export default function TransferForm() {
 
                 <div className="pt-10 flex flex-col md:flex-row items-center justify-between gap-6 border-t border-gold/10">
                     <div className="flex items-center gap-4">
-                        <div className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse shadow-[0_0_10px_rgba(203,161,110,0.8)]" />
-                        <div>
-                            <p className="text-[8px] text-accent/30 font-bold uppercase tracking-[0.4em]">Protocol Protocol</p>
-                            <p className="text-[10px] text-gold font-bold uppercase tracking-widest leading-none">AES-256 Auth Active</p>
-                        </div>
+                        {/* Status indicators removed */}
                     </div>
                     <button
                         type="submit"
                         disabled={loading}
                         className="w-full md:w-auto bg-gold text-primary font-bold tracking-[0.3em] uppercase px-16 py-6 hover:bg-gold-dark transition-all transform hover:scale-[1.02] active:scale-[0.98] inline-flex items-center justify-center gap-4 disabled:opacity-50 shadow-2xl shadow-gold/20 text-[10px]"
                     >
-                        Initialize Transfer <ArrowRight size={16} />
+                        Continue <ArrowRight size={16} />
                     </button>
                 </div>
             </form>

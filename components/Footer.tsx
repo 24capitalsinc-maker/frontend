@@ -8,11 +8,11 @@ export default function Footer() {
     const currentYear = new Date().getFullYear()
 
     return (
-        <footer className="bg-primary pt-24 pb-12 border-t border-gold/10 relative overflow-hidden">
+        <footer className="bg-primary pt-16 md:pt-24 pb-12 border-t border-gold/10 relative overflow-hidden">
             <div className="absolute inset-0 opacity-[0.02] pointer-events-none mix-blend-overlay" style={{ backgroundImage: "url('https://static.wixstatic.com/media/c837a6_51db7f706561479b9f9f7570f739e702~mv2.png')", backgroundSize: 'cover' }} />
 
             <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16 mb-20">
                     {/* Brand Section */}
                     <div className="space-y-8">
                         <Link href="/" className="flex items-center gap-2 md:gap-3">
@@ -26,7 +26,7 @@ export default function Footer() {
                             </span>
                         </Link>
                         <p className="text-[10px] text-accent/40 uppercase leading-relaxed tracking-widest font-light max-w-xs">
-                            Leading the evolution of institutional liquidity and sovereign wealth management through advanced diagnostic protocols.
+                            Modern, secure banking designed to make managing your money simple.
                         </p>
                         <div className="flex items-center gap-6">
                             {settings?.socialLinks?.twitter && (
@@ -46,40 +46,40 @@ export default function Footer() {
 
                     {/* Quick Protocols */}
                     <div className="space-y-8">
-                        <h4 className="text-[10px] font-bold text-gold uppercase tracking-[0.4em]">Operations</h4>
+                        <h4 className="text-[10px] font-bold text-gold uppercase tracking-[0.4em]">Services</h4>
                         <ul className="space-y-4">
-                            <li><Link href="/business" className="text-[10px] text-accent/50 hover:text-gold transition-colors uppercase tracking-widest">Institutional Banking</Link></li>
-                            <li><Link href="/personal" className="text-[10px] text-accent/50 hover:text-gold transition-colors uppercase tracking-widest">Private Equity</Link></li>
-                            <li><Link href="/cards" className="text-[10px] text-accent/50 hover:text-gold transition-colors uppercase tracking-widest">Sovereign Cards</Link></li>
-                            <li><Link href="/loans" className="text-[10px] text-accent/50 hover:text-gold transition-colors uppercase tracking-widest">Capital Liquidity</Link></li>
+                            <li><Link href="/business" className="text-[10px] text-accent/50 hover:text-gold transition-colors uppercase tracking-widest">Business Banking</Link></li>
+                            <li><Link href="/personal" className="text-[10px] text-accent/50 hover:text-gold transition-colors uppercase tracking-widest">Personal Banking</Link></li>
+                            <li><Link href="/cards" className="text-[10px] text-accent/50 hover:text-gold transition-colors uppercase tracking-widest">Cards</Link></li>
+                            <li><Link href="/loans" className="text-[10px] text-accent/50 hover:text-gold transition-colors uppercase tracking-widest">Loans</Link></li>
                         </ul>
                     </div>
 
                     {/* Support Node */}
                     <div className="space-y-8">
-                        <h4 className="text-[10px] font-bold text-gold uppercase tracking-[0.4em]">Governance</h4>
+                        <h4 className="text-[10px] font-bold text-gold uppercase tracking-[0.4em]">Help</h4>
                         <ul className="space-y-4">
-                            <li><Link href="/support" className="text-[10px] text-accent/50 hover:text-gold transition-colors uppercase tracking-widest">Support Portal</Link></li>
-                            <li><Link href="/contact" className="text-[10px] text-accent/50 hover:text-gold transition-colors uppercase tracking-widest">Contact Node</Link></li>
+                            <li><Link href="/support" className="text-[10px] text-accent/50 hover:text-gold transition-colors uppercase tracking-widest">Support</Link></li>
+                            <li><Link href="/contact" className="text-[10px] text-accent/50 hover:text-gold transition-colors uppercase tracking-widest">Contact Us</Link></li>
                         </ul>
                     </div>
 
-                    {/* Contact Node */}
+                    {/* Contact Section */}
                     <div className="space-y-8">
-                        <h4 className="text-[10px] font-bold text-gold uppercase tracking-[0.4em]">Node Info</h4>
+                        <h4 className="text-[10px] font-bold text-gold uppercase tracking-[0.4em]">Contact</h4>
                         <div className="space-y-6">
                             <div className="flex items-start gap-4">
                                 <Mail size={14} className="text-gold/40 mt-1" />
                                 <div>
                                     <p className="text-[10px] text-accent font-light tracking-wide">{settings?.supportEmail || 'support@optimanexgen.org'}</p>
-                                    <p className="text-[8px] text-accent/30 uppercase mt-1 tracking-widest font-bold">Encrypted Channel</p>
+                                    <p className="text-[8px] text-accent/30 uppercase mt-1 tracking-widest font-bold">Email Support</p>
                                 </div>
                             </div>
                             <div className="flex items-start gap-4">
                                 <MapPin size={14} className="text-gold/40 mt-1" />
                                 <div>
-                                    <p className="text-[10px] text-accent font-light tracking-wide">Sovereign District, Node 01</p>
-                                    <p className="text-[8px] text-accent/30 uppercase mt-1 tracking-widest font-bold">Global Headquarters</p>
+                                    <p className="text-[10px] text-accent font-light tracking-wide">Main Office</p>
+                                    <p className="text-[8px] text-accent/30 uppercase mt-1 tracking-widest font-bold">Head Office</p>
                                 </div>
                             </div>
                         </div>
@@ -90,11 +90,11 @@ export default function Footer() {
                     <div className="flex items-center gap-4">
                         <Shield size={16} className="text-gold/20" />
                         <p className="text-[9px] text-accent/30 uppercase tracking-[0.3em] font-medium">
-                            &copy; {currentYear} {settings?.companyName || 'optimanexgen'} Institutional. All rights reserved.
+                            &copy; {currentYear} {settings?.companyName || 'optimanexgen'}. All rights reserved.
                         </p>
                     </div>
                     <div className="flex items-center gap-10">
-                        <Link href="/privacy" className="text-[8px] text-accent/20 hover:text-accent/50 transition-colors uppercase tracking-[0.4em] font-bold">Privacy Protocol</Link>
+                        <Link href="/privacy" className="text-[8px] text-accent/20 hover:text-accent/50 transition-colors uppercase tracking-[0.4em] font-bold">Privacy Policy</Link>
                         <Link href="/terms" className="text-[8px] text-accent/20 hover:text-accent/50 transition-colors uppercase tracking-[0.4em] font-bold">Terms of Service</Link>
                     </div>
                 </div>

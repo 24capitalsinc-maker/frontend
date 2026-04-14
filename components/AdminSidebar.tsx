@@ -33,20 +33,9 @@ export default function AdminSidebar() {
     }
 
     return (
-        <aside className="w-80 bg-red-950/5 border-r border-red-500/10 min-h-[calc(100vh-80px)] p-10 hidden lg:block sticky top-20 self-start">
+        <aside className="w-64 bg-red-950/5 border-r border-red-500/10 h-[calc(100vh-80px)] p-10 hidden lg:block fixed top-20 left-0 z-30 overflow-y-auto">
             <div className="flex flex-col h-full">
                 <div className="flex-1 space-y-10">
-                    <div className="flex flex-col gap-6 mb-12">
-                        <Link href="/admin" className="flex items-center gap-3">
-                            <img
-                                src="/logo.png"
-                                alt="Optima Nexgen Admin"
-                                className="h-6 w-auto object-contain brightness-0 invert opacity-50"
-                            />
-                            <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-red-400/50">Admin Control</p>
-                        </Link>
-                        <div className="h-[1px] w-8 bg-red-400/30" />
-                    </div>
                     <ul className="space-y-4">
                         {links.map((link) => {
                             const isActive = pathname === link.href
