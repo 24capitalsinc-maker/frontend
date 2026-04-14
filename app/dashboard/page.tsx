@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
+import SmoothSelect from '@/components/SmoothSelect'
 import Navbar from '@/components/Navbar'
 import Sidebar from '@/components/Sidebar'
 import DashboardCard from '@/components/DashboardCard'
@@ -18,6 +19,7 @@ export default function DashboardPage() {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
     const [showSensitiveInfo, setShowSensitiveInfo] = useState(true)
+    const [quarter, setQuarter] = useState('Q1')
     const router = useRouter()
 
     useEffect(() => {
@@ -106,10 +108,23 @@ export default function DashboardPage() {
                                 <span className="bg-gold/10 text-gold text-[9px] font-bold px-4 py-2 border border-gold/20 uppercase tracking-[0.4em]">Verified Member</span>
                                 <div className="h-[1px] w-12 bg-gold/20"></div>
                             </div>
-                            <h1 className="text-prestige text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-accent leading-tight">
-                                Account <span className="text-gold font-medium">Dashboard.</span>
-                            </h1>
-                            <p className="text-accent/30 mt-6 text-xs sm:text-sm tracking-widest font-light">Welcome back, {profile?.name}. Your account is up to date.</p>
+                            <div className="flex flex-col md:flex-row md:items-center gap-6 mb-6">
+                                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full border border-gold/20 p-1 flex items-center justify-center overflow-hidden">
+                                    {profile?.profileImage ? (
+                                        <img src={profile.profileImage} className="w-full h-full rounded-full object-cover" alt={profile.name} />
+                                    ) : (
+                                        <div className="w-full h-full rounded-full bg-gold/10 flex items-center justify-center text-gold text-2xl font-light">
+                                            {profile?.name?.[0]}
+                                        </div>
+                                    )}
+                                </div>
+                                <div>
+                                    <h1 className="text-prestige text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-accent leading-tight">
+                                        Account <span className="text-gold font-medium">Dashboard.</span>
+                                    </h1>
+                                    <p className="text-accent/30 mt-4 text-xs sm:text-sm tracking-widest font-light">Welcome back, {profile?.name}. Your account is up to date.</p>
+                                </div>
+                            </div>
                         </div>
 
                         <button onClick={() => router.push('/transfer')} className="w-full md:w-auto group relative bg-gold text-primary px-10 py-5 font-bold text-[10px] tracking-[0.3em] uppercase transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-gold/10 overflow-hidden">
@@ -235,10 +250,17 @@ export default function DashboardPage() {
                             <div className="bg-primary/40 backdrop-blur-3xl border border-gold/10 p-10 relative overflow-hidden group shadow-2xl">
                                 <div className="flex justify-between items-center mb-12 border-b border-gold/5 pb-8">
                                     <h2 className="text-2xl font-light text-accent tracking-tighter">Spending <span className="text-gold font-medium">Insights.</span></h2>
-                                    <select className="bg-transparent text-[8px] text-gold uppercase tracking-[0.4em] font-bold border border-gold/20 px-4 py-2 outline-none cursor-pointer hover:border-gold/50 transition-colors select-institutional">
-                                        <option value="Q1">Q1 2026</option>
-                                        <option value="Q4">Q4 2025</option>
-                                    </select>
+                                    <div className="w-32">
+                                        <SmoothSelect
+                                            value={quarter}
+                                            options={[
+                                                { value: 'Q1', label: 'Q1 2026' },
+                                                { value: 'Q4', label: 'Q4 2025' },
+                                            ]}
+                                            onChange={(val) => setQuarter(val)}
+                                            className="!space-y-0"
+                                        />
+                                    </div>
                                 </div>
                                 <div className="h-60 flex items-end gap-3 px-4">
                                     {[65, 40, 85, 30, 95, 55, 75].map((h, i) => (

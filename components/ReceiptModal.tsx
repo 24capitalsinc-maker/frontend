@@ -175,7 +175,9 @@ export default function ReceiptModal({ isOpen, onClose, transaction }: ReceiptMo
                                 <p className="text-3xl font-light tracking-tighter tabular-nums" style={{ color: COLORS.accent }}>
                                     {isDebit ? '-' : '+'}{transaction.currency === 'USD' ? '$' : transaction.currency === 'EUR' ? '€' : '£'}{transaction.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                                 </p>
-                                <p className="text-[9px] font-bold uppercase tracking-[0.3em] mt-2" style={{ color: 'rgba(252, 249, 245, 0.3)' }}>Settlement Authenticated</p>
+                                <p className="text-[9px] font-bold uppercase tracking-[0.3em] mt-2" style={{ color: 'rgba(252, 249, 245, 0.3)' }}>
+                                    {transaction.status === 'pending' ? 'Initiated // Verification Required' : 'Settlement Authenticated'}
+                                </p>
                             </div>
 
                             {/* Details Grid */}

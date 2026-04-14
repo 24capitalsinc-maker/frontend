@@ -7,9 +7,11 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Loader2, Globe, Shield, Landmark, AlertCircle, CheckCircle2, ArrowRight, ShieldCheck, Info } from 'lucide-react'
 import ReceiptModal from './ReceiptModal'
+import SmoothSelect from './SmoothSelect'
 
 const schema = z.object({
     receiverAccountNumber: z.string().regex(/^\d{1,10}$/, 'Account number must be numeric and up to 10 digits'),
+    receiverName: z.string().min(3, 'Beneficiary full name is required'),
     amount: z.number().min(1, 'Minimum transfer amount is $1'),
     description: z.string().optional().or(z.literal('')),
     currency: z.string(),
@@ -43,6 +45,7 @@ export default function TransferForm() {
         resolver: zodResolver(schema),
         defaultValues: {
             receiverAccountNumber: '',
+            receiverName: '',
             amount: 0,
             routingProtocol: 'Domestic',
             currency: 'USD',
@@ -129,16 +132,22 @@ export default function TransferForm() {
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 py-6 border-b border-gold/5">
                         <div className="space-y-1 text-left">
+                            <p className="text-[9px] text-accent/30 font-bold uppercase tracking-[0.3em]">Beneficiary Name</p>
+                            <p className="text-accent font-medium tracking-widest break-all uppercase">{formData.receiverName}</p>
+                        </div>
+                        <div className="space-y-1 text-left sm:text-right">
                             <p className="text-[9px] text-accent/30 font-bold uppercase tracking-[0.3em]">Recipient Account</p>
                             <p className="text-accent font-medium tracking-widest break-all">{formData.receiverAccountNumber}</p>
                         </div>
-                        {formData.swiftCode && (
+                    </div>
+                    {formData.swiftCode && (
+                        <div className="py-6 border-b border-gold/5">
                             <div className="space-y-1 text-left sm:text-right">
                                 <p className="text-[9px] text-accent/30 font-bold uppercase tracking-[0.3em]">SWIFT / BIC</p>
                                 <p className="text-accent font-medium tracking-widest uppercase">{formData.swiftCode}</p>
                             </div>
-                        )}
-                    </div>
+                        </div>
+                    )}
                 </div>
 
                 <div className="bg-gold/5 border border-gold/10 p-6 flex items-start gap-4 mb-12">
@@ -239,7 +248,17 @@ export default function TransferForm() {
             </div>
 
             <form onSubmit={handleSubmit(handleInitialSubmit)} className="space-y-12 font-sans">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                    <div className="space-y-4">
+                        <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 block">Beneficiary Full Name</label>
+                        <input
+                            {...register('receiverName')}
+                            className="w-full bg-transparent border-b border-gold/30 p-4 focus:border-gold outline-none transition-colors text-accent placeholder:text-accent/20 font-light text-lg sm:text-xl tracking-wider uppercase"
+                            placeholder="e.g. JOHN DOE"
+                        />
+                        {errors.receiverName && <p className="text-red-400 text-[10px] font-bold uppercase tracking-wider mt-2">{errors.receiverName.message}</p>}
+                    </div>
+
                     <div className="space-y-4">
                         <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 block">Recipient Account Number</label>
                         <input
@@ -277,8 +296,11 @@ export default function TransferForm() {
                             <span className="absolute left-0 bottom-4 text-xl sm:text-2xl font-light text-gold/40">{currentCurrency === 'USD' ? '$' : currentCurrency === 'EUR' ? '€' : '£'}</span>
                             <input
                                 type="number"
+                                min="1"
+                                step="any"
+                                onWheel={(e) => (e.target as HTMLInputElement).blur()}
                                 {...register('amount', { valueAsNumber: true })}
-                                className="w-full bg-transparent border-b border-gold/30 pl-8 p-4 focus:border-gold outline-none transition-colors text-gold font-light text-2xl sm:text-3xl lg:text-4xl tracking-tighter tabular-nums"
+                                className="w-full bg-transparent border-b border-gold/30 pl-8 p-4 focus:border-gold outline-none transition-colors text-gold font-light text-2xl sm:text-3xl lg:text-4xl tracking-tighter tabular-nums no-scrollbar"
                                 placeholder="0.00"
                             />
                         </div>
@@ -286,39 +308,42 @@ export default function TransferForm() {
                     </div>
 
                     <div className="space-y-4">
-                        <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 block">Currency</label>
-                        <select
-                            {...register('currency')}
-                            className="w-full select-institutional bg-transparent border-b border-gold/30 p-4 focus:border-gold outline-none transition-colors text-accent font-light text-xl cursor-pointer"
-                        >
-                            <option value="USD">USD - US Dollar</option>
-                            <option value="EUR">EUR - Euro (SEPA)</option>
-                            <option value="GBP">GBP - British Pound</option>
-                            <option value="CHF">CHF - Swiss Franc</option>
-                            <option value="SGD">SGD - Singapore Dollar</option>
-                        </select>
+                        <SmoothSelect
+                            label="Currency"
+                            value={currentCurrency}
+                            options={[
+                                { value: 'USD', label: 'USD - US Dollar' },
+                                { value: 'EUR', label: 'EUR - Euro (SEPA)' },
+                                { value: 'GBP', label: 'GBP - British Pound' },
+                                { value: 'CHF', label: 'CHF - Swiss Franc' },
+                                { value: 'SGD', label: 'SGD - Singapore Dollar' },
+                            ]}
+                            onChange={(val) => setValue('currency', val)}
+                        />
                     </div>
 
                     <div className="space-y-4">
-                        <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 block">
-                            {protocol === 'Offshore' ? 'Destination' : 'Transfer Note (Optional)'}
-                        </label>
                         {protocol === 'Offshore' ? (
-                            <select
-                                {...register('jurisdiction')}
-                                className="w-full select-institutional bg-transparent border-b border-gold/30 p-4 focus:border-gold outline-none transition-colors text-accent font-light text-xl cursor-pointer"
-                            >
-                                <option value="Zurich">Zurich, Switzerland</option>
-                                <option value="Cayman">Cayman Islands</option>
-                                <option value="Singapore">Singapore</option>
-                                <option value="Luxembourg">Luxembourg</option>
-                            </select>
-                        ) : (
-                            <input
-                                {...register('description')}
-                                className="w-full bg-transparent border-b border-gold/30 p-4 focus:border-gold outline-none transition-colors text-accent placeholder:text-accent/20 font-light text-xl"
-                                placeholder="e.g. Rent payment"
+                            <SmoothSelect
+                                label="Destination Jurisdiction"
+                                value={formData.jurisdiction || 'Zurich'}
+                                options={[
+                                    { value: 'Zurich', label: 'Zurich, Switzerland' },
+                                    { value: 'Cayman', label: 'Cayman Islands' },
+                                    { value: 'Singapore', label: 'Singapore' },
+                                    { value: 'Luxembourg', label: 'Luxembourg' },
+                                ]}
+                                onChange={(val) => setValue('jurisdiction', val)}
                             />
+                        ) : (
+                            <>
+                                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50 block">Transfer Note (Optional)</label>
+                                <input
+                                    {...register('description')}
+                                    className="w-full bg-transparent border-b border-gold/30 p-4 focus:border-gold outline-none transition-colors text-accent placeholder:text-accent/20 font-light text-xl"
+                                    placeholder="e.g. Rent payment"
+                                />
+                            </>
                         )}
                     </div>
                 </div>

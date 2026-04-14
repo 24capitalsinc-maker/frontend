@@ -17,7 +17,7 @@ export const adminLinks = [
 export default function AdminSidebar() {
     const pathname = usePathname()
     const router = useRouter()
-    const { logout } = useAuthStore()
+    const { user, logout } = useAuthStore()
     const [mounted, setMounted] = useState(false)
 
     useEffect(() => {
@@ -74,16 +74,20 @@ export default function AdminSidebar() {
                     </ul>
                 </div>
 
-                {/* Secure Status */}
+                {/* Administrative Identity */}
                 <div className="mt-20 pt-10 border-t border-red-500/10 relative">
                     <div className="absolute top-0 left-0 w-8 h-[1px] bg-red-500" />
-                    <div className="flex items-center gap-4">
-                        <div className="w-11 h-11 bg-red-500/5 border border-red-500/20 flex items-center justify-center rounded-sm shadow-[0_0_15px_rgba(239,68,68,0.1)]">
-                            <ShieldCheck size={18} className="text-red-500/60" strokeWidth={1.2} />
+                    <div className="flex items-center gap-4 group">
+                        <div className="w-11 h-11 rounded-full bg-red-500/5 border border-red-500/20 flex items-center justify-center transition-all duration-700 group-hover:border-red-400 overflow-hidden relative">
+                            {user?.profileImage ? (
+                                <img src={user.profileImage} className="w-full h-full object-cover" alt="Admin" />
+                            ) : (
+                                <ShieldCheck size={18} className="text-red-500/60 group-hover:text-red-400 transition-colors duration-700" strokeWidth={1.2} />
+                            )}
                         </div>
-                        <div>
-                            <p className="text-[9px] text-red-400/20 uppercase font-bold tracking-[0.3em] mb-1">Access Level</p>
-                            <p className="text-[10px] text-red-500 font-bold uppercase tracking-widest animate-pulse">Administrator Mode</p>
+                        <div className="min-w-0">
+                            <p className="text-[9px] text-red-400/20 uppercase font-bold tracking-[0.3em] mb-1 truncate">{user?.name || "Administrator"}</p>
+                            <p className="text-[10px] text-red-500 font-bold uppercase tracking-widest animate-pulse">Access: Sovereign</p>
                         </div>
                     </div>
                 </div>

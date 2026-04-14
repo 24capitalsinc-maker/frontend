@@ -76,16 +76,26 @@ export default function Sidebar() {
                     </ul>
                 </div>
 
-                {/* Account Status */}
+                {/* Account Identity */}
                 <div className="mt-20 pt-12 border-t border-gold/10 relative">
                     <div className="absolute top-0 left-0 w-12 h-[1px] bg-gold/40" />
-                    <div className="flex items-center gap-6 group cursor-help">
-                        <div className="w-12 h-12 bg-primary/40 border border-gold/20 flex items-center justify-center transition-all duration-700 group-hover:border-gold shadow-inner">
-                            <ShieldCheck size={18} className="text-gold/40 group-hover:text-gold transition-colors duration-700" strokeWidth={1} />
+                    <div className="flex items-center gap-6 group">
+                        <div className="w-12 h-12 rounded-full bg-primary/40 border border-gold/20 flex items-center justify-center transition-all duration-700 group-hover:border-gold shadow-inner overflow-hidden relative">
+                            {user?.profileImage ? (
+                                <img
+                                    src={user.profileImage}
+                                    className="w-full h-full object-cover"
+                                    alt={user.name}
+                                />
+                            ) : (
+                                <span className="text-[10px] text-gold font-bold uppercase tracking-widest">
+                                    {user?.name?.split(' ').map(n => n[0]).join('').substring(0, 2)}
+                                </span>
+                            )}
                         </div>
-                        <div>
-                            <p className="text-[8px] text-accent/20 uppercase font-bold tracking-[0.4em] mb-1">Account Status</p>
-                            <p className="text-[10px] text-gold font-bold uppercase tracking-[0.2em]">Secure & Active</p>
+                        <div className="min-w-0">
+                            <p className="text-[8px] text-accent/20 uppercase font-bold tracking-[0.4em] mb-1 truncate">{user?.name || 'Institutional Client'}</p>
+                            <p className="text-[10px] text-gold font-bold uppercase tracking-[0.2em] animate-pulse">Identity Verified</p>
                         </div>
                     </div>
                 </div>

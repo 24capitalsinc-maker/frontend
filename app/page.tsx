@@ -160,7 +160,7 @@ export default function HomePage() {
                 <div className="absolute inset-0 bg-silk pointer-events-none opacity-20" />
                 <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 text-center relative z-10">
                     {[
-                        { value: "$4.2B+", label: "Capital Vault Liquidity" },
+                        { value: "$4.2B+", label: "Optima Vault Liquidity" },
                         { value: "0.01%", label: "Sovereign Tier Rates" },
                         { value: "100%", label: "Settlement Guarantee" },
                         { value: "24/7", label: "Executive Concierge" },

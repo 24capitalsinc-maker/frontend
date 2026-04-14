@@ -95,8 +95,12 @@ export default function Navbar() {
                     {mounted && (user ? (
                         <div className="flex items-center gap-8">
                             <Link href="/dashboard" className="text-[10px] font-bold tracking-[0.3em] uppercase text-accent hover:text-gold transition-all duration-500 flex items-center gap-3 group">
-                                <div className="w-8 h-8 rounded-full border border-gold/20 flex items-center justify-center group-hover:border-gold transition-colors">
-                                    <UserIcon size={14} className="text-gold" />
+                                <div className="w-8 h-8 rounded-full border border-gold/20 flex items-center justify-center group-hover:border-gold transition-colors overflow-hidden">
+                                    {user.profileImage ? (
+                                        <img src={user.profileImage} className="w-full h-full object-cover" alt={user.name} />
+                                    ) : (
+                                        <UserIcon size={14} className="text-gold" />
+                                    )}
                                 </div>
                                 <span className="">{user.name}</span>
                             </Link>
@@ -124,7 +128,16 @@ export default function Navbar() {
                 </div>
 
                 {/* Mobile Toggle */}
-                <div className="flex-1 flex xl:hidden justify-end items-center">
+                <div className="flex-1 flex xl:hidden justify-end items-center gap-4">
+                    {user && (
+                        <Link href="/settings" className="w-8 h-8 rounded-full border border-gold/20 flex items-center justify-center overflow-hidden">
+                            {user.profileImage ? (
+                                <img src={user.profileImage} className="w-full h-full object-cover" alt={user.name} />
+                            ) : (
+                                <span className="text-[8px] text-gold font-bold">{user.name?.[0]}</span>
+                            )}
+                        </Link>
+                    )}
                     <button
                         className="text-accent hover:text-gold transition-all duration-500"
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -144,6 +157,24 @@ export default function Navbar() {
                         className="xl:hidden absolute top-full left-0 w-full bg-primary border-b border-gold/10"
                     >
                         <div className="px-6 py-10 flex flex-col gap-2 font-light uppercase tracking-[0.15em]">
+                            {/* Mobile User Identity Header */}
+                            {user && (
+                                <div className="mb-8 p-6 bg-gold/5 border border-gold/10 flex items-center gap-6">
+                                    <div className="w-16 h-16 rounded-full border border-gold/30 p-1 flex items-center justify-center overflow-hidden">
+                                        {user.profileImage ? (
+                                            <img src={user.profileImage} className="w-full h-full rounded-full object-cover" alt={user.name} />
+                                        ) : (
+                                            <div className="w-full h-full rounded-full bg-gold/10 flex items-center justify-center text-gold text-xl font-light">
+                                                {user.name?.[0]}
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-gold text-sm font-bold tracking-widest truncate">{user.name}</p>
+                                        <p className="text-accent/30 text-[9px] font-medium tracking-[0.3em] uppercase">Premium Institutional Tier</p>
+                                    </div>
+                                </div>
+                            )}
                             {!isDashboard && !isAdmin && navLinks.map((link) => (
                                 <Link
                                     key={link.href}

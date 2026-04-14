@@ -20,7 +20,7 @@ export default function TransferPage() {
                                 <div className="h-[1px] w-8 bg-gold/20"></div>
                             </div>
                             <h1 className="text-4xl md:text-5xl font-light text-accent tracking-tighter">
-                                Capital <span className="text-gold font-medium">Transfer.</span>
+                                Optima <span className="text-gold font-medium">Transfer.</span>
                             </h1>
                             <p className="text-accent/40 mt-3 text-sm tracking-wide font-light max-w-xl">Execute encrypted global wealth transfers with institutional grade security and real-time settlement.</p>
                         </header>

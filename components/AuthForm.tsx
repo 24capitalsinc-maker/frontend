@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { Loader2, Shield, Lock, Eye, EyeOff } from 'lucide-react'
 import Link from 'next/link'
+import SmoothSelect from './SmoothSelect'
 
 const schema = z.object({
     name: z.string().min(2, 'Full name is required').optional(),
@@ -29,7 +30,7 @@ export default function AuthForm({ type }: { type: 'login' | 'register' }) {
     const setAuth = useAuthStore((state) => state.setAuth)
     const router = useRouter()
 
-    const { register, handleSubmit, formState: { errors }, trigger } = useForm({
+    const { register, handleSubmit, formState: { errors }, trigger, setValue, watch } = useForm({
         resolver: zodResolver(schema)
     })
 
@@ -182,14 +183,18 @@ export default function AuthForm({ type }: { type: 'login' | 'register' }) {
                                                 {errors.dateOfBirth && <p className="text-red-400 text-[10px] mt-1">{errors.dateOfBirth.message as string}</p>}
                                             </div>
                                         </div>
-                                        <div className="space-y-2">
-                                            <label className={labelClasses}>Gender Recognition</label>
-                                            <select {...register('gender')} className={`${inputClasses} appearance-none cursor-pointer`}>
-                                                <option value="" className="bg-primary">Select Gender</option>
-                                                <option value="Male" className="bg-primary">Male</option>
-                                                <option value="Female" className="bg-primary">Female</option>
-                                                <option value="Other" className="bg-primary">Other / Private</option>
-                                            </select>
+                                        <div className="space-y-4">
+                                            <SmoothSelect
+                                                label="Gender Recognition"
+                                                value={watch('gender')}
+                                                options={[
+                                                    { value: 'Male', label: 'Male' },
+                                                    { value: 'Female', label: 'Female' },
+                                                    { value: 'Other', label: 'Other / Private' },
+                                                ]}
+                                                onChange={(val) => setValue('gender', val)}
+                                                placeholder="Select Gender"
+                                            />
                                             {errors.gender && <p className="text-red-400 text-[10px] mt-1">{errors.gender.message as string}</p>}
                                         </div>
                                     </motion.div>

@@ -8,8 +8,11 @@ import api from '@/lib/api'
 import {
     User, Shield, Bell, Settings as SettingsIcon,
     Lock, ChevronRight, Check, Loader2, AlertTriangle,
-    Globe, Clock, CreditCard
+    Globe, Clock, CreditCard,
+    Camera, Edit2
 } from 'lucide-react'
+import { useRef } from 'react'
+import SmoothSelect from '@/components/SmoothSelect'
 
 type Section = 'Identity' | 'Security' | 'Notifications' | 'Global' | 'Management';
 
@@ -20,6 +23,45 @@ export default function SettingsPage() {
     const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState(false)
     const [formData, setFormData] = useState<any>({})
+    const fileInputRef = useRef<HTMLInputElement>(null)
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (file) {
+            const reader = new FileReader()
+            reader.onloadend = () => {
+                const img = new Image()
+                img.onload = () => {
+                    const canvas = document.createElement('canvas')
+                    const MAX_WIDTH = 400
+                    const MAX_HEIGHT = 400
+                    let width = img.width
+                    let height = img.height
+
+                    if (width > height) {
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width
+                            width = MAX_WIDTH
+                        }
+                    } else {
+                        if (height > MAX_HEIGHT) {
+                            width *= MAX_HEIGHT / height
+                            height = MAX_HEIGHT
+                        }
+                    }
+
+                    canvas.width = width
+                    canvas.height = height
+                    const ctx = canvas.getContext('2d')
+                    ctx?.drawImage(img, 0, 0, width, height)
+                    const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7) // 70% quality
+                    setFormData((prev: any) => ({ ...prev, profileImage: compressedBase64 }))
+                }
+                img.src = reader.result as string
+            }
+            reader.readAsDataURL(file)
+        }
+    }
 
     useEffect(() => {
         setMounted(true)
@@ -32,7 +74,8 @@ export default function SettingsPage() {
                 twoFactorEnabled: user.twoFactorEnabled || false,
                 notifications: user.notifications || { email: true, sms: false, push: true },
                 preferences: user.preferences || { language: 'English', timezone: 'UTC', defaultCurrency: 'USD' },
-                limits: user.limits || { dailyTransfer: 50000, monthlyTransfer: 500000 }
+                limits: user.limits || { dailyTransfer: 50000, monthlyTransfer: 500000 },
+                profileImage: user.profileImage || ''
             })
         }
     }, [user])
@@ -47,6 +90,22 @@ export default function SettingsPage() {
             setTimeout(() => setSuccess(false), 3000)
         } catch (err) {
             // Handled via UI
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const handleRequestClosure = async () => {
+        if (!confirm('Are you absolutely sure you want to request account closure? This process requires administrative approval.')) return
+
+        setLoading(true)
+        try {
+            await api.post('/users/request-closure', { reason: 'User initiated from settings' })
+            setUser({ ...user, isClosureRequested: true })
+            setSuccess(true)
+            setTimeout(() => setSuccess(false), 3000)
+        } catch (err: any) {
+            alert(err.response?.data?.message || 'Failed to submit closure request')
         } finally {
             setLoading(false)
         }
@@ -124,57 +183,100 @@ export default function SettingsPage() {
                                 className="space-y-12"
                             >
                                 {activeSection === 'Identity' && (
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                                        <div className="space-y-8 bg-primary-light/10 border border-gold/5 p-10">
-                                            <p className="text-[10px] text-gold font-bold uppercase tracking-[0.3em] mb-6 border-b border-gold/10 pb-4">Personal Information</p>
-                                            <div className="space-y-4">
-                                                <label className="text-[10px] text-accent/30 font-bold uppercase tracking-widest block">Full Name</label>
+                                    <div className="space-y-12">
+                                        {/* Master Avatar Section */}
+                                        <div className="bg-primary-light/10 border border-gold/5 p-10 flex flex-col md:flex-row items-center gap-10 group">
+                                            <div className="relative">
+                                                <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-2 border-gold/20 p-2 relative group-hover:border-gold transition-all duration-700">
+                                                    <div className="w-full h-full rounded-full bg-primary/40 flex items-center justify-center overflow-hidden relative border border-gold/10">
+                                                        {formData.profileImage ? (
+                                                            <img src={formData.profileImage} className="w-full h-full object-cover" alt="Profile" />
+                                                        ) : (
+                                                            <span className="text-2xl text-gold/20 font-light tracking-widest">{user?.name?.[0]}</span>
+                                                        )}
+                                                        <div
+                                                            onClick={() => fileInputRef.current?.click()}
+                                                            className="absolute inset-0 bg-primary/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center cursor-pointer gap-2"
+                                                        >
+                                                            <Camera size={24} className="text-gold" />
+                                                            <span className="text-[8px] text-gold font-bold uppercase tracking-widest">Update</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <input
-                                                    value={formData.name}
-                                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                                    className="w-full bg-transparent border-b border-gold/20 p-4 focus:border-gold outline-none transition-colors text-accent font-light text-lg tracking-tight"
+                                                    type="file"
+                                                    ref={fileInputRef}
+                                                    onChange={handleImageChange}
+                                                    accept="image/jpeg,image/png,image/webp,image/jpg"
+                                                    className="hidden"
                                                 />
                                             </div>
-                                            <div className="space-y-4">
-                                                <label className="text-[10px] text-accent/30 font-bold uppercase tracking-widest block">Occupation</label>
-                                                <input
-                                                    value={formData.occupation}
-                                                    onChange={(e) => setFormData({ ...formData, occupation: e.target.value })}
-                                                    className="w-full bg-transparent border-b border-gold/20 p-4 focus:border-gold outline-none transition-colors text-accent font-light text-lg tracking-tight placeholder:text-accent/10"
-                                                    placeholder="e.g. Portfolio Manager"
-                                                />
+                                            <div className="max-w-md text-center md:text-left">
+                                                <h3 className="text-xl font-light text-accent mb-2">Institutional Identity Image</h3>
+                                                <p className="text-xs text-accent/40 font-light leading-relaxed mb-6">
+                                                    Your profile picture is displayed across the secure ledger and internal communication modules. Recommended: Square WebP or PNG, min 400x400px.
+                                                </p>
+                                                <button
+                                                    onClick={() => fileInputRef.current?.click()}
+                                                    className="inline-flex items-center gap-3 text-[10px] text-gold font-bold uppercase tracking-[0.3em] border-b border-gold/20 pb-2 hover:gap-5 transition-all"
+                                                >
+                                                    Upload New Instrument <Edit2 size={12} />
+                                                </button>
                                             </div>
                                         </div>
 
-                                        <div className="space-y-8 bg-primary-light/10 border border-gold/5 p-10">
-                                            <p className="text-[10px] text-gold font-bold uppercase tracking-[0.3em] mb-6 border-b border-gold/10 pb-4">Contact Details</p>
-                                            <div className="space-y-4">
-                                                <label className="text-[10px] text-accent/30 font-bold uppercase tracking-widest block">Email Address</label>
-                                                <input
-                                                    disabled
-                                                    value={user?.email}
-                                                    className="w-full bg-transparent border-b border-gold/10 p-4 outline-none text-accent/40 font-light text-lg tracking-tight selection:bg-gold/10"
-                                                />
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                                            <div className="space-y-8 bg-primary-light/10 border border-gold/5 p-10">
+                                                <p className="text-[10px] text-gold font-bold uppercase tracking-[0.3em] mb-6 border-b border-gold/10 pb-4">Personal Information</p>
+                                                <div className="space-y-4">
+                                                    <label className="text-[10px] text-accent/30 font-bold uppercase tracking-widest block">Full Name</label>
+                                                    <input
+                                                        value={formData.name}
+                                                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                                        className="w-full bg-transparent border-b border-gold/20 p-4 focus:border-gold outline-none transition-colors text-accent font-light text-lg tracking-tight"
+                                                    />
+                                                </div>
+                                                <div className="space-y-4">
+                                                    <label className="text-[10px] text-accent/30 font-bold uppercase tracking-widest block">Occupation</label>
+                                                    <input
+                                                        value={formData.occupation}
+                                                        onChange={(e) => setFormData({ ...formData, occupation: e.target.value })}
+                                                        className="w-full bg-transparent border-b border-gold/20 p-4 focus:border-gold outline-none transition-colors text-accent font-light text-lg tracking-tight placeholder:text-accent/10"
+                                                        placeholder="e.g. Portfolio Manager"
+                                                    />
+                                                </div>
                                             </div>
-                                            <div className="space-y-4">
-                                                <label className="text-[10px] text-accent/30 font-bold uppercase tracking-widest block">Phone Number</label>
-                                                <input
-                                                    value={formData.phoneNumber}
-                                                    onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
-                                                    className="w-full bg-transparent border-b border-gold/20 p-4 focus:border-gold outline-none transition-colors text-accent font-light text-lg tracking-tight"
-                                                    placeholder="+X XXX XXX XXXX"
-                                                />
-                                            </div>
-                                        </div>
 
-                                        <div className="md:col-span-2 space-y-4 bg-primary-light/10 border border-gold/5 p-10">
-                                            <p className="text-[10px] text-gold font-bold uppercase tracking-[0.3em] mb-6 border-b border-gold/10 pb-4">Home Address</p>
-                                            <textarea
-                                                value={formData.address}
-                                                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                                                className="w-full bg-transparent border border-gold/10 p-6 focus:border-gold outline-none transition-colors text-accent font-light text-lg tracking-tight h-32 resize-none appearance-none"
-                                                placeholder="Provide your full home address..."
-                                            />
+                                            <div className="space-y-8 bg-primary-light/10 border border-gold/5 p-10">
+                                                <p className="text-[10px] text-gold font-bold uppercase tracking-[0.3em] mb-6 border-b border-gold/10 pb-4">Contact Details</p>
+                                                <div className="space-y-4">
+                                                    <label className="text-[10px] text-accent/30 font-bold uppercase tracking-widest block">Email Address</label>
+                                                    <input
+                                                        disabled
+                                                        value={user?.email}
+                                                        className="w-full bg-transparent border-b border-gold/10 p-4 outline-none text-accent/40 font-light text-lg tracking-tight selection:bg-gold/10"
+                                                    />
+                                                </div>
+                                                <div className="space-y-4">
+                                                    <label className="text-[10px] text-accent/30 font-bold uppercase tracking-widest block">Phone Number</label>
+                                                    <input
+                                                        value={formData.phoneNumber}
+                                                        onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
+                                                        className="w-full bg-transparent border-b border-gold/20 p-4 focus:border-gold outline-none transition-colors text-accent font-light text-lg tracking-tight"
+                                                        placeholder="+X XXX XXX XXXX"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className="md:col-span-2 space-y-4 bg-primary-light/10 border border-gold/5 p-10">
+                                                <p className="text-[10px] text-gold font-bold uppercase tracking-[0.3em] mb-6 border-b border-gold/10 pb-4">Home Address</p>
+                                                <textarea
+                                                    value={formData.address}
+                                                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                                                    className="w-full bg-transparent border border-gold/10 p-6 focus:border-gold outline-none transition-colors text-accent font-light text-lg tracking-tight h-32 resize-none appearance-none"
+                                                    placeholder="Provide your full home address..."
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                 )}
@@ -242,59 +344,45 @@ export default function SettingsPage() {
                                     </div>
                                 )}
 
-                                {activeSection === 'Global' && (
-                                    <div className="space-y-10">
-                                        <div className="bg-primary-light/10 border border-gold/5 p-10 grid grid-cols-1 md:grid-cols-3 gap-12">
-                                            <div className="space-y-4">
-                                                <div className="flex items-center gap-3 text-gold/40 mb-2">
-                                                    <Globe size={14} />
-                                                    <label className="text-[10px] font-bold uppercase tracking-[0.2em]">Primary Language</label>
-                                                </div>
-                                                <select
-                                                    value={formData.preferences?.language}
-                                                    onChange={(e) => setFormData({ ...formData, preferences: { ...formData.preferences, language: e.target.value } })}
-                                                    className="w-full select-institutional bg-transparent border-b border-gold/20 p-4 focus:border-gold outline-none text-accent font-light text-xl cursor-pointer"
-                                                >
-                                                    <option value="English">English</option>
-                                                    <option value="German">Deutsch</option>
-                                                    <option value="French">Français</option>
-                                                </select>
-                                            </div>
+                                <div className="space-y-10">
+                                    <div className="bg-primary-light/10 border border-gold/5 p-10 grid grid-cols-1 md:grid-cols-3 gap-12">
+                                        <SmoothSelect
+                                            label="Primary Language"
+                                            icon={<Globe size={14} />}
+                                            value={formData.preferences?.language}
+                                            options={[
+                                                { value: 'English', label: 'English' },
+                                                { value: 'German', label: 'Deutsch' },
+                                                { value: 'French', label: 'Français' },
+                                            ]}
+                                            onChange={(val) => setFormData({ ...formData, preferences: { ...formData.preferences, language: val } })}
+                                        />
 
-                                            <div className="space-y-4">
-                                                <div className="flex items-center gap-3 text-gold/40 mb-2">
-                                                    <Clock size={14} />
-                                                    <label className="text-[10px] font-bold uppercase tracking-[0.2em]">Time Zone</label>
-                                                </div>
-                                                <select
-                                                    value={formData.preferences?.timezone}
-                                                    onChange={(e) => setFormData({ ...formData, preferences: { ...formData.preferences, timezone: e.target.value } })}
-                                                    className="w-full select-institutional bg-transparent border-b border-gold/20 p-4 focus:border-gold outline-none text-accent font-light text-xl cursor-pointer"
-                                                >
-                                                    <option value="UTC">UTC</option>
-                                                    <option value="CET">CET (Europe)</option>
-                                                    <option value="SGT">SGT (Singapore)</option>
-                                                </select>
-                                            </div>
+                                        <SmoothSelect
+                                            label="Time Zone"
+                                            icon={<Clock size={14} />}
+                                            value={formData.preferences?.timezone}
+                                            options={[
+                                                { value: 'UTC', label: 'UTC' },
+                                                { value: 'CET', label: 'CET (Europe)' },
+                                                { value: 'SGT', label: 'SGT (Singapore)' },
+                                            ]}
+                                            onChange={(val) => setFormData({ ...formData, preferences: { ...formData.preferences, timezone: val } })}
+                                        />
 
-                                            <div className="space-y-4">
-                                                <div className="flex items-center gap-3 text-gold/40 mb-2">
-                                                    <CreditCard size={14} />
-                                                    <label className="text-[10px] font-bold uppercase tracking-[0.2em]">Base Currency</label>
-                                                </div>
-                                                <select
-                                                    value={formData.preferences?.defaultCurrency}
-                                                    onChange={(e) => setFormData({ ...formData, preferences: { ...formData.preferences, defaultCurrency: e.target.value } })}
-                                                    className="w-full select-institutional bg-transparent border-b border-gold/20 p-4 focus:border-gold outline-none text-accent font-light text-xl cursor-pointer"
-                                                >
-                                                    <option value="USD">USD - US Dollar</option>
-                                                    <option value="CHF">CHF - Swiss Franc</option>
-                                                    <option value="EUR">EUR - Euro</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                        <SmoothSelect
+                                            label="Base Currency"
+                                            icon={<CreditCard size={14} />}
+                                            value={formData.preferences?.defaultCurrency}
+                                            options={[
+                                                { value: 'USD', label: 'USD - US Dollar' },
+                                                { value: 'CHF', label: 'CHF - Swiss Franc' },
+                                                { value: 'EUR', label: 'EUR - Euro' },
+                                            ]}
+                                            onChange={(val) => setFormData({ ...formData, preferences: { ...formData.preferences, defaultCurrency: val } })}
+                                        />
                                     </div>
-                                )}
+                                </div>
 
                                 {activeSection === 'Management' && (
                                     <div className="space-y-12">
@@ -320,13 +408,30 @@ export default function SettingsPage() {
                                             <div className="bg-red-500/5 border border-red-500/10 p-10 flex flex-col">
                                                 <div className="flex items-center gap-4 mb-8 text-red-500/60">
                                                     <AlertTriangle size={20} />
-                                                    <h3 className="text-[10px] font-bold uppercase tracking-[0.3em]">Close Account</h3>
+                                                    <h3 className="text-[10px] font-bold uppercase tracking-[0.3em]">
+                                                        {user?.isClosureRequested ? 'Closure Pending Review' : 'Close Account'}
+                                                    </h3>
                                                 </div>
                                                 <p className="text-sm text-accent/30 font-light leading-relaxed mb-auto pb-10">
-                                                    Closing your account will permanently delete all your data. This cannot be undone.
+                                                    {user?.isClosureRequested
+                                                        ? 'An administrative review of your account closure request is currently in progress. You will be notified once the process is finalized.'
+                                                        : 'Closing your account will permanently delete all your data. This process requires administrative approval and cannot be undone.'}
                                                 </p>
-                                                <button className="w-full border border-red-500/30 text-red-400/60 py-5 text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-red-500/20 hover:text-red-400 transition-all">
-                                                    Close My Account
+                                                <button
+                                                    onClick={handleRequestClosure}
+                                                    disabled={loading || user?.isClosureRequested}
+                                                    className={`w-full border py-5 text-[10px] font-bold uppercase tracking-[0.3em] transition-all ${user?.isClosureRequested
+                                                        ? 'border-gold/20 text-gold/40 cursor-not-allowed'
+                                                        : 'border-red-500/30 text-red-400/60 hover:bg-red-500/20 hover:text-red-400'
+                                                        }`}
+                                                >
+                                                    {loading ? (
+                                                        <Loader2 className="animate-spin mx-auto" size={16} />
+                                                    ) : user?.isClosureRequested ? (
+                                                        'Awaiting Administrative Approval'
+                                                    ) : (
+                                                        'Close My Account'
+                                                    )}
                                                 </button>
                                             </div>
                                         </div>

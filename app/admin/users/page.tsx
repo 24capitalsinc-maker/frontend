@@ -105,6 +105,19 @@ export default function AdminUsersPage() {
         return filteredUsers.slice(start, start + itemsPerPage)
     }, [filteredUsers, currentPage])
 
+    const handleApproveClosure = async (userId: string) => {
+        if (!confirm('FINAL PROTOCOL ALERT: You are about to PERMANENTLY delete this institutional entity and all associated data. This action is IRREVERSIBLE. Proceed?')) return
+
+        try {
+            await api.post('/admin/approve-closure', { userId })
+            toast.success('Entity Purged: Account and data have been permanently deleted.')
+            setUsers(users.filter(u => u._id !== userId))
+            setSelectedUser(null)
+        } catch (err) {
+            toast.error('Deletion Failure: Unable to finalize account closure.')
+        }
+    }
+
     const handleSearchChange = (val: string) => {
         setSearchTerm(val)
         setCurrentPage(1)
@@ -276,6 +289,27 @@ export default function AdminUsersPage() {
                                                 <div className="mt-4 p-4 bg-red-500/5 border border-red-500/10 rounded-sm">
                                                     <p className="text-[9px] font-bold text-red-400 uppercase tracking-widest mb-1">Audit Reason</p>
                                                     <p className="text-xs text-accent/60 leading-relaxed italic">"{selectedUser.freezeReason}"</p>
+                                                </div>
+                                            )}
+
+                                            {/* Closure Request Alert */}
+                                            {selectedUser.isClosureRequested && (
+                                                <div className="mt-8 p-6 bg-red-600 border border-red-400 shadow-[0_20px_40px_rgba(220,38,38,0.3)] relative overflow-hidden group/closure">
+                                                    <div className="absolute top-0 right-0 p-2 opacity-20">
+                                                        <AlertCircle size={40} />
+                                                    </div>
+                                                    <h4 className="text-[10px] font-bold text-white uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
+                                                        <AlertCircle size={12} /> Institutional Revocation Requested
+                                                    </h4>
+                                                    <p className="text-xs text-white/80 font-light leading-relaxed mb-8">
+                                                        The user has formally requested a permanent account closure. Approving this will result in immediate data purge and ledger removal.
+                                                    </p>
+                                                    <button
+                                                        onClick={() => handleApproveClosure(selectedUser._id)}
+                                                        className="w-full py-4 bg-white text-red-600 text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-red-50 transition-all active:scale-95"
+                                                    >
+                                                        Finalize Account Deletion
+                                                    </button>
                                                 </div>
                                             )}
 

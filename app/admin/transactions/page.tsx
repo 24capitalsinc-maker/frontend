@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import Navbar from '@/components/Navbar'
 import AdminSidebar from '@/components/AdminSidebar'
+import SmoothSelect from '@/components/SmoothSelect'
 import api from '@/lib/api'
 import { toast } from 'sonner'
 import { Edit2, Save, X, Calendar, DollarSign, ArrowRightLeft, Search } from 'lucide-react'
@@ -266,16 +267,16 @@ export default function AdminTransactionsPage() {
                                     <h4 className="text-[10px] text-gold font-bold uppercase tracking-[0.2em]">Routing & Protocol</h4>
                                 </div>
                                 <div className="space-y-3">
-                                    <label className="text-[10px] font-bold uppercase tracking-widest text-accent/40">Protocol</label>
-                                    <select
+                                    <SmoothSelect
+                                        label="Protocol"
                                         value={editForm.routingProtocol}
-                                        onChange={(e) => setEditForm({ ...editForm, routingProtocol: e.target.value })}
-                                        className="w-full select-institutional p-4 text-[10px] font-bold uppercase tracking-[0.15em] cursor-pointer"
-                                    >
-                                        <option value="Domestic">Domestic Protocol</option>
-                                        <option value="International">International Wire</option>
-                                        <option value="Offshore">Offshore Settlement</option>
-                                    </select>
+                                        options={[
+                                            { value: 'Domestic', label: 'Domestic Protocol' },
+                                            { value: 'International', label: 'International Wire' },
+                                            { value: 'Offshore', label: 'Offshore Settlement' },
+                                        ]}
+                                        onChange={(val) => setEditForm({ ...editForm, routingProtocol: val })}
+                                    />
                                 </div>
                                 <div className="space-y-3">
                                     <label className="text-[10px] font-bold uppercase tracking-widest text-accent/40">SWIFT / BIC</label>
@@ -374,27 +375,27 @@ export default function AdminTransactionsPage() {
                                     />
                                 </div>
                                 <div className="space-y-3">
-                                    <label className="text-[10px] font-bold uppercase tracking-widest text-accent/40">Transaction Type</label>
-                                    <select
+                                    <SmoothSelect
+                                        label="Transaction Type"
                                         value={editForm.type}
-                                        onChange={(e) => setEditForm({ ...editForm, type: e.target.value })}
-                                        className="w-full select-institutional p-4 text-[10px] font-bold uppercase tracking-widest cursor-pointer"
-                                    >
-                                        <option value="debit">Debit Outflow</option>
-                                        <option value="credit">Credit Inflow</option>
-                                    </select>
+                                        options={[
+                                            { value: 'debit', label: 'Debit Outflow' },
+                                            { value: 'credit', label: 'Credit Inflow' },
+                                        ]}
+                                        onChange={(val) => setEditForm({ ...editForm, type: val })}
+                                    />
                                 </div>
                                 <div className="space-y-3">
-                                    <label className="text-[10px] font-bold uppercase tracking-widest text-accent/40">Current Status</label>
-                                    <select
+                                    <SmoothSelect
+                                        label="Current Status"
                                         value={editForm.status}
-                                        onChange={(e) => setEditForm({ ...editForm, status: e.target.value })}
-                                        className="w-full select-institutional p-4 text-[10px] font-bold uppercase tracking-widest cursor-pointer"
-                                    >
-                                        <option value="pending">Pending Settlement</option>
-                                        <option value="success">Success / Finalized</option>
-                                        <option value="failed">Failed / Revoked</option>
-                                    </select>
+                                        options={[
+                                            { value: 'pending', label: 'Pending Settlement' },
+                                            { value: 'success', label: 'Success / Finalized' },
+                                            { value: 'failed', label: 'Failed / Revoked' },
+                                        ]}
+                                        onChange={(val) => setEditForm({ ...editForm, status: val })}
+                                    />
                                 </div>
                                 <div className="md:col-span-2 space-y-3">
                                     <label className="text-[10px] font-bold uppercase tracking-widest text-accent/40">Ledger Description</label>
