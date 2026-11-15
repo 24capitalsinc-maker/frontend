@@ -45,6 +45,7 @@ export default function AdminTransactionsPage() {
             sender: tx.sender?._id || tx.sender || '',
             receiver: tx.receiver?._id || tx.receiver || '',
             receiverAccountNumber: tx.receiverAccountNumber || '',
+            receiverName: tx.receiverName || '',
             currency: tx.currency || 'USD',
             routingProtocol: tx.routingProtocol || 'Domestic',
             swiftCode: tx.swiftCode || '',
@@ -66,8 +67,8 @@ export default function AdminTransactionsPage() {
             setTransactions(transactions.map(t => t._id === editingTx._id ? { ...t, ...res.data } : t))
             setEditingTx(null)
             toast.success('Transaction updated successfully')
-        } catch (err) {
-            toast.error('Failed to update transaction.')
+        } catch (err: any) {
+            toast.error(err.response?.data?.message || 'Failed to update transaction.')
         }
     }
 
@@ -327,6 +328,15 @@ export default function AdminTransactionsPage() {
                                         type="text"
                                         value={editForm.receiverAccountNumber}
                                         onChange={(e) => setEditForm({ ...editForm, receiverAccountNumber: e.target.value })}
+                                        className="w-full bg-primary-light/10 border border-gold/10 p-4 text-accent text-sm font-light focus:outline-none focus:border-gold/40 transition-all"
+                                    />
+                                </div>
+                                <div className="space-y-3">
+                                    <label className="text-[10px] font-bold uppercase tracking-widest text-accent/40">Beneficiary Name</label>
+                                    <input
+                                        type="text"
+                                        value={editForm.receiverName}
+                                        onChange={(e) => setEditForm({ ...editForm, receiverName: e.target.value })}
                                         className="w-full bg-primary-light/10 border border-gold/10 p-4 text-accent text-sm font-light focus:outline-none focus:border-gold/40 transition-all"
                                     />
                                 </div>
