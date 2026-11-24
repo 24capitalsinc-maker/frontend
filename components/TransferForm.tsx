@@ -194,8 +194,8 @@ export default function TransferForm() {
                 </div>
                 <div className="space-y-6">
                     <p className="text-gold font-bold text-[10px] tracking-[0.5em] uppercase animate-pulse">Processing Transfer…</p>
-                    <h3 className="text-3xl font-light text-accent tracking-tighter">Your transfer is <span className="text-gold">on the way.</span></h3>
-                    <p className="text-accent/30 text-xs font-light max-w-xs mx-auto leading-relaxed">Please wait while your transfer is being processed securely.</p>
+                    <h3 className="text-3xl font-light text-accent tracking-tighter">Your transfer is <span className="text-gold">pending approval.</span></h3>
+                    <p className="text-accent/30 text-xs font-light max-w-xs mx-auto leading-relaxed">Your transfer has been submitted and is pending institutional review. You will be notified once approved.</p>
                 </div>
             </motion.div>
         )

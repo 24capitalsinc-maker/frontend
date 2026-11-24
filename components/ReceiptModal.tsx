@@ -1,7 +1,7 @@
 'use client'
 import { useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Download, Share2, CheckCircle2, ShieldCheck, Landmark, Globe, Shield } from 'lucide-react'
+import { X, Download, Share2, CheckCircle2, Clock, ShieldCheck, Landmark, Globe, Shield } from 'lucide-react'
 import { format } from 'date-fns'
 import html2canvas from 'html2canvas'
 import { jsPDF } from 'jspdf'
@@ -168,15 +168,18 @@ export default function ReceiptModal({ isOpen, onClose, transaction }: ReceiptMo
 
                             {/* Status Icon & Amount */}
                             <div className="flex flex-col items-center justify-center mb-8 py-6 border-y" style={{ backgroundColor: 'rgba(212, 175, 55, 0.02)', borderColor: 'rgba(212, 175, 55, 0.05)' }}>
-                                <div className="w-12 h-12 border flex items-center justify-center mb-4 shadow-inner relative" style={{ backgroundColor: COLORS.primary, borderColor: 'rgba(212, 175, 55, 0.1)' }}>
-                                    <div className="absolute inset-0 animate-pulse" style={{ backgroundColor: 'rgba(212, 175, 55, 0.05)' }} />
-                                    <CheckCircle2 size={20} style={{ color: COLORS.gold }} className="relative z-10" />
+                                <div className="w-12 h-12 border flex items-center justify-center mb-4 shadow-inner relative" style={{ backgroundColor: COLORS.primary, borderColor: transaction.status === 'pending' ? 'rgba(96, 165, 250, 0.3)' : 'rgba(212, 175, 55, 0.1)' }}>
+                                    <div className="absolute inset-0 animate-pulse" style={{ backgroundColor: transaction.status === 'pending' ? 'rgba(96, 165, 250, 0.05)' : 'rgba(212, 175, 55, 0.05)' }} />
+                                    {transaction.status === 'pending'
+                                        ? <Clock size={20} style={{ color: 'rgba(96, 165, 250, 0.9)' }} className="relative z-10" />
+                                        : <CheckCircle2 size={20} style={{ color: COLORS.gold }} className="relative z-10" />
+                                    }
                                 </div>
                                 <p className="text-3xl font-light tracking-tighter tabular-nums" style={{ color: COLORS.accent }}>
                                     {isDebit ? '-' : '+'}{transaction.currency === 'USD' ? '$' : transaction.currency === 'EUR' ? '€' : '£'}{transaction.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                                 </p>
-                                <p className="text-[9px] font-bold uppercase tracking-[0.3em] mt-2" style={{ color: 'rgba(252, 249, 245, 0.3)' }}>
-                                    {transaction.status === 'pending' ? 'Initiated // Verification Required' : 'Settlement Authenticated'}
+                                <p className="text-[9px] font-bold uppercase tracking-[0.3em] mt-2" style={{ color: transaction.status === 'pending' ? 'rgba(96, 165, 250, 0.7)' : 'rgba(252, 249, 245, 0.3)' }}>
+                                    {transaction.status === 'pending' ? 'Pending // Awaiting Admin Approval' : transaction.status === 'failed' ? 'Failed // Transaction Rejected' : 'Settlement Authenticated'}
                                 </p>
                             </div>
 
