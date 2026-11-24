@@ -74,52 +74,98 @@ export default function ReceiptModal({ isOpen, onClose, transaction }: ReceiptMo
         const loadingToast = toast.loading('Generating receipt document...')
 
         try {
-            const doc = new jsPDF({ orientation: 'portrait', unit: 'pt', format: 'a4' })
-            const pageW = doc.internal.pageSize.getWidth()
-            const margin = 48
-            const contentW = pageW - margin * 2
+            // ── Layout constants ───────────────────────────────────────────
+            const W = 360          // compact receipt width (pt)
+            const margin = 28
+            const contentW = W - margin * 2
+            const lineH = 20       // standard row height
+            const sectionGap = 14
+
+            // ── Helper: measure how tall the detail rows will be ───────────
+            const tempDoc = new jsPDF({ unit: 'pt', format: [W, 800] })
+
+            const rows: [string, string][] = [
+                ['Reference ID',       transaction.referenceId],
+                ['Date',               format(new Date(transaction.createdAt), 'MMM dd, yyyy  HH:mm')],
+                ['Protocol',           transaction.routingProtocol],
+                ['Type',               isDebit ? 'Debit (Outgoing)' : 'Credit (Incoming)'],
+                ['Currency',           transaction.currency],
+                ['Beneficiary Acct',   transaction.receiverAccountNumber],
+                ['Beneficiary Name',   transaction.receiverName || 'N/A'],
+                ['Note',               transaction.description || 'Institutional Distribution'],
+            ]
+            if (transaction.jurisdiction) rows.splice(3, 0, ['Jurisdiction', transaction.jurisdiction])
+
+            // measure row heights
+            tempDoc.setFontSize(8)
+            const rowHeights = rows.map(([, val]) => {
+                const lines = tempDoc.splitTextToSize(val, contentW - 4)
+                return Math.max(lineH, lines.length * 11 + 10)
+            })
+            const rowsTotal = rowHeights.reduce((a, b) => a + b, 0)
+
+            // ── Calculate total page height ────────────────────────────────
+            const headerH    = 32   // brand + official records
+            const titleH     = 30
+            const divH       = 10
+            const amountH    = 60   // big number + status
+            const detailsH   = rowsTotal + sectionGap
+            const verifyH    = 36
+            const footerH    = 24
+            const stripH     = 18
+            const topBarH    = 4
+            const topPad     = 24
+            const bottomPad  = 20
+
+            const totalH = topBarH + topPad + headerH + titleH + divH + amountH + divH + detailsH + divH + verifyH + footerH + stripH + bottomPad
+
+            // ── Create correctly-sized page ────────────────────────────────
+            const doc = new jsPDF({ orientation: 'portrait', unit: 'pt', format: [W, totalH] })
 
             // Dark background
             doc.setFillColor(26, 13, 8)
-            doc.rect(0, 0, pageW, doc.internal.pageSize.getHeight(), 'F')
+            doc.rect(0, 0, W, totalH, 'F')
 
             // Gold top bar
             doc.setFillColor(212, 175, 55)
-            doc.rect(0, 0, pageW, 4, 'F')
+            doc.rect(0, 0, W, topBarH, 'F')
 
-            let y = 48
+            let y = topBarH + topPad
 
-            // Logo / brand
-            doc.setTextColor(212, 175, 55)
-            doc.setFontSize(7)
+            // ── Brand ──────────────────────────────────────────────────────
             doc.setFont('helvetica', 'bold')
-            doc.text('OPTIMA NEXGEN BANKING', pageW / 2, y, { align: 'center' })
-            y += 10
+            doc.setFontSize(6.5)
             doc.setTextColor(212, 175, 55)
-            doc.setFontSize(6)
-            doc.text('OFFICIAL RECORDS', pageW / 2, y, { align: 'center' })
-            y += 28
+            doc.text('OPTIMA NEXGEN BANKING', W / 2, y, { align: 'center' })
+            y += 10
+            doc.setFontSize(5.5)
+            doc.setTextColor(160, 130, 60)
+            doc.text('OFFICIAL TRANSACTION RECORDS', W / 2, y, { align: 'center' })
+            y += 18
 
-            // Title
-            doc.setTextColor(252, 249, 245)
-            doc.setFontSize(24)
+            // ── Title ──────────────────────────────────────────────────────
             doc.setFont('helvetica', 'normal')
-            doc.text('Transaction Receipt', margin, y)
-            y += 36
+            doc.setFontSize(16)
+            doc.setTextColor(252, 249, 245)
+            doc.text('Transaction ', margin, y)
+            const titleW = doc.getTextWidth('Transaction ')
+            doc.setTextColor(212, 175, 55)
+            doc.text('Receipt.', margin + titleW, y)
+            y += titleH
 
             // Divider
             doc.setDrawColor(212, 175, 55)
-            doc.setLineWidth(0.5)
-            doc.line(margin, y, pageW - margin, y)
-            y += 24
+            doc.setLineWidth(0.4)
+            doc.line(margin, y, W - margin, y)
+            y += divH + 4
 
-            // Amount
+            // ── Amount ─────────────────────────────────────────────────────
             const sign = isDebit ? '-' : '+'
             const amountStr = `${sign}${currencySymbol}${transaction.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}`
-            doc.setFontSize(32)
-            doc.setFont('helvetica', 'light')
+            doc.setFont('helvetica', 'normal')
+            doc.setFontSize(22)
             doc.setTextColor(252, 249, 245)
-            doc.text(amountStr, pageW / 2, y, { align: 'center' })
+            doc.text(amountStr, W / 2, y, { align: 'center' })
             y += 18
 
             // Status label
@@ -134,70 +180,68 @@ export default function ReceiptModal({ isOpen, onClose, transaction }: ReceiptMo
             doc.setFontSize(7)
             doc.setFont('helvetica', 'bold')
             doc.setTextColor(statusR, statusG, statusB)
-            doc.text(statusText, pageW / 2, y, { align: 'center' })
-            y += 32
+            doc.text(statusText, W / 2, y, { align: 'center' })
+            y += 24
 
             // Divider
             doc.setDrawColor(212, 175, 55)
             doc.setLineWidth(0.3)
-            doc.line(margin, y, pageW - margin, y)
-            y += 24
+            doc.line(margin, y, W - margin, y)
+            y += 18
 
-            // Detail rows
-            const rows: [string, string][] = [
-                ['Reference ID', transaction.referenceId],
-                ['Date', format(new Date(transaction.createdAt), 'MMM dd, yyyy — HH:mm:ss')],
-                ['Protocol', transaction.routingProtocol],
-                ['Type', isDebit ? 'Debit (Outgoing)' : 'Credit (Incoming)'],
-                ['Currency', transaction.currency],
-                ['Beneficiary Account', transaction.receiverAccountNumber],
-                ['Beneficiary Name', transaction.receiverName || 'N/A'],
-                ['Note', transaction.description || 'Institutional Distribution'],
-            ]
+            // ── Detail rows ────────────────────────────────────────────────
+            for (let i = 0; i < rows.length; i++) {
+                const [label, value] = rows[i]
+                const rowH = rowHeights[i]
 
-            if (transaction.jurisdiction) {
-                rows.splice(3, 0, ['Jurisdiction', transaction.jurisdiction])
-            }
-
-            for (const [label, value] of rows) {
+                // Label (Left)
                 doc.setFontSize(7)
                 doc.setFont('helvetica', 'bold')
-                doc.setTextColor(252, 249, 245, 0.35)
-                doc.setTextColor(120, 100, 80)
-                doc.text(label.toUpperCase(), margin, y)
+                doc.setTextColor(190, 160, 110) // Clear, visible golden-tan color
+                doc.text(label.toUpperCase(), margin, y + 8)
 
-                doc.setFontSize(9)
+                // Value (Right)
+                doc.setFontSize(8.5)
                 doc.setFont('helvetica', 'normal')
-                doc.setTextColor(252, 249, 245)
-                const lines = doc.splitTextToSize(value, contentW - 10)
-                doc.text(lines, pageW - margin, y, { align: 'right' })
-                y += lines.length > 1 ? lines.length * 13 + 10 : 22
+                doc.setTextColor(252, 249, 245) // Bright off-white
+                const lines = doc.splitTextToSize(value, contentW * 0.55)
+                doc.text(lines, W - margin, y + 8, { align: 'right' })
+
+                y += rowH
             }
 
-            y += 8
-            // Final divider
+            y += 6
+
+            // Divider before footer
             doc.setDrawColor(212, 175, 55)
             doc.setLineWidth(0.3)
-            doc.line(margin, y, pageW - margin, y)
-            y += 20
+            doc.line(margin, y, W - margin, y)
+            y += 14
 
-            // Share link
-            doc.setFontSize(7)
+            // ── Verify URL ─────────────────────────────────────────────────
+            doc.setFontSize(6.5)
             doc.setFont('helvetica', 'bold')
-            doc.setTextColor(120, 100, 80)
-            doc.text('VERIFY RECEIPT ONLINE', margin, y)
-            y += 13
+            doc.setTextColor(190, 160, 110)
+            doc.text('VERIFY RECEIPT ONLINE:', margin, y)
+            y += 10
             doc.setFontSize(7)
             doc.setFont('helvetica', 'normal')
             doc.setTextColor(212, 175, 55)
             doc.text(getReceiptUrl(), margin, y)
-            y += 28
+            y += 18
 
-            // Footer
+            // ── Security text / Footer ─────────────────────────────────────
             doc.setFontSize(6)
-            doc.setFont('helvetica', 'bold')
-            doc.setTextColor(80, 60, 40)
-            doc.text('This is an official receipt issued by Optima Nexgen Banking. Vault Security Alpha-7.', pageW / 2, y, { align: 'center' })
+            doc.setFont('helvetica', 'normal')
+            doc.setTextColor(150, 140, 130)
+            doc.text('Official receipt issued by Optima Nexgen Banking. Vault Security Alpha-7.', W / 2, y, { align: 'center' })
+            y += 12
+
+            // Security strip line
+            doc.setFontSize(5)
+            doc.setFont('courier', 'normal')
+            doc.setTextColor(100, 80, 50)
+            doc.text(`AUTH_TX_${transaction.referenceId.slice(-4).toUpperCase()}_SECURE_VAULT_ENCRYPTED_LEDGER_BUFFER`, W / 2, y, { align: 'center' })
 
             doc.save(`OptimaNexgen_Receipt_${transaction.referenceId.slice(-8)}.pdf`)
 
