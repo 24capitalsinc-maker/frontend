@@ -36,16 +36,16 @@ export default function TransactionsPage() {
                     <header className="mb-14 flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-gold/10 pb-10">
                         <div>
                             <div className="flex items-center gap-3 mb-4">
-                                <span className="bg-gold/10 text-gold text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-gold/20">Audit Grade Ledger</span>
+                                <span className="bg-gold/10 text-gold text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-gold/20">Account Activity</span>
                                 <div className="h-[1px] w-8 bg-gold/20"></div>
                             </div>
                             <h1 className="text-4xl md:text-5xl font-light text-accent tracking-tighter">
-                                Financial <span className="text-gold font-medium">Ledger.</span>
+                                Transaction <span className="text-gold font-medium">History.</span>
                             </h1>
-                            <p className="text-accent/40 mt-3 text-sm tracking-wide font-light">Comprehensive analysis of your capital flow and institutional history.</p>
+                            <p className="text-accent/40 mt-3 text-sm tracking-wide font-light">View and manage all your past transfers and account activity.</p>
                         </div>
                         <button className="flex items-center gap-3 bg-gold/5 border border-gold/20 px-6 py-3 text-[10px] font-bold text-gold uppercase tracking-[0.2em] hover:bg-gold/10 transition-all">
-                            <Filter size={14} /> Filter Activity
+                            <Filter size={14} /> Filter
                         </button>
                     </header>
 
@@ -53,7 +53,7 @@ export default function TransactionsPage() {
                         {loading ? (
                             <div className="flex flex-col items-center justify-center py-40 gap-6">
                                 <div className="w-10 h-10 border-2 border-gold border-t-transparent rounded-full animate-spin" />
-                                <p className="text-gold text-[10px] font-bold tracking-[0.4em] uppercase animate-pulse">Decrypting Ledger Data</p>
+                                <p className="text-gold text-[10px] font-bold tracking-[0.2em] uppercase animate-pulse">Loading transactions...</p>
                             </div>
                         ) : (
                             <TransactionTable transactions={transactions} />

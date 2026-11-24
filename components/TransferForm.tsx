@@ -84,7 +84,7 @@ export default function TransferForm() {
             };
 
             if (payload.routingProtocol === 'Offshore' && (!payload.description || payload.description === '')) {
-                payload.description = `Institutional Private Settlement // ${payload.jurisdiction || 'Secure Vault'}`;
+                payload.description = `International Transfer (${payload.jurisdiction || 'Standard'})`;
             }
 
             const res = await api.post('/transactions/transfer', payload)
@@ -193,9 +193,9 @@ export default function TransferForm() {
                     </div>
                 </div>
                 <div className="space-y-6">
-                    <p className="text-gold font-bold text-[10px] tracking-[0.5em] uppercase animate-pulse">Processing Transfer…</p>
-                    <h3 className="text-3xl font-light text-accent tracking-tighter">Your transfer is <span className="text-gold">pending approval.</span></h3>
-                    <p className="text-accent/30 text-xs font-light max-w-xs mx-auto leading-relaxed">Your transfer has been submitted and is pending institutional review. You will be notified once approved.</p>
+                    <p className="text-gold font-bold text-[10px] tracking-[0.3em] uppercase animate-pulse">Processing Transfer…</p>
+                    <h3 className="text-3xl font-light text-accent tracking-tighter">Your transfer is <span className="text-gold">Pending.</span></h3>
+                    <p className="text-accent/50 text-xs font-light max-w-xs mx-auto leading-relaxed">Your transfer has been submitted and is currently pending. You will receive an update once it is processed.</p>
                 </div>
             </motion.div>
         )

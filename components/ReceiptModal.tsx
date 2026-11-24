@@ -37,11 +37,24 @@ export default function ReceiptModal({ isOpen, onClose, transaction }: ReceiptMo
 
     const isDebit = transaction.type === 'debit'
     const currencySymbol = transaction.currency === 'USD' ? '$' : transaction.currency === 'EUR' ? '€' : '£'
-    const statusColor = transaction.status === 'pending'
-        ? 'rgba(96,165,250,0.9)'
+    
+    const simpleStatus = transaction.status === 'pending'
+        ? 'Pending'
         : transaction.status === 'failed'
-            ? 'rgba(239,68,68,0.9)'
+            ? 'Failed'
+            : 'Successful'
+
+    const statusColor = transaction.status === 'pending'
+        ? 'rgba(96,165,250,0.95)'
+        : transaction.status === 'failed'
+            ? 'rgba(239,68,68,0.95)'
             : COLORS.gold
+
+    const protocolDisplay = transaction.routingProtocol === 'Domestic'
+        ? 'Domestic Transfer'
+        : transaction.routingProtocol === 'Offshore'
+            ? 'International Transfer'
+            : `${transaction.routingProtocol} Transfer`
 
     const getReceiptUrl = () => {
         const base = typeof window !== 'undefined' ? window.location.origin : 'https://www.optimanexgen.org'
@@ -69,179 +82,144 @@ export default function ReceiptModal({ isOpen, onClose, transaction }: ReceiptMo
         }
     }
 
-    // --- Download: programmatic PDF via jsPDF (no DOM capture) ---
+    // --- Download: programmatic standard A4 PDF (no DOM capture, 100% visible & concise) ---
     const handleDownloadPDF = () => {
         const loadingToast = toast.loading('Generating receipt document...')
 
         try {
-            // ── Layout constants ───────────────────────────────────────────
-            const W = 360          // compact receipt width (pt)
-            const margin = 28
-            const contentW = W - margin * 2
-            const lineH = 20       // standard row height
-            const sectionGap = 14
+            // Standard A4 document (595.28 x 841.89 pt)
+            const doc = new jsPDF({ orientation: 'portrait', unit: 'pt', format: 'a4' })
+            const pageW = doc.internal.pageSize.getWidth()
+            const pageH = doc.internal.pageSize.getHeight()
 
-            // ── Helper: measure how tall the detail rows will be ───────────
-            const tempDoc = new jsPDF({ unit: 'pt', format: [W, 800] })
-
-            const rows: [string, string][] = [
-                ['Reference ID',       transaction.referenceId],
-                ['Date',               format(new Date(transaction.createdAt), 'MMM dd, yyyy  HH:mm')],
-                ['Protocol',           transaction.routingProtocol],
-                ['Type',               isDebit ? 'Debit (Outgoing)' : 'Credit (Incoming)'],
-                ['Currency',           transaction.currency],
-                ['Beneficiary Acct',   transaction.receiverAccountNumber],
-                ['Beneficiary Name',   transaction.receiverName || 'N/A'],
-                ['Note',               transaction.description || 'Institutional Distribution'],
-            ]
-            if (transaction.jurisdiction) rows.splice(3, 0, ['Jurisdiction', transaction.jurisdiction])
-
-            // measure row heights
-            tempDoc.setFontSize(8)
-            const rowHeights = rows.map(([, val]) => {
-                const lines = tempDoc.splitTextToSize(val, contentW - 4)
-                return Math.max(lineH, lines.length * 11 + 10)
-            })
-            const rowsTotal = rowHeights.reduce((a, b) => a + b, 0)
-
-            // ── Calculate total page height ────────────────────────────────
-            const headerH    = 32   // brand + official records
-            const titleH     = 30
-            const divH       = 10
-            const amountH    = 60   // big number + status
-            const detailsH   = rowsTotal + sectionGap
-            const verifyH    = 36
-            const footerH    = 24
-            const stripH     = 18
-            const topBarH    = 4
-            const topPad     = 24
-            const bottomPad  = 20
-
-            const totalH = topBarH + topPad + headerH + titleH + divH + amountH + divH + detailsH + divH + verifyH + footerH + stripH + bottomPad
-
-            // ── Create correctly-sized page ────────────────────────────────
-            const doc = new jsPDF({ orientation: 'portrait', unit: 'pt', format: [W, totalH] })
-
-            // Dark background
+            // Dark luxury background
             doc.setFillColor(26, 13, 8)
-            doc.rect(0, 0, W, totalH, 'F')
+            doc.rect(0, 0, pageW, pageH, 'F')
 
-            // Gold top bar
+            // Centered receipt card dimensions
+            const cardW = 440
+            const cardX = (pageW - cardW) / 2
+            const startContentY = 70
+            let cardY = startContentY
+            const padX = 36
+
+            // Top accent gold bar on the card
             doc.setFillColor(212, 175, 55)
-            doc.rect(0, 0, W, topBarH, 'F')
+            doc.rect(cardX, cardY, cardW, 4, 'F')
+            cardY += 28
 
-            let y = topBarH + topPad
-
-            // ── Brand ──────────────────────────────────────────────────────
+            // Brand Header
             doc.setFont('helvetica', 'bold')
-            doc.setFontSize(6.5)
+            doc.setFontSize(11)
             doc.setTextColor(212, 175, 55)
-            doc.text('OPTIMA NEXGEN BANKING', W / 2, y, { align: 'center' })
-            y += 10
-            doc.setFontSize(5.5)
-            doc.setTextColor(160, 130, 60)
-            doc.text('OFFICIAL TRANSACTION RECORDS', W / 2, y, { align: 'center' })
-            y += 18
+            doc.text('OPTIMA NEXGEN BANKING', pageW / 2, cardY, { align: 'center' })
+            cardY += 16
 
-            // ── Title ──────────────────────────────────────────────────────
             doc.setFont('helvetica', 'normal')
-            doc.setFontSize(16)
-            doc.setTextColor(252, 249, 245)
-            doc.text('Transaction ', margin, y)
-            const titleW = doc.getTextWidth('Transaction ')
-            doc.setTextColor(212, 175, 55)
-            doc.text('Receipt.', margin + titleW, y)
-            y += titleH
+            doc.setFontSize(8)
+            doc.setTextColor(197, 168, 128)
+            doc.text('TRANSACTION RECEIPT', pageW / 2, cardY, { align: 'center' })
+            cardY += 24
+
+            // Divider
+            doc.setDrawColor(212, 175, 55)
+            doc.setLineWidth(0.5)
+            doc.line(cardX + padX, cardY, cardX + cardW - padX, cardY)
+            cardY += 26
+
+            // Amount
+            const sign = isDebit ? '-' : '+'
+            const amountStr = `${sign}${currencySymbol}${transaction.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}`
+            doc.setFont('helvetica', 'bold')
+            doc.setFontSize(26)
+            doc.setTextColor(255, 255, 255)
+            doc.text(amountStr, pageW / 2, cardY, { align: 'center' })
+            cardY += 18
+
+            // Simple Status (Pending / Successful / Failed)
+            const statusR = transaction.status === 'pending' ? 96 : transaction.status === 'failed' ? 248 : 212
+            const statusG = transaction.status === 'pending' ? 165 : transaction.status === 'failed' ? 113 : 175
+            const statusB = transaction.status === 'pending' ? 250 : transaction.status === 'failed' ? 113 : 55
+
+            doc.setFontSize(9)
+            doc.setFont('helvetica', 'bold')
+            doc.setTextColor(statusR, statusG, statusB)
+            doc.text(simpleStatus.toUpperCase(), pageW / 2, cardY, { align: 'center' })
+            cardY += 26
 
             // Divider
             doc.setDrawColor(212, 175, 55)
             doc.setLineWidth(0.4)
-            doc.line(margin, y, W - margin, y)
-            y += divH + 4
+            doc.line(cardX + padX, cardY, cardX + cardW - padX, cardY)
+            cardY += 22
 
-            // ── Amount ─────────────────────────────────────────────────────
-            const sign = isDebit ? '-' : '+'
-            const amountStr = `${sign}${currencySymbol}${transaction.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}`
-            doc.setFont('helvetica', 'normal')
-            doc.setFontSize(22)
-            doc.setTextColor(252, 249, 245)
-            doc.text(amountStr, W / 2, y, { align: 'center' })
-            y += 18
+            // Detail rows
+            const rows: [string, string][] = [
+                ['Reference ID', transaction.referenceId],
+                ['Date & Time', format(new Date(transaction.createdAt), 'MMM dd, yyyy  HH:mm')],
+                ['Transfer Type', protocolDisplay],
+                ['Transfer Direction', isDebit ? 'Debit (Outgoing)' : 'Credit (Incoming)'],
+                ['Currency', transaction.currency || 'USD'],
+                ['Recipient Name', transaction.receiverName || 'Account Holder'],
+                ['Recipient Account', transaction.receiverAccountNumber || 'N/A'],
+                ['Status', simpleStatus],
+                ['Note', transaction.description || 'Transfer'],
+            ]
 
-            // Status label
-            const statusText = transaction.status === 'pending'
-                ? 'PENDING // AWAITING ADMIN APPROVAL'
-                : transaction.status === 'failed'
-                    ? 'FAILED // TRANSACTION REJECTED'
-                    : 'SETTLEMENT AUTHENTICATED'
-            const statusR = transaction.status === 'pending' ? 96 : transaction.status === 'failed' ? 239 : 212
-            const statusG = transaction.status === 'pending' ? 165 : transaction.status === 'failed' ? 68 : 175
-            const statusB = transaction.status === 'pending' ? 250 : transaction.status === 'failed' ? 68 : 55
-            doc.setFontSize(7)
-            doc.setFont('helvetica', 'bold')
-            doc.setTextColor(statusR, statusG, statusB)
-            doc.text(statusText, W / 2, y, { align: 'center' })
-            y += 24
+            const leftColX = cardX + padX
+            const rightColX = cardX + cardW - padX
+            const colWidth = 220
+
+            for (const [label, val] of rows) {
+                // Label (Left)
+                doc.setFontSize(8)
+                doc.setFont('helvetica', 'bold')
+                doc.setTextColor(197, 168, 128) // Bright legible golden-tan
+                doc.text(label.toUpperCase(), leftColX, cardY)
+
+                // Value (Right)
+                doc.setFontSize(9)
+                doc.setFont('helvetica', 'normal')
+                doc.setTextColor(255, 255, 255) // Pure bright white
+                const lines = doc.splitTextToSize(val, colWidth)
+                doc.text(lines, rightColX, cardY, { align: 'right' })
+
+                cardY += Math.max(18, lines.length * 12 + 6)
+            }
+
+            cardY += 10
 
             // Divider
             doc.setDrawColor(212, 175, 55)
-            doc.setLineWidth(0.3)
-            doc.line(margin, y, W - margin, y)
-            y += 18
+            doc.setLineWidth(0.4)
+            doc.line(cardX + padX, cardY, cardX + cardW - padX, cardY)
+            cardY += 20
 
-            // ── Detail rows ────────────────────────────────────────────────
-            for (let i = 0; i < rows.length; i++) {
-                const [label, value] = rows[i]
-                const rowH = rowHeights[i]
-
-                // Label (Left)
-                doc.setFontSize(7)
-                doc.setFont('helvetica', 'bold')
-                doc.setTextColor(190, 160, 110) // Clear, visible golden-tan color
-                doc.text(label.toUpperCase(), margin, y + 8)
-
-                // Value (Right)
-                doc.setFontSize(8.5)
-                doc.setFont('helvetica', 'normal')
-                doc.setTextColor(252, 249, 245) // Bright off-white
-                const lines = doc.splitTextToSize(value, contentW * 0.55)
-                doc.text(lines, W - margin, y + 8, { align: 'right' })
-
-                y += rowH
-            }
-
-            y += 6
-
-            // Divider before footer
-            doc.setDrawColor(212, 175, 55)
-            doc.setLineWidth(0.3)
-            doc.line(margin, y, W - margin, y)
-            y += 14
-
-            // ── Verify URL ─────────────────────────────────────────────────
-            doc.setFontSize(6.5)
+            // Online verification link
+            doc.setFontSize(7.5)
             doc.setFont('helvetica', 'bold')
-            doc.setTextColor(190, 160, 110)
-            doc.text('VERIFY RECEIPT ONLINE:', margin, y)
-            y += 10
-            doc.setFontSize(7)
+            doc.setTextColor(197, 168, 128)
+            doc.text('VERIFY THIS RECEIPT ONLINE:', leftColX, cardY)
+            cardY += 12
+
+            doc.setFontSize(7.5)
             doc.setFont('helvetica', 'normal')
             doc.setTextColor(212, 175, 55)
-            doc.text(getReceiptUrl(), margin, y)
-            y += 18
+            doc.text(getReceiptUrl(), leftColX, cardY)
+            cardY += 24
 
-            // ── Security text / Footer ─────────────────────────────────────
-            doc.setFontSize(6)
+            // Security footer inside card
+            doc.setFontSize(7)
             doc.setFont('helvetica', 'normal')
-            doc.setTextColor(150, 140, 130)
-            doc.text('Official receipt issued by Optima Nexgen Banking. Vault Security Alpha-7.', W / 2, y, { align: 'center' })
-            y += 12
+            doc.setTextColor(160, 145, 130)
+            doc.text('Official receipt issued by Optima Nexgen Banking. Verified secure transaction.', pageW / 2, cardY, { align: 'center' })
+            cardY += 24
 
-            // Security strip line
-            doc.setFontSize(5)
-            doc.setFont('courier', 'normal')
-            doc.setTextColor(100, 80, 50)
-            doc.text(`AUTH_TX_${transaction.referenceId.slice(-4).toUpperCase()}_SECURE_VAULT_ENCRYPTED_LEDGER_BUFFER`, W / 2, y, { align: 'center' })
+            // Draw outer border for the card
+            const totalCardH = cardY - startContentY
+            doc.setDrawColor(212, 175, 55)
+            doc.setLineWidth(0.8)
+            doc.rect(cardX, startContentY, cardW, totalCardH, 'D')
 
             doc.save(`OptimaNexgen_Receipt_${transaction.referenceId.slice(-8)}.pdf`)
 
@@ -278,15 +256,12 @@ export default function ReceiptModal({ isOpen, onClose, transaction }: ReceiptMo
                         ref={receiptRef}
                         style={{
                             backgroundColor: COLORS.primary,
-                            borderColor: 'rgba(212, 175, 55, 0.2)',
+                            borderColor: 'rgba(212, 175, 55, 0.25)',
                             scrollbarWidth: 'none'
                         }}
                     >
                         {/* Decorative background elements */}
                         <div className="absolute top-0 right-0 w-48 h-48 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none" style={{ backgroundColor: 'rgba(212, 175, 55, 0.05)' }} />
-
-                        {/* Static bg pattern */}
-                        <div className="absolute inset-0 opacity-5 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(212, 175, 55, 0.05) 1px, transparent 0)', backgroundSize: '40px 40px' }} />
 
                         {/* Top Accent Bar */}
                         <div className="h-1 w-full" style={{ backgroundColor: COLORS.gold, boxShadow: '0 0 10px rgba(212, 175, 55, 0.3)' }} />
@@ -296,8 +271,8 @@ export default function ReceiptModal({ isOpen, onClose, transaction }: ReceiptMo
                             <div className="flex justify-between items-start mb-8">
                                 <div className="space-y-1">
                                     <div className="flex items-center gap-1.5 mb-1">
-                                        <div className="w-1 h-1 rounded-full animate-pulse" style={{ backgroundColor: COLORS.gold }} />
-                                        <p className="text-[8px] font-bold uppercase tracking-[0.4em]" style={{ color: 'rgba(212, 175, 55, 0.6)' }}>Official Records</p>
+                                        <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: COLORS.gold }} />
+                                        <p className="text-[9px] font-bold uppercase tracking-[0.25em]" style={{ color: 'rgba(212, 175, 55, 0.8)' }}>Receipt</p>
                                     </div>
                                     <h2 className="text-2xl font-light tracking-tighter" style={{ color: COLORS.accent }}>
                                         Transaction <span style={{ color: COLORS.gold }}>Receipt.</span>
@@ -305,102 +280,100 @@ export default function ReceiptModal({ isOpen, onClose, transaction }: ReceiptMo
                                 </div>
                                 <button
                                     onClick={onClose}
-                                    className="p-1.5 transition-colors border rounded-sm"
+                                    className="p-1.5 transition-colors border rounded-sm hover:bg-gold/10"
                                     style={{
-                                        color: 'rgba(252, 249, 245, 0.2)',
-                                        borderColor: 'rgba(252, 249, 245, 0.05)',
+                                        color: 'rgba(252, 249, 245, 0.4)',
+                                        borderColor: 'rgba(252, 249, 245, 0.1)',
                                         backgroundColor: 'rgba(252, 249, 245, 0.05)'
                                     }}
                                 >
-                                    <X size={16} strokeWidth={1} />
+                                    <X size={16} strokeWidth={1.5} />
                                 </button>
                             </div>
 
                             {/* Status Icon & Amount */}
-                            <div className="flex flex-col items-center justify-center mb-8 py-6 border-y" style={{ backgroundColor: 'rgba(212, 175, 55, 0.02)', borderColor: 'rgba(212, 175, 55, 0.05)' }}>
+                            <div className="flex flex-col items-center justify-center mb-8 py-6 border-y" style={{ backgroundColor: 'rgba(212, 175, 55, 0.02)', borderColor: 'rgba(212, 175, 55, 0.1)' }}>
                                 <div className="w-12 h-12 border flex items-center justify-center mb-4 shadow-inner relative" style={{
                                     backgroundColor: COLORS.primary,
-                                    borderColor: transaction.status === 'pending' ? 'rgba(96, 165, 250, 0.3)' : transaction.status === 'failed' ? 'rgba(239,68,68,0.3)' : 'rgba(212, 175, 55, 0.1)'
+                                    borderColor: transaction.status === 'pending' ? 'rgba(96, 165, 250, 0.4)' : transaction.status === 'failed' ? 'rgba(239, 68, 68, 0.4)' : 'rgba(212, 175, 55, 0.3)'
                                 }}>
-                                    <div className="absolute inset-0 animate-pulse" style={{ backgroundColor: transaction.status === 'pending' ? 'rgba(96, 165, 250, 0.05)' : 'rgba(212, 175, 55, 0.05)' }} />
-                                    {transaction.status === 'pending' && <Clock size={20} style={{ color: 'rgba(96, 165, 250, 0.9)' }} className="relative z-10" />}
-                                    {transaction.status === 'failed' && <XCircle size={20} style={{ color: 'rgba(239,68,68,0.9)' }} className="relative z-10" />}
-                                    {transaction.status === 'success' && <CheckCircle2 size={20} style={{ color: COLORS.gold }} className="relative z-10" />}
+                                    {transaction.status === 'pending' && <Clock size={22} style={{ color: 'rgba(96, 165, 250, 0.95)' }} className="relative z-10" />}
+                                    {transaction.status === 'failed' && <XCircle size={22} style={{ color: 'rgba(239, 68, 68, 0.95)' }} className="relative z-10" />}
+                                    {transaction.status === 'success' && <CheckCircle2 size={22} style={{ color: COLORS.gold }} className="relative z-10" />}
                                 </div>
                                 <p className="text-3xl font-light tracking-tighter tabular-nums" style={{ color: COLORS.accent }}>
                                     {isDebit ? '-' : '+'}{currencySymbol}{transaction.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                                 </p>
-                                <p className="text-[9px] font-bold uppercase tracking-[0.3em] mt-2" style={{ color: statusColor }}>
-                                    {transaction.status === 'pending' ? 'Pending // Awaiting Admin Approval' : transaction.status === 'failed' ? 'Failed // Transaction Rejected' : 'Settlement Authenticated'}
+                                <p className="text-[10px] font-bold uppercase tracking-[0.25em] mt-2" style={{ color: statusColor }}>
+                                    {simpleStatus}
                                 </p>
                             </div>
 
                             {/* Details Grid */}
                             <div className="grid grid-cols-2 gap-y-6 gap-x-4 mb-8">
                                 <div className="space-y-1">
-                                    <p className="text-[8px] font-bold uppercase tracking-[0.2em]" style={{ color: 'rgba(252, 249, 245, 0.2)' }}>Protocol</p>
+                                    <p className="text-[8px] font-bold uppercase tracking-[0.2em]" style={{ color: 'rgba(252, 249, 245, 0.4)' }}>Transfer Type</p>
                                     <div className="flex items-center gap-2">
-                                        {transaction.routingProtocol === 'Domestic' && <Landmark size={12} style={{ color: 'rgba(212, 175, 55, 0.6)' }} />}
-                                        {transaction.routingProtocol === 'International' && <Globe size={12} style={{ color: 'rgba(212, 175, 55, 0.6)' }} />}
-                                        {transaction.routingProtocol === 'Offshore' && <Shield size={12} style={{ color: 'rgba(212, 175, 55, 0.6)' }} />}
-                                        <p className="text-[10px] font-medium uppercase tracking-widest" style={{ color: COLORS.accent }}>{transaction.routingProtocol}</p>
+                                        {transaction.routingProtocol === 'Domestic' && <Landmark size={12} style={{ color: 'rgba(212, 175, 55, 0.8)' }} />}
+                                        {transaction.routingProtocol === 'International' && <Globe size={12} style={{ color: 'rgba(212, 175, 55, 0.8)' }} />}
+                                        {transaction.routingProtocol === 'Offshore' && <Shield size={12} style={{ color: 'rgba(212, 175, 55, 0.8)' }} />}
+                                        <p className="text-[10px] font-medium uppercase tracking-wider" style={{ color: COLORS.accent }}>{protocolDisplay}</p>
                                     </div>
                                 </div>
                                 <div className="space-y-1 text-right">
-                                    <p className="text-[8px] font-bold uppercase tracking-[0.2em]" style={{ color: 'rgba(252, 249, 245, 0.2)' }}>Settlement Date</p>
-                                    <p className="text-[10px] font-medium uppercase tracking-widest" style={{ color: COLORS.accent }}>
+                                    <p className="text-[8px] font-bold uppercase tracking-[0.2em]" style={{ color: 'rgba(252, 249, 245, 0.4)' }}>Date</p>
+                                    <p className="text-[10px] font-medium uppercase tracking-wider" style={{ color: COLORS.accent }}>
                                         {format(new Date(transaction.createdAt), 'MMM dd, yyyy')}
                                     </p>
                                 </div>
                                 <div className="space-y-1">
-                                    <p className="text-[8px] font-bold uppercase tracking-[0.2em]" style={{ color: 'rgba(252, 249, 245, 0.2)' }}>Reference ID</p>
-                                    <p className="text-[10px] font-mono tracking-widest uppercase" style={{ color: 'rgba(212, 175, 55, 0.8)' }}>{transaction.referenceId}</p>
+                                    <p className="text-[8px] font-bold uppercase tracking-[0.2em]" style={{ color: 'rgba(252, 249, 245, 0.4)' }}>Reference ID</p>
+                                    <p className="text-[10px] font-mono tracking-wider uppercase" style={{ color: 'rgba(212, 175, 55, 0.9)' }}>{transaction.referenceId}</p>
                                 </div>
                                 <div className="space-y-1 text-right">
-                                    <p className="text-[8px] font-bold uppercase tracking-[0.2em]" style={{ color: 'rgba(252, 249, 245, 0.2)' }}>Beneficiary</p>
-                                    <p className="text-[10px] font-medium uppercase tracking-widest truncate" style={{ color: COLORS.accent }}>{transaction.receiverAccountNumber}</p>
+                                    <p className="text-[8px] font-bold uppercase tracking-[0.2em]" style={{ color: 'rgba(252, 249, 245, 0.4)' }}>Recipient Account</p>
+                                    <p className="text-[10px] font-medium uppercase tracking-wider truncate" style={{ color: COLORS.accent }}>{transaction.receiverAccountNumber}</p>
                                 </div>
+                                {transaction.receiverName && (
+                                    <div className="space-y-1 col-span-2">
+                                        <p className="text-[8px] font-bold uppercase tracking-[0.2em]" style={{ color: 'rgba(252, 249, 245, 0.4)' }}>Recipient Name</p>
+                                        <p className="text-[10px] font-medium uppercase tracking-wider" style={{ color: COLORS.accent }}>{transaction.receiverName}</p>
+                                    </div>
+                                )}
                                 <div className="space-y-1 col-span-2">
-                                    <p className="text-[8px] font-bold uppercase tracking-[0.2em]" style={{ color: 'rgba(252, 249, 245, 0.2)' }}>Institutional Note</p>
-                                    <p className="text-[10px] font-light leading-relaxed italic line-clamp-2" style={{ color: 'rgba(252, 249, 245, 0.6)' }}>"{transaction.description || 'Institutional Distribution'}"</p>
+                                    <p className="text-[8px] font-bold uppercase tracking-[0.2em]" style={{ color: 'rgba(252, 249, 245, 0.4)' }}>Note</p>
+                                    <p className="text-[10px] font-light leading-relaxed italic line-clamp-2" style={{ color: 'rgba(252, 249, 245, 0.7)' }}>"{transaction.description || 'Transfer'}"</p>
                                 </div>
                             </div>
 
                             {/* Footer / Actions */}
-                            <div className="pt-6 border-t" style={{ borderColor: 'rgba(212, 175, 55, 0.1)' }}>
+                            <div className="pt-6 border-t" style={{ borderColor: 'rgba(212, 175, 55, 0.15)' }}>
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-2">
-                                        <ShieldCheck size={14} style={{ color: 'rgba(212, 175, 55, 0.3)' }} />
-                                        <p className="text-[7px] font-bold uppercase tracking-[0.4em]" style={{ color: 'rgba(252, 249, 245, 0.2)' }}>Vault Security Alpha-7</p>
+                                        <ShieldCheck size={14} style={{ color: 'rgba(212, 175, 55, 0.6)' }} />
+                                        <p className="text-[8px] font-bold uppercase tracking-[0.25em]" style={{ color: 'rgba(252, 249, 245, 0.4)' }}>Secure Bank Transfer</p>
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <button
                                             onClick={handleShare}
-                                            className="p-2 transition-colors border border-transparent hover:border-gold/20"
-                                            style={{ color: 'rgba(252, 249, 245, 0.4)' }}
+                                            className="p-2 transition-colors border border-transparent hover:border-gold/20 rounded-sm"
+                                            style={{ color: 'rgba(252, 249, 245, 0.6)' }}
                                             title="Copy shareable receipt link"
                                         >
-                                            <Share2 size={14} strokeWidth={1} />
+                                            <Share2 size={15} strokeWidth={1.5} />
                                         </button>
                                         <button
                                             onClick={handleDownloadPDF}
-                                            className="p-2 px-3 transition-colors border border-transparent font-bold uppercase text-[9px] tracking-widest flex items-center gap-2 hover:border-gold/20"
-                                            style={{ color: 'rgba(252, 249, 245, 0.4)' }}
+                                            className="p-2 px-3 transition-colors border border-transparent font-bold uppercase text-[9px] tracking-widest flex items-center gap-2 hover:border-gold/20 rounded-sm"
+                                            style={{ color: 'rgba(252, 249, 245, 0.8)' }}
                                             title="Download PDF receipt"
                                         >
-                                            <Download size={14} strokeWidth={1} />
+                                            <Download size={15} strokeWidth={1.5} />
                                             PDF
                                         </button>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        {/* Security Strip */}
-                        <div className="py-2 px-10 border-t flex justify-between items-center overflow-hidden whitespace-nowrap opacity-30" style={{ backgroundColor: 'rgba(212, 175, 55, 0.03)', borderColor: 'rgba(212, 175, 55, 0.1)' }}>
-                            <span className="text-[6px] font-serif uppercase tracking-[1em] tabular-nums" style={{ color: 'rgba(212, 175, 55, 0.2)' }}>
-                                AUTH_TX_{transaction.referenceId.slice(-4).toUpperCase()}_SECURE_VAULT_ENCRYPTED_LEDGER_BUFFER
-                            </span>
                         </div>
                     </motion.div>
                 </div>

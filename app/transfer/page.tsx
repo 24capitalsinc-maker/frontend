@@ -16,13 +16,13 @@ export default function TransferPage() {
                     <div className="max-w-4xl mx-auto">
                         <header className="mb-14 border-b border-gold/10 pb-10">
                             <div className="flex items-center gap-3 mb-4">
-                                <span className="bg-gold/10 text-gold text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-gold/20">Secure Channel</span>
+                                <span className="bg-gold/10 text-gold text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-gold/20">Fast & Secure</span>
                                 <div className="h-[1px] w-8 bg-gold/20"></div>
                             </div>
                             <h1 className="text-4xl md:text-5xl font-light text-accent tracking-tighter">
-                                Optima <span className="text-gold font-medium">Transfer.</span>
+                                Transfer <span className="text-gold font-medium">Funds.</span>
                             </h1>
-                            <p className="text-accent/40 mt-3 text-sm tracking-wide font-light max-w-xl">Execute encrypted global wealth transfers with institutional grade security and real-time settlement.</p>
+                            <p className="text-accent/40 mt-3 text-sm tracking-wide font-light max-w-xl">Send money locally or internationally with speed and security.</p>
                         </header>
 
                         <div>

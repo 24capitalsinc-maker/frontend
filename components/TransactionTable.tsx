@@ -96,15 +96,14 @@ export default function TransactionTable({ transactions = [], itemsPerPage = 10 
                 <table className="w-full text-left border-collapse">
                     <thead>
                         <tr className="border-b border-gold/10 bg-gold/[0.02]">
-                            <th className="px-4 sm:px-8 py-6 text-[10px] uppercase font-bold tracking-[0.3em] text-accent/40">
-                                <span className="hidden sm:inline">Timestamp</span>
-                                <span className="sm:hidden">Instrument</span>
+                            <th className="px-4 sm:px-8 py-6 text-[10px] uppercase font-bold tracking-[0.2em] text-accent/40">
+                                <span className="hidden sm:inline">Date</span>
+                                <span className="sm:hidden">Transaction</span>
                             </th>
-                            <th className="px-4 sm:px-8 py-6 text-[10px] uppercase font-bold tracking-[0.3em] text-accent/40 hidden sm:table-cell">Reference</th>
-                            <th className="px-4 sm:px-8 py-6 text-[10px] uppercase font-bold tracking-[0.3em] text-accent/40 hidden lg:table-cell">Registry</th>
-                            <th className="px-4 sm:px-8 py-6 text-[10px] uppercase font-bold tracking-[0.3em] text-accent/40 text-right">
-                                <span className="hidden sm:inline">Volume</span>
-                                <span className="sm:hidden">Capital</span>
+                            <th className="px-4 sm:px-8 py-6 text-[10px] uppercase font-bold tracking-[0.2em] text-accent/40 hidden sm:table-cell">Reference</th>
+                            <th className="px-4 sm:px-8 py-6 text-[10px] uppercase font-bold tracking-[0.2em] text-accent/40 hidden lg:table-cell">Status</th>
+                            <th className="px-4 sm:px-8 py-6 text-[10px] uppercase font-bold tracking-[0.2em] text-accent/40 text-right">
+                                Amount
                             </th>
                         </tr>
                     </thead>
@@ -146,19 +145,21 @@ export default function TransactionTable({ transactions = [], itemsPerPage = 10 
                                     {/* Desktop Only Reference */}
                                     <td className="px-4 sm:px-8 py-6 hidden sm:table-cell">
                                         <p className="text-[10px] font-bold text-accent uppercase tracking-widest truncate max-w-[120px]">{tx.referenceId}</p>
-                                        <p className="text-[8px] text-accent/20 uppercase tracking-widest mt-1">Network Identity</p>
+                                        <p className="text-[8px] text-accent/30 uppercase tracking-wider mt-1">Ref ID</p>
                                     </td>
 
-                                    {/* Registry - Desktop Only */}
+                                    {/* Status - Desktop Only */}
                                     <td className="px-4 sm:px-8 py-6 hidden lg:table-cell">
                                         <div className="flex items-center gap-2 mb-1">
-                                            <div className={`w-1 h-1 rounded-full ${tx.status === 'success' ? 'bg-gold animate-pulse' : tx.status === 'pending' ? 'bg-blue-400' : 'bg-red-500'}`} />
-                                            <p className="text-[9px] font-bold text-accent/60 uppercase tracking-widest">{tx.status}</p>
+                                            <div className={`w-1.5 h-1.5 rounded-full ${tx.status === 'success' ? 'bg-gold' : tx.status === 'pending' ? 'bg-blue-400' : 'bg-red-500'}`} />
+                                            <p className="text-[9px] font-bold text-accent/80 uppercase tracking-wider">
+                                                {tx.status === 'pending' ? 'Pending' : tx.status === 'failed' ? 'Failed' : 'Successful'}
+                                            </p>
                                         </div>
-                                        <p className="text-[8px] text-accent/20 font-bold uppercase tracking-widest">Global Node V4</p>
+                                        <p className="text-[8px] text-accent/30 font-bold uppercase tracking-wider">{tx.routingProtocol || 'Transfer'}</p>
                                     </td>
 
-                                    {/* Volume */}
+                                    {/* Amount */}
                                     <td className="px-4 sm:px-8 py-6 text-right">
                                         <p className={`text-[12px] sm:text-sm font-medium tabular-nums ${tx.type === 'debit' ? 'text-accent' : 'text-gold'}`}>
                                             {tx.type === 'debit' ? '-' : '+'}{tx.currency === 'USD' ? '$' : tx.currency === 'EUR' ? '€' : '£'}{tx.amount?.toLocaleString(undefined, { minimumFractionDigits: 2 })}
@@ -179,7 +180,7 @@ export default function TransactionTable({ transactions = [], itemsPerPage = 10 
                         <div className="w-12 h-12 border border-gold/10 mx-auto flex items-center justify-center opacity-20">
                             <Search size={20} className="text-gold" />
                         </div>
-                        <p className="text-[10px] text-accent/20 font-bold uppercase tracking-[0.4em]">No financial records found in the current buffer</p>
+                        <p className="text-[10px] text-accent/30 font-bold uppercase tracking-[0.2em]">No transactions found</p>
                     </div>
                 )}
             </div>
@@ -187,8 +188,8 @@ export default function TransactionTable({ transactions = [], itemsPerPage = 10 
             {/* Pagination */}
             {totalPages > 1 && (
                 <div className="flex justify-between items-center pt-6">
-                    <p className="text-[9px] text-accent/20 font-bold uppercase tracking-[0.3em]">
-                        Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredTransactions.length)} of {filteredTransactions.length} Settlements
+                    <p className="text-[9px] text-accent/30 font-bold uppercase tracking-[0.2em]">
+                        Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredTransactions.length)} of {filteredTransactions.length} Transactions
                     </p>
                     <div className="flex gap-2">
                         <button
